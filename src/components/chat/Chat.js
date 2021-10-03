@@ -14,7 +14,7 @@ function Chat() {
   const sendMessage = async (evn) => {
     evn.preventDefault();
     if (inputRef.current.value.trim()) {
-      console.log(inputRef.current.value);
+      console.log(doc(db, "channels", selectChannelId));
       // addDoc(db.collection("channels"), {
       //   // need to continue
       // });
