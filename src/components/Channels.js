@@ -11,6 +11,7 @@ import { useState } from "react";
 import Channel from "./channels/Channel";
 import Chat from "./chat/Chat";
 import styled from "styled-components";
+import { selectChannelName } from "../redux/common/channel/selectors";
 
 const ChatWrapper = styled.div`
   display: flex;
@@ -22,6 +23,7 @@ function Channels() {
   const history = useHistory();
   const dispatch = useDispatch();
   const [channels, setChannels] = useState([]);
+  const currentChannelName = useSelector(selectChannelName);
   const handleSignOut = () => {
     const auth = getAuth();
     signOut(auth)
@@ -53,6 +55,7 @@ function Channels() {
       />
     );
   };
+  console.log(currentChannelName);
 
   return (
     <div>

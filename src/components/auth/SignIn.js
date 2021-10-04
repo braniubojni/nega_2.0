@@ -39,6 +39,7 @@ function SignIn() {
         history.push(CHANNELS_ROUTE);
       })
       .catch((error) => {
+        alert(`We don't have such person please sign up`);
         return new Error(error);
       });
   };

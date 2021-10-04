@@ -1,6 +1,7 @@
+import { getAuth } from "@firebase/auth";
 import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { collection, doc, addDoc } from "firebase/firestore";
+import { collection, doc, addDoc, serverTimestamp } from "firebase/firestore";
 import db from "../../firebase";
 import {
   selectChannelId,
@@ -11,13 +12,24 @@ function Chat() {
   const channelId = useSelector(selectChannelId);
   const channelName = useSelector(selectChannelName);
   const inputRef = useRef("");
+  const chatRef = useRef(null);
+
+  const scrollToBottom = () => {};
+
   const sendMessage = async (evn) => {
     evn.preventDefault();
+    const auth = getAuth();
     if (inputRef.current.value.trim()) {
-      console.log(inputRef.current.value);
-      // addDoc(db.collection("channels"), {
-      //   // need to continue
-      // });
+      // setDoc is need when message is rendered need to edit that message
+      const newMsg = {
+        timestamp: serverTimestamp(),
+        message: inputRef.current.value.trim(),
+        name: auth.currentUser.email,
+      };
+      const messages = doc(db, `channels`, channelId, "messages", newMsg);
+
+      // inputRef.current.value = "";
+      // scrollToBottom();
     }
   };
   return (

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -18,10 +18,13 @@ import {
 } from "./constants/paths";
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
 import { collection, onSnapshot } from "@firebase/firestore";
+import Loader from "./components/loader/Loader";
+import styled from "styled-components";
 import db from "./firebase";
 
 function App() {
   const dispatch = useDispatch();
+  const [loader, setLoader] = useState(true);
   const auth = getAuth();
 
   useEffect(() => {
@@ -36,32 +39,42 @@ function App() {
                 .find((user) => user.email === currentUser.email)
             )
           );
+          setLoader(false);
         });
       }
     });
   }, [dispatch, auth]);
 
   return (
-    <Router>
-      <Switch>
-        <Route exact path={HOME_ROUTE}>
-          <Home />
-        </Route>
-        <Route path={SIGN_UP_ROUTE}>
-          <Auth />
-        </Route>
-        <Route path={SIGN_IN_ROUTE}>
-          <Auth />
-        </Route>
-        <Route exact path={CHANNELS_ROUTE}>
-          <Channels />
-        </Route>
-        <Route exact path={`${CHANNELS_ROUTE}/:id`}>
-          <Channels />
-        </Route>
-        <Redirect to={HOME_ROUTE} />
-      </Switch>
-    </Router>
+    <>
+      {loader ? (
+        <>
+          <Loader loader={loader} />
+          {setTimeout(() => {}, 2000)}
+        </>
+      ) : (
+        <Router>
+          <Switch>
+            <Route exact path={HOME_ROUTE}>
+              <Home />
+            </Route>
+            <Route path={SIGN_UP_ROUTE}>
+              <Auth />
+            </Route>
+            <Route path={SIGN_IN_ROUTE}>
+              <Auth />
+            </Route>
+            <Route exact path={CHANNELS_ROUTE}>
+              <Channels />
+            </Route>
+            <Route exact path={`${CHANNELS_ROUTE}/:id`}>
+              <Channels />
+            </Route>
+            <Redirect to={HOME_ROUTE} />
+          </Switch>
+        </Router>
+      )}
+    </>
   );
 }
 
