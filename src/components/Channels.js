@@ -10,7 +10,6 @@ import { useState } from "react";
 import Channel from "./channels/Channel";
 import Chat from "./chat/Chat";
 import styled from "styled-components";
-import { selectChannelName } from "../redux/common/channel/selectors";
 import LogOutDialog from "./dialogs/LogOutDialog";
 
 const ChatWrapper = styled.div`
@@ -22,7 +21,6 @@ function Channels() {
   const loggedUser = useSelector(selectLoggedInUser);
   const history = useHistory();
   const [channels, setChannels] = useState([]);
-  const currentChannelName = useSelector(selectChannelName);
 
   useEffect(() => {
     if (!loggedUser) {

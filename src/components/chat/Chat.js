@@ -20,13 +20,7 @@ function Chat() {
     evn.preventDefault();
     const auth = getAuth();
     if (inputRef.current.value.trim()) {
-      // setDoc is need when message is rendered need to edit that message
-      const newMsg = {
-        timestamp: serverTimestamp(),
-        message: inputRef.current.value.trim(),
-        name: auth.currentUser.email,
-      };
-      const messages = doc(db, `channels`, channelId, "messages", newMsg);
+      const collectionRef = collection(db, `channels/${channelId}/messages`);
 
       // inputRef.current.value = "";
       // scrollToBottom();
