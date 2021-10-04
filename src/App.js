@@ -26,6 +26,11 @@ function App() {
   const dispatch = useDispatch();
   const [loader, setLoader] = useState(true);
   const auth = getAuth();
+  const timer = () => {
+    setTimeout(() => {
+      setLoader(false);
+    }, 1500);
+  };
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -47,13 +52,13 @@ function App() {
 
   return (
     <>
-      {loader ? (
-        <>
-          <Loader loader={loader} />
-          {setTimeout(() => {}, 2000)}
-        </>
-      ) : (
-        <Router>
+      <Router>
+        {loader ? (
+          <>
+            <Loader loader={loader} />
+            {timer()}
+          </>
+        ) : (
           <Switch>
             <Route exact path={HOME_ROUTE}>
               <Home />
@@ -70,10 +75,9 @@ function App() {
             <Route exact path={`${CHANNELS_ROUTE}/:id`}>
               <Channels />
             </Route>
-            <Redirect to={HOME_ROUTE} />
           </Switch>
-        </Router>
-      )}
+        )}
+      </Router>
     </>
   );
 }

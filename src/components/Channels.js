@@ -1,10 +1,9 @@
-import { getAuth, signOut } from "@firebase/auth";
 import { collection, onSnapshot } from "@firebase/firestore";
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { SIGN_IN_ROUTE } from "../constants/paths";
-import { logOut } from "../redux/common/auth/actions";
+import { Link } from "react-router-dom";
+import { HOME_ROUTE, SIGN_IN_ROUTE } from "../constants/paths";
 import { selectLoggedInUser } from "../redux/common/auth/selectors";
 import db from "../firebase";
 import { useState } from "react";
@@ -12,6 +11,7 @@ import Channel from "./channels/Channel";
 import Chat from "./chat/Chat";
 import styled from "styled-components";
 import { selectChannelName } from "../redux/common/channel/selectors";
+import LogOutDialog from "./dialogs/LogOutDialog";
 
 const ChatWrapper = styled.div`
   display: flex;
@@ -21,20 +21,8 @@ const ChatWrapper = styled.div`
 function Channels() {
   const loggedUser = useSelector(selectLoggedInUser);
   const history = useHistory();
-  const dispatch = useDispatch();
   const [channels, setChannels] = useState([]);
   const currentChannelName = useSelector(selectChannelName);
-  const handleSignOut = () => {
-    const auth = getAuth();
-    signOut(auth)
-      .then(() => {
-        dispatch(logOut());
-        history.push(SIGN_IN_ROUTE);
-      })
-      .catch((error) => {
-        console.log(new Error(error));
-      });
-  };
 
   useEffect(() => {
     if (!loggedUser) {
@@ -55,11 +43,12 @@ function Channels() {
       />
     );
   };
-  console.log(currentChannelName);
 
   return (
     <div>
-      <button onClick={() => history.push("/")}>HOME</button>
+      <button>
+        <Link to={HOME_ROUTE}>HOME</Link>
+      </button>
       <h1>Here is your channels {loggedUser && loggedUser?.email}</h1>
 
       <ul style={{ listStyle: "none" }}>
@@ -70,7 +59,7 @@ function Channels() {
           <Chat />
         </div>
       </ChatWrapper>
-      <button onClick={handleSignOut}>Log out</button>
+      <LogOutDialog />
     </div>
   );
 }
