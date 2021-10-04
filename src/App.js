@@ -1,10 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Auth from "./components/auth/Auth";
 import Home from "./components/Home";
 import Channels from "./components/Channels";
@@ -19,13 +14,17 @@ import {
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
 import { collection, onSnapshot } from "@firebase/firestore";
 import Loader from "./components/loader/Loader";
-import styled from "styled-components";
 import db from "./firebase";
 
 function App() {
   const dispatch = useDispatch();
   const [loader, setLoader] = useState(true);
   const auth = getAuth();
+  const timer = () => {
+    setTimeout(() => {
+      setLoader(false);
+    }, 1500);
+  };
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -47,13 +46,13 @@ function App() {
 
   return (
     <>
-      {loader ? (
-        <>
-          <Loader loader={loader} />
-          {setTimeout(() => {}, 2000)}
-        </>
-      ) : (
-        <Router>
+      <Router>
+        {loader ? (
+          <>
+            <Loader loader={loader} />
+            {timer()}
+          </>
+        ) : (
           <Switch>
             <Route exact path={HOME_ROUTE}>
               <Home />
@@ -70,10 +69,9 @@ function App() {
             <Route exact path={`${CHANNELS_ROUTE}/:id`}>
               <Channels />
             </Route>
-            <Redirect to={HOME_ROUTE} />
           </Switch>
-        </Router>
-      )}
+        )}
+      </Router>
     </>
   );
 }

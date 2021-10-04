@@ -1,11 +1,7 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { setChannelInfo } from "../../redux/common/channel/actions";
 import { CHANNELS_ROUTE } from "../../constants/paths";
-import {
-  selectChannelId,
-  selectChannelName,
-} from "../../redux/common/channel/selectors";
 
 function Channel({ id, channelName }) {
   const dispatch = useDispatch();
