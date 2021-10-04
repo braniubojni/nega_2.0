@@ -21,7 +21,11 @@ function Chat() {
     const auth = getAuth();
     if (inputRef.current.value.trim()) {
       const collectionRef = collection(db, `channels/${channelId}/messages`);
-
+      const payload = {
+        timestamp: "timestampFromServer",
+        message: "someMessage",
+        name: "userName",
+      };
       // inputRef.current.value = "";
       // scrollToBottom();
     }
