@@ -1,39 +1,83 @@
 import { getAuth } from "@firebase/auth";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { collection, doc, addDoc, serverTimestamp } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  serverTimestamp,
+  onSnapshot,
+} from "firebase/firestore";
+import styled from "styled-components";
 import db from "../../firebase";
 import {
   selectChannelId,
   selectChannelName,
 } from "../../redux/common/channel/selectors";
+import Message from "../messages/Message";
+
+const BottomDiv = styled.div`
+  padding-bottom: 20px;
+`;
+const MainContentWrapper = styled.div`
+  position: relative;
+`;
+const H4 = styled.div`
+  position: absolute;
+  top: 20px;
+`;
+const Ul = styled.ul`
+  list-style: none;
+`;
 
 function Chat() {
   const channelId = useSelector(selectChannelId);
   const channelName = useSelector(selectChannelName);
+  const [messages, setMessages] = useState([]);
   const inputRef = useRef("");
-  const chatRef = useRef(null);
+  const chatRef = React.createRef;
 
-  const scrollToBottom = () => {};
+  useEffect(() => {
+    onSnapshot(collection(db, `channels/${channelId}/messages`), (snapshot) => {
+      setMessages(snapshot?.docs);
+    });
+  }, [channelId]);
+
+  const scrollToBottom = () => {
+    chatRef.current.scrollInfoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
 
   const sendMessage = async (evn) => {
     evn.preventDefault();
     const auth = getAuth();
     if (inputRef.current.value.trim()) {
-      const collectionRef = collection(db, `channels/${channelId}/messages`);
-
-      // inputRef.current.value = "";
-      // scrollToBottom();
+      await addDoc(collection(db, `channels/${channelId}/messages`), {
+        timestamp: serverTimestamp(),
+        message: inputRef.current.value,
+        name: auth.currentUser.email,
+      });
+      inputRef.current.value = "";
+      scrollToBottom();
     }
   };
+
+  const renderMsg = (msgInfo) => {
+    return (
+      <Message key={msgInfo.id} id={msgInfo.id} msgInfo={msgInfo.data()} />
+    );
+  };
+
   return (
     <div>
-      <h4>
+      <H4>
         {!channelName
           ? "Select any channel"
           : `You are in the channel ${channelName}`}
-      </h4>
-      <ul>{}</ul>
+      </H4>
+      <Ul>{messages?.map((msg) => renderMsg(msg))}</Ul>
+      <BottomDiv ref={chatRef} />
       <form>
         <input
           type="text"
