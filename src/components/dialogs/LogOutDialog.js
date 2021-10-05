@@ -5,8 +5,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { useTheme } from "@mui/material/styles";
+
 import { useDispatch } from "react-redux";
 import { logOut } from "../../redux/common/auth/actions";
 import { useHistory } from "react-router";
@@ -15,8 +14,6 @@ import { HOME_ROUTE } from "../../constants/paths";
 
 export default function LogOutDialog() {
   const [open, setOpen] = React.useState(false);
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -49,7 +46,6 @@ export default function LogOutDialog() {
         Log out
       </Button>
       <Dialog
-        fullScreen={fullScreen}
         open={open}
         onClose={onHandleNoClose}
         aria-labelledby="responsive-dialog-title"
