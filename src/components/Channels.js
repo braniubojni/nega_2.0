@@ -16,6 +16,10 @@ const ChatWrapper = styled.div`
   display: flex;
   justify-content: center;
 `;
+const Ul = styled.ul`
+  display: inline-flex;
+  flex-direction: column;
+`;
 
 function Channels() {
   const loggedUser = useSelector(selectLoggedInUser);
@@ -49,9 +53,7 @@ function Channels() {
       </button>
       <h1>Here is your channels {loggedUser && loggedUser?.email}</h1>
 
-      <ul style={{ listStyle: "none" }}>
-        {channels?.map((channel) => renderChannels(channel))}
-      </ul>
+      <Ul>{channels?.map((channel) => renderChannels(channel))}</Ul>
       <ChatWrapper>
         <div>
           <Chat />

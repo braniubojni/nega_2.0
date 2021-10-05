@@ -7,27 +7,41 @@ import {
   serverTimestamp,
   onSnapshot,
 } from "firebase/firestore";
-import styled from "styled-components";
 import db from "../../firebase";
 import {
   selectChannelId,
   selectChannelName,
 } from "../../redux/common/channel/selectors";
 import Message from "../messages/Message";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import SendIcon from "@mui/icons-material/Send";
+import { styled } from "@mui/system";
 
-const BottomDiv = styled.div`
-  padding-bottom: 20px;
-`;
-const MainContentWrapper = styled.div`
-  position: relative;
-`;
-const H4 = styled.div`
-  position: absolute;
-  top: 20px;
-`;
-const Ul = styled.ul`
-  list-style: none;
-`;
+const BottomDiv = styled("div")(({ theme }) => ({
+  paddingBottom: theme.spacing(2),
+}));
+const MainContentWrapper = styled("div")({
+  position: "relative",
+});
+const H4 = styled("div")(({ theme }) => ({
+  position: "absolute",
+  top: theme.spacing(2),
+}));
+const Ul = styled("ul")({
+  listStyle: "none",
+});
+const Arrow = styled("div")(({ theme }) => ({
+  cursor: "pointer",
+  paddingLeft: theme.spacing(1),
+}));
+const Field = styled("div")(({ theme }) => ({
+  marginRight: theme.spacing(1),
+}));
+const TextFieldWrapper = styled("div")(({ theme }) => ({
+  position: "relative",
+  display: "flex",
+}));
 
 function Chat() {
   const channelId = useSelector(selectChannelId);
@@ -42,12 +56,12 @@ function Chat() {
     });
   }, [channelId]);
 
-  const scrollToBottom = () => {
-    chatRef.current.scrollInfoView({
-      behavior: "smooth",
-      block: "start",
-    });
-  };
+  // const scrollToBottom = () => {
+  //   chatRef.current.scrollIntoView({
+  //     behavior: "smooth",
+  //     block: "start",
+  //   });
+  // };
 
   const sendMessage = async (evn) => {
     evn.preventDefault();
@@ -59,7 +73,7 @@ function Chat() {
         name: auth.currentUser.email,
       });
       inputRef.current.value = "";
-      scrollToBottom();
+      // scrollToBottom(); // need for reach the last msg
     }
   };
 
@@ -77,20 +91,30 @@ function Chat() {
           : `You are in the channel ${channelName}`}
       </H4>
       <Ul>{messages?.map((msg) => renderMsg(msg))}</Ul>
-      <BottomDiv ref={chatRef} />
-      <form>
-        <input
-          type="text"
-          disabled={!channelId}
-          ref={inputRef}
-          placeholder={
-            channelId ? `Message # ${channelName}` : "Select any channel"
-          }
-        />
-        <button type="submit" onClick={sendMessage}>
-          Send
-        </button>
-      </form>
+      <Box
+        component="form"
+        sx={{
+          "& > :not(style)": { m: 1, width: "25ch" },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <TextFieldWrapper>
+          <Field>
+            <TextField
+              id="standard-basic"
+              disabled={!channelId}
+              placeholder={
+                channelId ? `Message # ${channelName}` : "Select any channel"
+              }
+              variant="standard"
+            />
+          </Field>
+          <Arrow>
+            <SendIcon onClick={sendMessage} />
+          </Arrow>
+        </TextFieldWrapper>
+      </Box>
     </div>
   );
 }
