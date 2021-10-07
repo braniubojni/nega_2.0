@@ -57,7 +57,6 @@ function Chat() {
       setMessages(snapshot?.docs);
     });
   }, [channelId]);
-  useEffect(() => {}, [inputRef]);
 
   const scrollToBottom = () => {
     chatRef.current.scrollIntoView({
@@ -117,17 +116,15 @@ function Chat() {
               placeholder={
                 channelId ? `Message # ${channelName}` : "Select any channel"
               }
+              sx={{
+                width: "10vw",
+              }}
               variant="standard"
               fullWidth
             />
           </Field>
           <Arrow>
-            <SendIcon
-              onSubmit={sendMessage}
-              style={{
-                color: inputRef.current.value === "" ? "#808080" : "black",
-              }}
-            />
+            <SendIcon onClick={sendMessage} />
           </Arrow>
         </TextFieldWrapper>
       </Box>
