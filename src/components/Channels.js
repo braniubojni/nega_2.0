@@ -9,17 +9,17 @@ import db from "../firebase";
 import { useState } from "react";
 import Channel from "./channels/Channel";
 import Chat from "./chat/Chat";
-import styled from "styled-components";
+import { styled } from "@mui/system";
 import LogOutDialog from "./dialogs/LogOutDialog";
 
-const ChatWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-const Ul = styled.ul`
-  display: inline-flex;
-  flex-direction: column;
-`;
+const ChatWrapper = styled("div")({
+  display: "flex",
+  justifyContent: "center",
+});
+const Ul = styled("ul")({
+  display: "inline-flex",
+  flexDirection: "column",
+});
 
 function Channels() {
   const loggedUser = useSelector(selectLoggedInUser);
@@ -31,7 +31,7 @@ function Channels() {
       history.push(SIGN_IN_ROUTE);
     } else {
       onSnapshot(collection(db, "channels"), (snapshot) => {
-        setChannels(snapshot.docs);
+        setChannels(snapshot?.docs);
       });
     }
   }, [history, loggedUser]);
