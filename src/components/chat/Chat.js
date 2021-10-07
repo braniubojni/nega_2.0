@@ -44,12 +44,18 @@ const TextFieldWrapper = styled("div")(({ theme }) => ({
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
-  border: "2px solid black",
+  border: "1px solid gray",
+  borderRadius: theme.spacing(1),
   padding: 10,
+  "&:focus-within": {
+    border: "2px solid black",
+    transition: "all 0.2s",
+  },
 }));
 const MenuBar = styled("div")(({ theme }) => ({
   display: "flex",
   position: "relative",
+  marginTop: theme.spacing(1),
 }));
 
 function Chat() {
@@ -113,7 +119,6 @@ function Chat() {
         component="form"
         onSubmit={sendMessage}
         sx={{
-          "& > :not(style)": { m: 1 },
           display: "flex",
           justifyContent: "center",
         }}
