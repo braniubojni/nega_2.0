@@ -60,17 +60,11 @@ function SignUp() {
   };
   const [passwordError, setPasswordError] = useState(false);
   useEffect(() => {
-    if (password.length > 6 && password.length < 10) {
+    if (validatePassword(password)) {
       setPasswordError(true);
     } else {
       setPasswordError(false);
     }
-
-    // if (validatePassword(password)) {
-    //   setpasswordError(true);
-    // } else {
-    //   setpasswordError(false);
-    // }
   }, [password]);
   const [isDirtyPassword, setIsDirtyPassword] = useState(false);
   const handleChangeIsDirtyPassword = useCallback(() => {
@@ -137,7 +131,6 @@ function SignUp() {
     }
   };
 
-  console.log(isDirtyPassword, passwordError);
   return (
     <>
       <Container maxWidth="sm">
@@ -227,7 +220,7 @@ function SignUp() {
 
             <FormControl fullWidth variant="outlined" margin="dense">
               <InputLabel htmlFor="outlined-adornment-rePassword">
-                rePassword
+                Repeat
               </InputLabel>
               <OutlinedInput
                 id="outlined-adornment-password"
