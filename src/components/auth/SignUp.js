@@ -11,19 +11,22 @@ import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import db from "../../firebase";
 import { v4 as uuidv4 } from "uuid";
+import Loader from "../loader/Loader";
 
 function SignUp() {
-  const history = useHistory();
-  const loggedUser = useSelector(selectLoggedInUser);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   const [trigger, setTrigger] = useState(false);
+  const [loader, setLoader] = useState(false);
+  const [alert, setAlert] = useState(false);
   const userData = { email, password, id: uuidv4() };
+
+  const loggedUser = useSelector(selectLoggedInUser);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
-    console.log(password === rePassword);
     if (password === rePassword && rePassword !== "") {
       setTrigger(true);
     } else {
@@ -39,7 +42,9 @@ function SignUp() {
 
   const handleNewUser = (event) => {
     event.preventDefault();
+    setLoader(true);
     if (validateEmail(email) && validatePassword(password)) {
+      setAlert((prev) => !prev);
     } else {
       const usrCollection = collection(db, "users");
       const auth = getAuth();
@@ -51,43 +56,51 @@ function SignUp() {
         })
         .catch((error) => {
           console.log(new Error(error));
+        })
+        .finally(() => {
+          setLoader(false);
         });
     }
   };
 
   return (
     <>
-      <h1>On Sign up</h1>
-      <form onSubmit={handleNewUser}>
-        Email:
-        <input
-          type="text"
-          value={email}
-          placeholder={"Email"}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          value={password}
-          placeholder={"Password"}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <input
-          type="password"
-          value={rePassword}
-          placeholder={"Retype the password"}
-          onChange={(e) => setRePassword(e.target.value)}
-        />
-        {trigger ? (
-          <CheckIcon color="success" fontSize="large" />
-        ) : (
-          <CloseIcon color="error" />
-        )}
-        <input type="submit" value="Submit" />
-      </form>
-      {/* If already has an account */}
-      <div>Are you already signed up?</div>
-      <button onClick={() => history.push(SIGN_IN_ROUTE)}>Sign In</button>
+      {loader ? (
+        <Loader loader={loader} />
+      ) : (
+        <>
+          <h1>On Sign up</h1>
+          <form onSubmit={handleNewUser}>
+            Email:
+            <input
+              type="text"
+              value={email}
+              placeholder={"Email"}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+              type="password"
+              value={password}
+              placeholder={"Password"}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <input
+              type="password"
+              value={rePassword}
+              placeholder={"Retype the password"}
+              onChange={(e) => setRePassword(e.target.value)}
+            />
+            {trigger ? (
+              <CheckIcon color="success" fontSize="large" />
+            ) : (
+              <CloseIcon color="error" />
+            )}
+            <input type="submit" value="Submit" />
+          </form>
+          <div>Are you already signed up?</div>
+          <button onClick={() => history.push(SIGN_IN_ROUTE)}>Sign In</button>
+        </>
+      )}
     </>
   );
 }
