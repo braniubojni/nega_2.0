@@ -12,6 +12,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import db from "../../firebase";
 import { v4 as uuidv4 } from "uuid";
 import Loader from "../loader/Loader";
+import Alert from "../dialogs/Alert";
 
 function SignUp() {
   const [email, setEmail] = useState("");
@@ -20,6 +21,8 @@ function SignUp() {
   const [trigger, setTrigger] = useState(false);
   const [loader, setLoader] = useState(false);
   const [alert, setAlert] = useState(false);
+  const [text, setText] = useState("You typed incorrect credentials");
+
   const userData = { email, password, id: uuidv4() };
 
   const loggedUser = useSelector(selectLoggedInUser);
@@ -42,25 +45,32 @@ function SignUp() {
 
   const handleNewUser = (event) => {
     event.preventDefault();
-    setLoader(true);
-    if (validateEmail(email) && validatePassword(password)) {
-      setAlert((prev) => !prev);
-    } else {
-      const usrCollection = collection(db, "users");
-      const auth = getAuth();
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(() => {
-          addDoc(usrCollection, userData, userData.id);
-          dispatch(setLoggedinUser(userData));
-          history.push("/");
-        })
-        .catch((error) => {
-          console.log(new Error(error));
-        })
-        .finally(() => {
-          setLoader(false);
-        });
+    if (
+      email === "" ||
+      password === "" ||
+      rePassword === "" ||
+      (!validateEmail(email) && !validatePassword(password))
+    ) {
+      setAlert(true);
+      return null;
     }
+    setLoader(true);
+    const usrCollection = collection(db, "users");
+    const auth = getAuth();
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        addDoc(usrCollection, userData, userData.id);
+        dispatch(setLoggedinUser(userData));
+        history.push("/");
+      })
+      .catch((error) => {
+        setAlert(true);
+        setText(`We already have the user with email ${email}`);
+        console.log(new Error(error));
+      })
+      .finally(() => {
+        setLoader(false);
+      });
   };
 
   return (
@@ -99,6 +109,7 @@ function SignUp() {
           </form>
           <div>Are you already signed up?</div>
           <button onClick={() => history.push(SIGN_IN_ROUTE)}>Sign In</button>
+          <Alert alert={alert} setAlert={setAlert} text={text} />
         </>
       )}
     </>
