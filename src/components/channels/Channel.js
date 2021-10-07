@@ -3,11 +3,15 @@ import { useHistory } from "react-router";
 import { setChannelInfo } from "../../redux/common/channel/actions";
 import { CHANNELS_ROUTE } from "../../constants/paths";
 import { styled } from "@mui/system";
+import TagIcon from "@mui/icons-material/Tag";
 
 const Li = styled("li")({
-  display: "inline",
-  cursor: "pointer",
   margin: "5px 0 5px",
+  display: "flex",
+});
+const ChannelName = styled("span")({
+  fontSize: "1.2em",
+  cursor: "pointer",
 });
 
 function Channel({ id, channelName }) {
@@ -23,7 +27,11 @@ function Channel({ id, channelName }) {
     );
     history.push(`${CHANNELS_ROUTE}/${id}`);
   };
-  return <Li onClick={setChannel}># {channelName}</Li>;
+  return (
+    <Li onClick={setChannel}>
+      <TagIcon /> <ChannelName>{channelName}</ChannelName>
+    </Li>
+  );
 }
 
 export default Channel;
