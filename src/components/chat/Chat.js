@@ -17,6 +17,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import SendIcon from "@mui/icons-material/Send";
 import { styled } from "@mui/system";
+import Emoji from "./emoji/Emoji";
 
 const H4 = styled("div")(({ theme }) => ({
   position: "absolute",
@@ -36,20 +37,25 @@ const Arrow = styled("div")(({ theme }) => ({
 const Field = styled("div")(({ theme }) => ({
   marginRight: theme.spacing(1),
 }));
-const MenuBar = styled("div")(({ theme }) => ({}));
 const TextFieldWrapper = styled("div")(({ theme }) => ({
   position: "relative",
   display: "flex",
+  flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
   border: "2px solid black",
   padding: 10,
 }));
+const MenuBar = styled("div")(({ theme }) => ({
+  display: "flex",
+  position: "relative",
+}));
 
 function Chat() {
+  const [messages, setMessages] = useState([]);
+  const [sent, setSent] = useState(false);
   const channelId = useSelector(selectChannelId);
   const channelName = useSelector(selectChannelName);
-  const [messages, setMessages] = useState([]);
   const inputRef = useRef("");
   const chatRef = useRef(null);
 
@@ -75,8 +81,9 @@ function Chat() {
         message: inputRef.current.value,
         name: auth.currentUser.email,
       });
+      setSent(true);
       inputRef.current.value = "";
-      scrollToBottom(); // need for reach the last msg
+      scrollToBottom();
     }
   };
 
@@ -101,7 +108,7 @@ function Chat() {
         component="form"
         onSubmit={sendMessage}
         sx={{
-          "& > :not(style)": { m: 1, width: "25ch" },
+          "& > :not(style)": { m: 1 },
           display: "flex",
           justifyContent: "center",
         }}
@@ -125,6 +132,7 @@ function Chat() {
             />
           </Field>
           <MenuBar>
+            <Emoji inputRef={inputRef} isDisabled={channelId} Sent={sent} />
             <Arrow>
               <SendIcon onClick={sendMessage} />
             </Arrow>
