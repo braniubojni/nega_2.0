@@ -2,13 +2,13 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { setChannelInfo } from "../../redux/common/channel/actions";
 import { CHANNELS_ROUTE } from "../../constants/paths";
-import styled from "styled-components";
+import { styled } from "@mui/system";
 
-const Li = styled.li`
-  display: inline;
-  cursor: pointer;
-  margin: 5px 0 5px;
-`;
+const Li = styled("li")({
+  display: "inline",
+  cursor: "pointer",
+  margin: "5px 0 5px",
+});
 
 function Channel({ id, channelName }) {
   const dispatch = useDispatch();
