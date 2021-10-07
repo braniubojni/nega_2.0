@@ -1,18 +1,22 @@
-import React from "react";
-import styled from "styled-components";
+import { styled } from "@mui/system";
 
-export const FormFlex = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
+export const FormFlex = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+});
 
-export const FormH1 = styled.h1`
-  padding: 0;
-  margin-bottom: 30px;
-  text-align: center;
-`;
+export const FormH1 = styled("h1")({
+  padding: 0,
+  marginBottom: 30,
+  textAlign: "center",
+});
 
-export const FormFlexItems = styled.div`
-  margin-bottom: 30px;
-`;
+export const FormFlexItems = styled("div")({
+  marginBottom: 30,
+});
+
+export const IfSignIn = styled("div")({
+  display: "flex",
+  justifyContent: "center",
+});
