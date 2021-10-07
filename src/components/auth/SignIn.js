@@ -7,6 +7,8 @@ import { setLoggedinUser } from "../../redux/common/auth/actions";
 import { CHANNELS_ROUTE, SIGN_UP_ROUTE } from "../../constants/paths";
 import { signInWithEmailAndPassword, getAuth } from "@firebase/auth";
 import { selectLoggedInUser } from "../../redux/common/auth/selectors";
+import Alert from "../dialogs/Alert";
+import Loader from "../loader/Loader";
 
 function SignIn() {
   const history = useHistory();
@@ -15,6 +17,8 @@ function SignIn() {
   const [usrEmail, setUsrEmail] = useState("");
   const [usrPassword, setUsrPassword] = useState("");
   const loggedInUser = useSelector(selectLoggedInUser);
+  const [alert, setAlert] = useState(false);
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
     if (loggedInUser) {
@@ -24,6 +28,7 @@ function SignIn() {
 
   const handleExistingUser = (event) => {
     event.preventDefault();
+    setLoader(true);
     signInWithEmailAndPassword(auth, usrEmail, usrPassword)
       .then(() => {
         const currentUser = auth.currentUser;
@@ -39,38 +44,49 @@ function SignIn() {
         history.push(CHANNELS_ROUTE);
       })
       .catch((error) => {
-        alert(`We don't have such person please sign up`);
+        setAlert((prev) => !prev);
         return new Error(error);
+      })
+      .finally(() => {
+        setLoader(false);
       });
   };
 
   return (
     <>
-      <h1>On Sign In</h1>
-      <form onSubmit={handleExistingUser}>
-        <label>
-          Email:
-          <input
-            type="text"
-            value={usrEmail}
-            onChange={(e) => setUsrEmail(e.target.value)}
-          />
-        </label>
-        <label>
-          Password:
-          <input
-            type="text"
-            value={usrPassword}
-            onChange={(e) => setUsrPassword(e.target.value)}
-          />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-      <button onClick={() => history.push(SIGN_UP_ROUTE)}>Sign up</button>
-      {loggedInUser && (
-        <button onClick={() => history.push(CHANNELS_ROUTE)}>
-          to channels
-        </button>
+      {loader ? (
+        <Loader loader={loader} />
+      ) : (
+        <>
+          <h1>On Sign In</h1>
+          <form onSubmit={handleExistingUser}>
+            <label>
+              Email:
+              <input
+                type="text"
+                value={usrEmail}
+                onChange={(e) => setUsrEmail(e.target.value)}
+              />
+            </label>
+            <label>
+              Password:
+              <input
+                type="text"
+                value={usrPassword}
+                onChange={(e) => setUsrPassword(e.target.value)}
+              />
+            </label>
+            <input type="submit" value="Submit" />
+          </form>
+          <button onClick={() => history.push(SIGN_UP_ROUTE)}>Sign up</button>
+          {loggedInUser && (
+            <button onClick={() => history.push(CHANNELS_ROUTE)}>
+              to channels
+            </button>
+          )}
+
+          {alert && <Alert alert={alert} setAlert={setAlert} />}
+        </>
       )}
     </>
   );
