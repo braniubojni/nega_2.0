@@ -22,62 +22,19 @@ import {
   InputLabel,
   OutlinedInput,
 } from "@mui/material";
-import { FormFlex, FormFlexItems, FormH1 } from "./signUpStyle";
+import { FormFlex, FormH1 } from "./signUpStyle";
 
 function SignUp() {
   const history = useHistory();
   const loggedUser = useSelector(selectLoggedInUser);
+
+  //! email code start
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [rePassword, setRePassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [showRePassword, setShowRePassword] = useState(false);
-
-  const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const [rePasswordError, setRePasswordError] = useState(false);
-  const [isDirtyEmail, setIsDirtyEmail] = useState(false);
-  const [isDirtyPassword, setIsDirtyPassword] = useState(false);
-  const [isDirtyRePassword, setIsDirtyRePassword] = useState(false);
-  const handleClickClearInput = () => {
-    setPassword("");
-    setPasswordError(false);
-    setIsDirtyPassword(false);
-  };
-
-  const handleChangeIsDirtyEmail = useCallback(() => {
-    setIsDirtyEmail(true);
-  }, [isDirtyEmail]);
-  const handleChangeIsDirtyPassword = useCallback(() => {
-    setIsDirtyPassword(true);
-  }, [isDirtyPassword]);
-  const handleChangeIsDirtyRePassword = useCallback(() => {
-    setIsDirtyRePassword(true);
-  }, [isDirtyRePassword]);
-
-  const userData = { email, password, id: uuidv4() };
-  const dispatch = useDispatch();
-
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
-  const handleClickShowRePassword = () => setShowRePassword(!showRePassword);
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-  const handleMouseDownRePassword = (event) => {
-    event.preventDefault();
-  };
-
-  const handleChangePassword = (event) => {
-    setPassword(event.target.value);
-  };
   const handleChangeEmail = (event) => {
     setEmail(event.target.value);
   };
-  const handleChangeRePassword = (event) => {
-    setRePassword(event.target.value);
-  };
 
+  const [emailError, setEmailError] = useState(false);
   useEffect(() => {
     if (validateEmail(email)) {
       setEmailError(true);
@@ -85,7 +42,23 @@ function SignUp() {
       setEmailError(false);
     }
   }, [email]);
+  const [isDirtyEmail, setIsDirtyEmail] = useState(false);
+  const handleChangeIsDirtyEmail = useCallback(() => {
+    setIsDirtyEmail(true);
+  }, [isDirtyEmail]);
+  //! emali code end
 
+  //! password code start
+  const [password, setPassword] = useState("");
+  const handleChangePassword = (event) => {
+    setPassword(event.target.value);
+  };
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+  const [passwordError, setPasswordError] = useState(false);
   useEffect(() => {
     if (password.length > 6 && password.length < 10) {
       setPasswordError(true);
@@ -99,7 +72,29 @@ function SignUp() {
     //   setpasswordError(false);
     // }
   }, [password]);
+  const [isDirtyPassword, setIsDirtyPassword] = useState(false);
+  const handleChangeIsDirtyPassword = useCallback(() => {
+    setIsDirtyPassword(true);
+  }, [isDirtyPassword]);
+  const handleClickClearInput = () => {
+    setPassword("");
+    setPasswordError(false);
+    setIsDirtyPassword(false);
+  };
+  //! password code end
 
+  //! rePassword code start
+  const [rePassword, setRePassword] = useState("");
+  const handleChangeRePassword = (event) => {
+    setRePassword(event.target.value);
+  };
+  const handleClickClearRePasswordInput = () => setRePassword("");
+  const [showRePassword, setShowRePassword] = useState(false);
+  const handleClickShowRePassword = () => setShowRePassword(!showRePassword);
+  const handleMouseDownRePassword = (event) => {
+    event.preventDefault();
+  };
+  const [rePasswordError, setRePasswordError] = useState(false);
   useEffect(() => {
     if (password === rePassword && rePassword !== "") {
       setRePasswordError(true);
@@ -107,6 +102,16 @@ function SignUp() {
       setRePasswordError(false);
     }
   }, [password, rePassword]);
+
+  const [isDirtyRePassword, setIsDirtyRePassword] = useState(false);
+  const handleChangeIsDirtyRePassword = useCallback(() => {
+    setIsDirtyRePassword(true);
+  }, [isDirtyRePassword]);
+
+  //! rePassword code end
+
+  const userData = { email, password, id: uuidv4() };
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (loggedUser) {
@@ -142,21 +147,12 @@ function SignUp() {
             <FormControl fullWidth variant="outlined" margin="dense">
               <InputLabel htmlFor="outlined-adornment-email">Email</InputLabel>
               <OutlinedInput
-                id="outlined-adornment-password"
+                id="outlined-adornment-Email"
                 type={email}
                 value={email}
                 onChange={handleChangeEmail}
                 onBlur={handleChangeIsDirtyEmail}
                 color={isDirtyEmail && emailError ? "success" : null}
-                // style={
-                //   isDirtyEmail && emailError
-                //     ? {
-                //         border: " 2px solid #22bb33",
-                //         borderRadius: 1,
-                //       }
-                //     : null
-                // }
-                focused
                 error={
                   isDirtyEmail && emailError
                     ? false
@@ -173,7 +169,7 @@ function SignUp() {
                     ) : null}
                   </InputAdornment>
                 }
-                label="Password"
+                label="Email"
               />
             </FormControl>
             <FormControl fullWidth variant="outlined" margin="dense">
@@ -196,31 +192,33 @@ function SignUp() {
                 }
                 endAdornment={
                   <InputAdornment position="end">
-                    {isDirtyPassword && passwordError ? (
-                      <CheckIcon color="success" />
-                    ) : isDirtyPassword && !passwordError ? (
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickClearInput}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        <CloseIcon color="warning" />
-                      </IconButton>
-                    ) : (
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showPassword ? (
-                          <VisibilityOffIcon />
-                        ) : (
-                          <VisibilityIcon />
-                        )}
-                      </IconButton>
-                    )}
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? (
+                        <VisibilityOffIcon />
+                      ) : (
+                        <VisibilityIcon />
+                      )}
+                    </IconButton>
+
+                    <div style={{ marginLeft: 8 }}>
+                      {isDirtyPassword && passwordError ? (
+                        <CheckIcon color="success" />
+                      ) : isDirtyPassword && !passwordError ? (
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickClearInput}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          <CloseIcon color="warning" />
+                        </IconButton>
+                      ) : null}
+                    </div>
                   </InputAdornment>
                 }
                 label="Password"
@@ -228,7 +226,7 @@ function SignUp() {
             </FormControl>
 
             <FormControl fullWidth variant="outlined" margin="dense">
-              <InputLabel htmlFor="outlined-adornment-password">
+              <InputLabel htmlFor="outlined-adornment-rePassword">
                 rePassword
               </InputLabel>
               <OutlinedInput
@@ -247,31 +245,32 @@ function SignUp() {
                 }
                 endAdornment={
                   <InputAdornment position="end">
-                    {isDirtyRePassword && passwordError ? (
-                      <CheckIcon color="success" />
-                    ) : isDirtyRePassword && !rePasswordError ? (
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickClearInput}
-                        onMouseDown={handleMouseDownRePassword}
-                        edge="end"
-                      >
-                        <CloseIcon color="error" />
-                      </IconButton>
-                    ) : (
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowRePassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showRePassword ? (
-                          <VisibilityOffIcon />
-                        ) : (
-                          <VisibilityIcon />
-                        )}
-                      </IconButton>
-                    )}
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowRePassword}
+                      onMouseDown={handleMouseDownRePassword}
+                      edge="end"
+                    >
+                      {showRePassword ? (
+                        <VisibilityOffIcon />
+                      ) : (
+                        <VisibilityIcon />
+                      )}
+                    </IconButton>
+                    <div style={{ marginLeft: 8 }}>
+                      {isDirtyRePassword && rePasswordError ? (
+                        <CheckIcon color="success" />
+                      ) : isDirtyRePassword && !rePasswordError ? (
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickClearRePasswordInput}
+                          onMouseDown={handleMouseDownRePassword}
+                          edge="end"
+                        >
+                          <CloseIcon color="warning" />
+                        </IconButton>
+                      ) : null}
+                    </div>
                   </InputAdornment>
                 }
                 label="Password"
