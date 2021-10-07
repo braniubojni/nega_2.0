@@ -40,6 +40,9 @@ function Message({ msgInfo, id }) {
   const onRemoveClose = () => {
     setRemoveMsg(null);
   };
+  const onEditClose = () => {
+    setEditedMsg(null);
+  };
   return (
     <Li>
       {/* <img src={msgInfo.photoURL} alt="avatar" /> */}
@@ -70,14 +73,14 @@ function Message({ msgInfo, id }) {
           onRemoveClose={onRemoveClose}
         />
       )}
-      {/* {!!editedMsg && (
+      {!!editedMsg && (
         <EditMsg
           id={id}
           channelId={channelId}
-          msgInfo={editedMsg}
+          msgInfo={msgInfo}
           onEditClose={onEditClose}
         />
-      )} */}
+      )}
     </Li>
   );
 }

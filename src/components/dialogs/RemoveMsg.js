@@ -1,6 +1,4 @@
-import { useState } from "react";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -8,7 +6,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { handleRemove } from "../helpers/handlers";
 
-export default function EditMsg({ onRemoveClose, id, channelId }) {
+export default function RemoveMsg({ onRemoveClose, id, channelId }) {
   return (
     <div>
       <Dialog open={true} onClose={onRemoveClose}>
@@ -19,7 +17,7 @@ export default function EditMsg({ onRemoveClose, id, channelId }) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => onRemoveClose()}>NO</Button>
+          <Button onClick={onRemoveClose}>NO</Button>
           <Button onClick={() => handleRemove({ channelId, id })}>YES</Button>
         </DialogActions>
       </Dialog>
