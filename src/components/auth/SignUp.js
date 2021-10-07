@@ -33,12 +33,11 @@ function SignUp() {
   const [alert, setAlert] = useState(false);
   const [text, setText] = useState("You typed incorrect credentials");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const userData = { email, password, id: uuidv4() };
 
-  const loggedUser = useSelector(selectLoggedInUser);
   const dispatch = useDispatch();
-  const history = useHistory();
   //! email code start
 
   const handleChangeEmail = (event) => {
@@ -56,11 +55,10 @@ function SignUp() {
   const [isDirtyEmail, setIsDirtyEmail] = useState(false);
   const handleChangeIsDirtyEmail = useCallback(() => {
     setIsDirtyEmail(true);
-  }, [isDirtyEmail]);
+  }, []);
   //! emali code end
 
   //! password code start
-  const [password, setPassword] = useState("");
   const handleChangePassword = (event) => {
     setPassword(event.target.value);
   };
@@ -80,7 +78,7 @@ function SignUp() {
   const [isDirtyPassword, setIsDirtyPassword] = useState(false);
   const handleChangeIsDirtyPassword = useCallback(() => {
     setIsDirtyPassword(true);
-  }, [isDirtyPassword]);
+  }, []);
   const handleClickClearInput = () => {
     setPassword("");
     setPasswordError(false);
@@ -111,12 +109,9 @@ function SignUp() {
   const [isDirtyRePassword, setIsDirtyRePassword] = useState(false);
   const handleChangeIsDirtyRePassword = useCallback(() => {
     setIsDirtyRePassword(true);
-  }, [isDirtyRePassword]);
+  }, []);
 
   //! rePassword code end
-
-  const userData = { email, password, id: uuidv4() };
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (loggedUser) {
