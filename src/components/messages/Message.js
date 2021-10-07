@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { handleDelete } from "../helpers/handlers";
 import { selectChannelId } from "../../redux/common/channel/selectors";
 import EditMsg from "../dialogs/EditMsg";
+import RemoveMsg from "../dialogs/RemoveMsg";
 import { useState } from "react";
 const HoverPopUp = styled("div")(() => ({
   position: "absolute",
@@ -33,10 +34,11 @@ const StyledSpan = styled("span")({
 
 function Message({ msgInfo, id }) {
   const [editedMsg, setEditedMsg] = useState(null);
+  const [removeMsg, setRemoveMsg] = useState(null);
   const channelId = useSelector(selectChannelId);
   const loggedUser = useSelector(selectLoggedInUser);
-  const onEditClose = () => {
-    setEditedMsg(null);
+  const onRemoveClose = () => {
+    setRemoveMsg(null);
   };
   return (
     <Li>
@@ -56,9 +58,17 @@ function Message({ msgInfo, id }) {
           <DeleteForeverIcon
             sx={{ paddingLeft: 0.45, "&:hover": { color: "red" } }}
             cursor="pointer"
-            onClick={() => handleDelete({ channelId, id })}
+            onClick={() => setRemoveMsg({ channelId, id })}
           />
         </HoverPopUp>
+      )}
+      {!!removeMsg && (
+        <RemoveMsg
+          id={id}
+          channelId={channelId}
+          msgInfo={removeMsg}
+          onRemoveClose={onRemoveClose}
+        />
       )}
       {/* {!!editedMsg && (
         <EditMsg

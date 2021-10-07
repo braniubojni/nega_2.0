@@ -111,7 +111,7 @@ function Chat() {
             />
           </Field>
           <Arrow>
-            <SendIcon onClick={sendMessage} />
+            <SendIcon onSubmit={sendMessage} />
           </Arrow>
         </TextFieldWrapper>
       </Box>

@@ -13,7 +13,7 @@ export const handleEdit = async ({ channelId, id, msgInfo }) => {
   await setDoc(docRef, { msgInfo });
 };
 
-export const handleDelete = async ({ channelId, id }) => {
-  const removeItem = doc(collection(db, "channels", channelId, "messages"), id);
-  await deleteDoc(removeItem);
+export const handleRemove = async ({ channelId, id }) => {
+  // console.log(doc(collection(db, "channels", channelId, "messages"), id));
+  await deleteDoc(doc(collection(db, "channels", channelId, "messages"), id));
 };
