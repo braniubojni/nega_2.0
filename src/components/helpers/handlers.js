@@ -1,10 +1,4 @@
-import {
-  collection,
-  addDoc,
-  setDoc,
-  doc,
-  deleteDoc,
-} from "@firebase/firestore";
+import { collection, setDoc, doc, deleteDoc } from "@firebase/firestore";
 import db from "../../firebase";
 
 export const handleEdit = async ({ channelId, id, msgInfo }) => {

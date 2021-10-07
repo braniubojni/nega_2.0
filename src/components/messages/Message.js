@@ -4,7 +4,6 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import moment from "moment";
 import { selectLoggedInUser } from "../../redux/common/auth/selectors";
 import { useSelector } from "react-redux";
-import { handleDelete } from "../helpers/handlers";
 import { selectChannelId } from "../../redux/common/channel/selectors";
 import EditMsg from "../dialogs/EditMsg";
 import RemoveMsg from "../dialogs/RemoveMsg";
