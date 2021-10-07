@@ -6,7 +6,11 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-export default function Alert({ alert, setAlert }) {
+export default function Alert({
+  alert,
+  setAlert,
+  text = "We don't have such a person, please Sign In to see our channels",
+}) {
   const handleClose = () => setAlert((prev) => !prev);
 
   return (
@@ -20,7 +24,7 @@ export default function Alert({ alert, setAlert }) {
         <DialogTitle id="alert-dialog-title">{"Alert"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            We don't have such a person, please Sign In to see our channels
+            {text}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
