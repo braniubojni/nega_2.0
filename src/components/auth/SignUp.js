@@ -13,6 +13,8 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import db from "../../firebase";
 import { v4 as uuidv4 } from "uuid";
+import Loader from "../loader/Loader";
+import Alert from "../dialogs/Alert";
 import {
   Button,
   Container,
@@ -27,9 +29,18 @@ import { FormFlex, FormH1 } from "./signUpStyle";
 function SignUp() {
   const history = useHistory();
   const loggedUser = useSelector(selectLoggedInUser);
-
-  //! email code start
+  const [loader, setLoader] = useState(false);
+  const [alert, setAlert] = useState(false);
+  const [text, setText] = useState("You typed incorrect credentials");
   const [email, setEmail] = useState("");
+
+  const userData = { email, password, id: uuidv4() };
+
+  const loggedUser = useSelector(selectLoggedInUser);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  //! email code start
+
   const handleChangeEmail = (event) => {
     setEmail(event.target.value);
   };
@@ -115,174 +126,197 @@ function SignUp() {
 
   const handleNewUser = (event) => {
     event.preventDefault();
-    if (validateEmail(email) && validatePassword(password)) {
-    } else {
-      const usrCollection = collection(db, "users");
-      const auth = getAuth();
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(() => {
-          addDoc(usrCollection, userData, userData.id);
-          dispatch(setLoggedinUser(userData));
-          history.push("/");
-        })
-        .catch((error) => {
-          console.log(new Error(error));
-        });
+    if (
+      email === "" ||
+      password === "" ||
+      rePassword === "" ||
+      (!validateEmail(email) && !validatePassword(password))
+    ) {
+      setAlert(true);
+      return null;
     }
+    setLoader(true);
+    const usrCollection = collection(db, "users");
+    const auth = getAuth();
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        addDoc(usrCollection, userData, userData.id);
+        dispatch(setLoggedinUser(userData));
+        history.push("/");
+      })
+      .catch((error) => {
+        setAlert(true);
+        setText(`We already have the user with email ${email}`);
+        console.log(new Error(error));
+      })
+      .finally(() => {
+        setLoader(false);
+      });
   };
 
   return (
     <>
-      <Container maxWidth="sm">
-        <FormFlex>
-          <FormH1>On Sign up</FormH1>
-          <form onSubmit={handleNewUser}>
-            <FormControl fullWidth variant="outlined" margin="dense">
-              <InputLabel htmlFor="outlined-adornment-email">Email</InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-Email"
-                type={email}
-                value={email}
-                onChange={handleChangeEmail}
-                onBlur={handleChangeIsDirtyEmail}
-                color={isDirtyEmail && emailError ? "success" : null}
-                error={
-                  isDirtyEmail && emailError
-                    ? false
-                    : isDirtyEmail && !emailError
-                    ? true
-                    : null
-                }
-                endAdornment={
-                  <InputAdornment position="end">
-                    {isDirtyEmail && emailError ? (
-                      <CheckIcon color="success" />
-                    ) : isDirtyEmail && !emailError ? (
-                      <CloseIcon color="warning" />
-                    ) : null}
-                  </InputAdornment>
-                }
-                label="Email"
-              />
-            </FormControl>
-            <FormControl fullWidth variant="outlined" margin="dense">
-              <InputLabel htmlFor="outlined-adornment-password">
-                Password
-              </InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-password"
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={handleChangePassword}
-                onBlur={handleChangeIsDirtyPassword}
-                color={isDirtyPassword && passwordError ? "success" : null}
-                error={
-                  isDirtyPassword && passwordError
-                    ? false
-                    : isDirtyPassword && !passwordError
-                    ? true
-                    : null
-                }
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {showPassword ? (
-                        <VisibilityOffIcon />
-                      ) : (
-                        <VisibilityIcon />
-                      )}
-                    </IconButton>
-
-                    <div style={{ marginLeft: 8 }}>
-                      {isDirtyPassword && passwordError ? (
-                        <CheckIcon color="success" />
-                      ) : isDirtyPassword && !passwordError ? (
+      {loader ? (
+        <Loader loader={loader} />
+      ) : (
+        <>
+          <Container maxWidth="sm">
+            <FormFlex>
+              <FormH1>On Sign up</FormH1>
+              <form onSubmit={handleNewUser}>
+                <FormControl fullWidth variant="outlined" margin="dense">
+                  <InputLabel htmlFor="outlined-adornment-email">
+                    Email
+                  </InputLabel>
+                  <OutlinedInput
+                    id="outlined-adornment-Email"
+                    type={email}
+                    value={email}
+                    onChange={handleChangeEmail}
+                    onBlur={handleChangeIsDirtyEmail}
+                    color={isDirtyEmail && emailError ? "success" : null}
+                    error={
+                      isDirtyEmail && emailError
+                        ? false
+                        : isDirtyEmail && !emailError
+                        ? true
+                        : null
+                    }
+                    endAdornment={
+                      <InputAdornment position="end">
+                        {isDirtyEmail && emailError ? (
+                          <CheckIcon color="success" />
+                        ) : isDirtyEmail && !emailError ? (
+                          <CloseIcon color="warning" />
+                        ) : null}
+                      </InputAdornment>
+                    }
+                    label="Email"
+                  />
+                </FormControl>
+                <FormControl fullWidth variant="outlined" margin="dense">
+                  <InputLabel htmlFor="outlined-adornment-password">
+                    Password
+                  </InputLabel>
+                  <OutlinedInput
+                    id="outlined-adornment-password"
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={handleChangePassword}
+                    onBlur={handleChangeIsDirtyPassword}
+                    color={isDirtyPassword && passwordError ? "success" : null}
+                    error={
+                      isDirtyPassword && passwordError
+                        ? false
+                        : isDirtyPassword && !passwordError
+                        ? true
+                        : null
+                    }
+                    endAdornment={
+                      <InputAdornment position="end">
                         <IconButton
                           aria-label="toggle password visibility"
-                          onClick={handleClickClearInput}
+                          onClick={handleClickShowPassword}
                           onMouseDown={handleMouseDownPassword}
                           edge="end"
                         >
-                          <CloseIcon color="warning" />
+                          {showPassword ? (
+                            <VisibilityOffIcon />
+                          ) : (
+                            <VisibilityIcon />
+                          )}
                         </IconButton>
-                      ) : null}
-                    </div>
-                  </InputAdornment>
-                }
-                label="Password"
-              />
-            </FormControl>
 
-            <FormControl fullWidth variant="outlined" margin="dense">
-              <InputLabel htmlFor="outlined-adornment-rePassword">
-                Repeat
-              </InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-password"
-                type={showRePassword ? "text" : "password"}
-                value={rePassword}
-                onChange={handleChangeRePassword}
-                onBlur={handleChangeIsDirtyRePassword}
-                color={isDirtyRePassword && passwordError ? "success" : null}
-                error={
-                  isDirtyRePassword && rePasswordError
-                    ? false
-                    : isDirtyRePassword && !rePasswordError
-                    ? true
-                    : null
-                }
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowRePassword}
-                      onMouseDown={handleMouseDownRePassword}
-                      edge="end"
-                    >
-                      {showRePassword ? (
-                        <VisibilityOffIcon />
-                      ) : (
-                        <VisibilityIcon />
-                      )}
-                    </IconButton>
-                    <div style={{ marginLeft: 8 }}>
-                      {isDirtyRePassword && rePasswordError ? (
-                        <CheckIcon color="success" />
-                      ) : isDirtyRePassword && !rePasswordError ? (
+                        <div style={{ marginLeft: 8 }}>
+                          {isDirtyPassword && passwordError ? (
+                            <CheckIcon color="success" />
+                          ) : isDirtyPassword && !passwordError ? (
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickClearInput}
+                              onMouseDown={handleMouseDownPassword}
+                              edge="end"
+                            >
+                              <CloseIcon color="warning" />
+                            </IconButton>
+                          ) : null}
+                        </div>
+                      </InputAdornment>
+                    }
+                    label="Password"
+                  />
+                </FormControl>
+
+                <FormControl fullWidth variant="outlined" margin="dense">
+                  <InputLabel htmlFor="outlined-adornment-rePassword">
+                    Repeat
+                  </InputLabel>
+                  <OutlinedInput
+                    id="outlined-adornment-password"
+                    type={showRePassword ? "text" : "password"}
+                    value={rePassword}
+                    onChange={handleChangeRePassword}
+                    onBlur={handleChangeIsDirtyRePassword}
+                    color={
+                      isDirtyRePassword && passwordError ? "success" : null
+                    }
+                    error={
+                      isDirtyRePassword && rePasswordError
+                        ? false
+                        : isDirtyRePassword && !rePasswordError
+                        ? true
+                        : null
+                    }
+                    endAdornment={
+                      <InputAdornment position="end">
                         <IconButton
                           aria-label="toggle password visibility"
-                          onClick={handleClickClearRePasswordInput}
+                          onClick={handleClickShowRePassword}
                           onMouseDown={handleMouseDownRePassword}
                           edge="end"
                         >
-                          <CloseIcon color="warning" />
+                          {showRePassword ? (
+                            <VisibilityOffIcon />
+                          ) : (
+                            <VisibilityIcon />
+                          )}
                         </IconButton>
-                      ) : null}
-                    </div>
-                  </InputAdornment>
+                        <div style={{ marginLeft: 8 }}>
+                          {isDirtyRePassword && rePasswordError ? (
+                            <CheckIcon color="success" />
+                          ) : isDirtyRePassword && !rePasswordError ? (
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickClearRePasswordInput}
+                              onMouseDown={handleMouseDownRePassword}
+                              edge="end"
+                            >
+                              <CloseIcon color="warning" />
+                            </IconButton>
+                          ) : null}
+                        </div>
+                      </InputAdornment>
+                    }
+                    label="Password"
+                  />
+                </FormControl>
+              </form>
+              {/* If already has an account */}
+              <div>Are you already signed up?</div>
+              <Button
+                variant="outlined"
+                disabled={
+                  emailError && passwordError && rePasswordError ? false : true
                 }
-                label="Password"
-              />
-            </FormControl>
-          </form>
-          {/* If already has an account */}
-          <div>Are you already signed up?</div>
-          <Button
-            variant="outlined"
-            disabled={
-              emailError && passwordError && rePasswordError ? false : true
-            }
-            onClick={() => history.push(SIGN_IN_ROUTE)}
-          >
-            Sign In
-          </Button>
-        </FormFlex>
-      </Container>
+                onClick={() => history.push(SIGN_IN_ROUTE)}
+              >
+                Sign In
+              </Button>
+            </FormFlex>
+          </Container>
+          <Alert alert={alert} setAlert={setAlert} text={text} />
+        </>
+      )}
     </>
   );
 }
