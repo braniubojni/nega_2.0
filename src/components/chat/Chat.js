@@ -18,18 +18,16 @@ import TextField from "@mui/material/TextField";
 import SendIcon from "@mui/icons-material/Send";
 import { styled } from "@mui/system";
 
-const BottomDiv = styled("div")(({ theme }) => ({
-  paddingBottom: theme.spacing(2),
-}));
-const MainContentWrapper = styled("div")({
-  position: "relative",
-});
 const H4 = styled("div")(({ theme }) => ({
   position: "absolute",
   top: theme.spacing(2),
 }));
 const Ul = styled("ul")({
   listStyle: "none",
+  overflowY: "auto",
+  display: "flex",
+  flexDirection: "column",
+  height: "50vh",
 });
 const Arrow = styled("div")(({ theme }) => ({
   cursor: "pointer",
@@ -41,6 +39,8 @@ const Field = styled("div")(({ theme }) => ({
 const TextFieldWrapper = styled("div")(({ theme }) => ({
   position: "relative",
   display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
 }));
 
 function Chat() {
@@ -48,7 +48,6 @@ function Chat() {
   const channelName = useSelector(selectChannelName);
   const [messages, setMessages] = useState([]);
   const inputRef = useRef("");
-  const chatRef = React.createRef;
 
   useEffect(() => {
     onSnapshot(collection(db, `channels/${channelId}/messages`), (snapshot) => {
@@ -66,8 +65,8 @@ function Chat() {
   const sendMessage = async (evn) => {
     evn.preventDefault();
     const auth = getAuth();
-    if (inputRef.current.value.trim()) {
-      await addDoc(collection(db, `channels/${channelId}/messages`), {
+    if (inputRef.current.value !== "") {
+      await addDoc(collection(db, "channels", channelId, "messages"), {
         timestamp: serverTimestamp(),
         message: inputRef.current.value,
         name: auth.currentUser.email,
@@ -104,6 +103,7 @@ function Chat() {
             <TextField
               id="standard-basic"
               disabled={!channelId}
+              inputRef={inputRef}
               placeholder={
                 channelId ? `Message # ${channelName}` : "Select any channel"
               }

@@ -23,19 +23,13 @@ const Li = styled("li")(({ theme }) => ({
   },
 }));
 
-function Message({ msgInfo }) {
-  const [popup, setPopup] = useState(false);
+function Message({ msgInfo, id }) {
+  console.log(msgInfo);
   return (
     <Li>
       {/* <img src={msgInfo.photoURL} alt="avatar" /> */}
       <span>{msgInfo.name}</span>
       <span>{msgInfo.message}</span>
-      {popup && (
-        <HoverPopUp>
-          <ModeEditIcon />
-          <DeleteForeverIcon />
-        </HoverPopUp>
-      )}
     </Li>
   );
 }
