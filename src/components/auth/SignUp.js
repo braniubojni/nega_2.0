@@ -24,7 +24,8 @@ import {
   InputLabel,
   OutlinedInput,
 } from "@mui/material";
-import { FormFlex, FormH1 } from "./signUpStyle";
+import { FormFlex, FormH1, IfSignIn } from "./signUpStyle";
+import { Link } from "react-router-dom";
 
 function SignUp() {
   const history = useHistory();
@@ -296,19 +297,22 @@ function SignUp() {
                   />
                 </FormControl>
               </form>
-              {/* If already has an account */}
-              <div>Are you already signed up?</div>
               <Button
                 variant="outlined"
                 disabled={
                   emailError && passwordError && rePasswordError ? false : true
                 }
-                onClick={() => history.push(SIGN_IN_ROUTE)}
+                onClick={handleNewUser}
               >
-                Sign In
+                Sign UP
               </Button>
             </FormFlex>
           </Container>
+          <IfSignIn>
+            <div>
+              Already have an account??? <Link to={SIGN_IN_ROUTE}>Sign In</Link>
+            </div>
+          </IfSignIn>
           <Alert alert={alert} setAlert={setAlert} text={text} />
         </>
       )}

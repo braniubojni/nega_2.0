@@ -36,6 +36,7 @@ const Arrow = styled("div")(({ theme }) => ({
 const Field = styled("div")(({ theme }) => ({
   marginRight: theme.spacing(1),
 }));
+const MenuBar = styled("div")(({ theme }) => ({}));
 const TextFieldWrapper = styled("div")(({ theme }) => ({
   position: "relative",
   display: "flex",
@@ -117,15 +118,17 @@ function Chat() {
                 channelId ? `Message # ${channelName}` : "Select any channel"
               }
               sx={{
-                width: "10vw",
+                width: "30vw",
               }}
               variant="standard"
               fullWidth
             />
           </Field>
-          <Arrow>
-            <SendIcon onClick={sendMessage} />
-          </Arrow>
+          <MenuBar>
+            <Arrow>
+              <SendIcon onClick={sendMessage} />
+            </Arrow>
+          </MenuBar>
         </TextFieldWrapper>
       </Box>
     </div>

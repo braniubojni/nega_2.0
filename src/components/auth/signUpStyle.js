@@ -15,3 +15,8 @@ export const FormH1 = styled("h1")({
 export const FormFlexItems = styled("div")({
   marginBottom: 30,
 });
+
+export const IfSignIn = styled("div")({
+  display: "flex",
+  justifyContent: "center",
+});
