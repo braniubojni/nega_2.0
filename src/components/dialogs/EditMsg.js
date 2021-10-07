@@ -4,7 +4,6 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { handleEdit } from "../helpers/handlers";
 
@@ -19,18 +18,12 @@ export default function EditMsg({ onEditClose, msgInfo, id, channelId }) {
     handleEdit({ msgInfo, id, channelId });
     onEditClose();
   };
-  const handleMsgEdit = (e) => {
-    setMsg(e.target.value);
-  };
+
   return (
     <div>
       <Dialog open={true} onClose={onEditClose}>
         <DialogTitle>Edit message</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            You can edit your message and click SAVE to save new message, or
-            click on cancel.
-          </DialogContentText>
           <TextField
             autoFocus
             margin="dense"
@@ -38,7 +31,7 @@ export default function EditMsg({ onEditClose, msgInfo, id, channelId }) {
             type="text"
             fullWidth
             value={msg}
-            onChange={handleMsgEdit}
+            onChange={(e) => setMsg(e.target.value)}
             variant="standard"
           />
         </DialogContent>
