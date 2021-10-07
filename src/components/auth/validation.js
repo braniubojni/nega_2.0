@@ -9,3 +9,5 @@ function validatePassword(pass) {
 }
 
 export { validateEmail, validatePassword };
+
+// const re = /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"/;
