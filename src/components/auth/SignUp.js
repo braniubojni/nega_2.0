@@ -1,5 +1,5 @@
 import { useHistory } from "react-router";
-import React, { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { collection, addDoc } from "firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";

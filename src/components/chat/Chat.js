@@ -27,7 +27,7 @@ const Ul = styled("ul")({
   overflowY: "auto",
   display: "flex",
   flexDirection: "column",
-  height: "50vh",
+  height: "30vh",
 });
 const Arrow = styled("div")(({ theme }) => ({
   cursor: "pointer",
@@ -41,6 +41,8 @@ const TextFieldWrapper = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  border: "2px solid black",
+  padding: 10,
 }));
 
 function Chat() {
@@ -48,19 +50,21 @@ function Chat() {
   const channelName = useSelector(selectChannelName);
   const [messages, setMessages] = useState([]);
   const inputRef = useRef("");
+  const chatRef = useRef(null);
 
   useEffect(() => {
     onSnapshot(collection(db, `channels/${channelId}/messages`), (snapshot) => {
       setMessages(snapshot?.docs);
     });
   }, [channelId]);
+  useEffect(() => {}, [inputRef]);
 
-  // const scrollToBottom = () => {
-  //   chatRef.current.scrollIntoView({
-  //     behavior: "smooth",
-  //     block: "start",
-  //   });
-  // };
+  const scrollToBottom = () => {
+    chatRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
 
   const sendMessage = async (evn) => {
     evn.preventDefault();
@@ -72,7 +76,7 @@ function Chat() {
         name: auth.currentUser.email,
       });
       inputRef.current.value = "";
-      // scrollToBottom(); // need for reach the last msg
+      scrollToBottom(); // need for reach the last msg
     }
   };
 
@@ -89,11 +93,17 @@ function Chat() {
           ? "Select any channel"
           : `You are in the channel ${channelName}`}
       </H4>
-      <Ul>{messages?.map((msg) => renderMsg(msg))}</Ul>
+      <Ul>
+        {messages?.map((msg) => renderMsg(msg))}
+        <li ref={chatRef} />
+      </Ul>
       <Box
         component="form"
+        onSubmit={sendMessage}
         sx={{
           "& > :not(style)": { m: 1, width: "25ch" },
+          display: "flex",
+          justifyContent: "center",
         }}
         noValidate
         autoComplete="off"
@@ -108,10 +118,16 @@ function Chat() {
                 channelId ? `Message # ${channelName}` : "Select any channel"
               }
               variant="standard"
+              fullWidth
             />
           </Field>
           <Arrow>
-            <SendIcon onSubmit={sendMessage} />
+            <SendIcon
+              onSubmit={sendMessage}
+              style={{
+                color: inputRef.current.value === "" ? "#808080" : "black",
+              }}
+            />
           </Arrow>
         </TextFieldWrapper>
       </Box>
