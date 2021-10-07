@@ -48,6 +48,7 @@ function SignUp() {
     if (
       email === "" ||
       password === "" ||
+      rePassword === "" ||
       (!validateEmail(email) && !validatePassword(password))
     ) {
       setAlert(true);
