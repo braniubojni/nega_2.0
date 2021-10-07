@@ -1,4 +1,5 @@
 import { getAuth } from "@firebase/auth";
+import { query, orderBy } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import {
@@ -60,7 +61,11 @@ function Chat() {
   const chatRef = useRef(null);
 
   useEffect(() => {
-    onSnapshot(collection(db, `channels/${channelId}/messages`), (snapshot) => {
+    const messagesRef = query(
+      collection(db, `channels/${channelId}/messages`),
+      orderBy("timestamp")
+    );
+    onSnapshot(messagesRef, (snapshot) => {
       setMessages(snapshot?.docs);
     });
   }, [channelId]);
