@@ -10,9 +10,6 @@ import { Toolbar } from "@mui/material";
 // ev yst dran kimananq te renderi
 
 function Home() {
-  const history = useHistory();
-  const loggedUser = useSelector(selectLoggedInUser);
-
   return (
     <header style={{ display: "flex" }}>
       <AppbarDrawer />
