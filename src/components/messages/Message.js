@@ -30,11 +30,11 @@ const StyledMsg = styled("div")({
     color: "red",
   },
 });
-const StyledTime = styled("span")({
+const StyledTime = styled("span")(({ theme }) => ({
   position: "relative",
   fontSize: "0.718em",
-  width: "100%",
-});
+  marginLeft: theme.spacing(1),
+}));
 
 function Message({ msgInfo, id }) {
   const [editedMsg, setEditedMsg] = useState(null);

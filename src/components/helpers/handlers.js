@@ -7,6 +7,10 @@ import {
 } from "@firebase/firestore";
 import db from "../../firebase";
 
+export const handleNewChannel = async (channelName) => {
+  addDoc(collection(db, "channels"), { channelName });
+};
+
 export const handleEdit = async ({ channelId, id, msgInfo }) => {
   const docRef = doc(collection(db, "channels", channelId, "messages"), id);
   await setDoc(docRef, msgInfo);
