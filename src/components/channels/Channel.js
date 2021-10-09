@@ -4,6 +4,7 @@ import { setChannelInfo } from "../../redux/common/channel/actions";
 import { CHANNELS_ROUTE } from "../../constants/paths";
 import { styled } from "@mui/system";
 import TagIcon from "@mui/icons-material/Tag";
+import { ListItem, ListItemText } from "@mui/material";
 
 const Li = styled("li")({
   margin: "5px 0 5px",
@@ -28,9 +29,9 @@ function Channel({ id, channelName }) {
     history.push(`${CHANNELS_ROUTE}/${id}`);
   };
   return (
-    <Li onClick={setChannel}>
-      <TagIcon /> <ChannelName>{channelName}</ChannelName>
-    </Li>
+    <ListItem onClick={setChannel}>
+      <TagIcon /> <ListItemText cursor="pointer" primary={channelName} />
+    </ListItem>
   );
 }
 

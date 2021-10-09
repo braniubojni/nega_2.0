@@ -36,7 +36,13 @@ function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const userData = { email, password, id: uuidv4() };
+  const userData = {
+    email,
+    password,
+    id: uuidv4(),
+    isOnline: true,
+    isAdmin: false,
+  };
 
   const dispatch = useDispatch();
   //! email code start
