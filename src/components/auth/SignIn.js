@@ -35,7 +35,7 @@ function SignIn() {
         onSnapshot(collection(db, "users"), (snapshot) => {
           dispatch(
             setLoggedinUser(
-              snapshot.docs
+              snapshot?.docs
                 .map((doc) => doc.data())
                 .find((user) => user.email === currentUser.email)
             )
@@ -63,7 +63,7 @@ function SignIn() {
             <label>
               Email:
               <input
-                type="text"
+                type="email"
                 value={usrEmail}
                 onChange={(e) => setUsrEmail(e.target.value)}
               />
@@ -71,7 +71,7 @@ function SignIn() {
             <label>
               Password:
               <input
-                type="text"
+                type="password"
                 value={usrPassword}
                 onChange={(e) => setUsrPassword(e.target.value)}
               />
