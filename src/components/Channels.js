@@ -30,9 +30,9 @@ function Channels() {
     if (!loggedUser) {
       history.push(SIGN_IN_ROUTE);
     } else {
-      onSnapshot(collection(db, "channels"), (snapshot) => {
-        setChannels(snapshot?.docs);
-      });
+      onSnapshot(collection(db, "channels"), (snapshot) =>
+        setChannels(snapshot?.docs)
+      );
     }
   }, [history, loggedUser]);
 
@@ -41,7 +41,7 @@ function Channels() {
       <Channel
         key={channel.id}
         id={channel.id}
-        channelName={channel.data().channelName}
+        channelName={channel?.data().channelName}
       />
     );
   };

@@ -16,8 +16,6 @@ import { styled, alpha } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import InputBase from "@mui/material/InputBase";
 import Badge from "@mui/material/Badge";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
@@ -28,6 +26,7 @@ import { useHistory } from "react-router";
 import { useSelector } from "react-redux";
 import { selectLoggedInUser } from "../../redux/common/auth/selectors";
 import { CHANNELS_ROUTE, SIGN_IN_ROUTE } from "../../constants/paths";
+import { selectChannelName } from "../../redux/common/channel/selectors";
 
 const drawerWidth = 240;
 const Search = styled("div")(({ theme }) => ({
@@ -72,6 +71,7 @@ export default function ClippedDrawer() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const history = useHistory();
   const loggedUser = useSelector(selectLoggedInUser);
+  const channelName = useSelector(selectChannelName);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -97,10 +97,12 @@ export default function ClippedDrawer() {
 
   return (
     <Box sx={{ display: "flex" }}>
-      <CssBaseline />
+      {/* <CssBaseline /> */}
       <AppBar
-        position="fixed"
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          position: "absolute",
+        }}
       >
         <Toolbar>
           <IconButton
@@ -185,12 +187,14 @@ export default function ClippedDrawer() {
             {!loggedUser ? "Try for free" : "Open channels"}
           </Button>
         </Toolbar>
+      </AppBar>
+      {/* <AppBar sx={{ position: "absolute", top: 500 }}>
         <Toolbar sx={{ height: 10 }}>
           <Typography variant="h6" noWrap component="div">
             Clipped drawer
           </Typography>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
       <Drawer
         variant="permanent"
         sx={{
@@ -229,6 +233,8 @@ export default function ClippedDrawer() {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />
+        <div>{channelName}</div>
+
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus

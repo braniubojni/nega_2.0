@@ -50,7 +50,7 @@ function Message({ msgInfo, id }) {
       </span>
       <StyledSpan>{msgInfo.message}</StyledSpan>
       <span>{moment(msgInfo.timestamp?.toDate().getTime()).format("lll")}</span>
-      {loggedUser.email === msgInfo.name && (
+      {loggedUser?.email === msgInfo.name && (
         <HoverPopUp>
           <ModeEditIcon
             sx={{ marginRight: 0.45, "&:hover": { color: "#75e6da" } }}
