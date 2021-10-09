@@ -36,11 +36,7 @@ function Channels() {
     }
   }, [history, loggedUser]);
 
-  return (
-    <div>
-      <ChannelArea channels={channels} Chat={Chat} />
-    </div>
-  );
+  return <ChannelArea channels={channels} Chat={Chat} />;
 }
 
 export default Channels;
