@@ -10,7 +10,7 @@ import { useState } from "react";
 import Channel from "./channels/Channel";
 import Chat from "./chat/Chat";
 import { styled } from "@mui/system";
-import LogOutDialog from "./dialogs/LogOutDialog";
+import ChannelArea from "./header/ChannelArea";
 
 const ChatWrapper = styled("div")({
   display: "flex",
@@ -36,30 +36,9 @@ function Channels() {
     }
   }, [history, loggedUser]);
 
-  const renderChannels = (channel) => {
-    return (
-      <Channel
-        key={channel.id}
-        id={channel.id}
-        channelName={channel?.data().channelName}
-      />
-    );
-  };
-
   return (
     <div>
-      <button>
-        <Link to={HOME_ROUTE}>HOME</Link>
-      </button>
-      <h1>Here is your channels {loggedUser && loggedUser?.email}</h1>
-
-      <Ul>{channels?.map((channel) => renderChannels(channel))}</Ul>
-      <ChatWrapper>
-        <div>
-          <Chat />
-        </div>
-      </ChatWrapper>
-      <LogOutDialog />
+      <ChannelArea channels={channels} Chat={Chat} />
     </div>
   );
 }

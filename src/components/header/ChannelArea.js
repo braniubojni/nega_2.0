@@ -5,16 +5,11 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-
+import { selectChannelName } from "../../redux/common/channel/selectors";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
@@ -23,6 +18,9 @@ import HelpIcon from "@mui/icons-material/Help";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faHashtag } from "@fortawesome/free-solid-svg-icons";
+import Channel from "../channels/Channel";
+import { useSelector } from "react-redux";
+import LogOutDialog from "../dialogs/LogOutDialog";
 
 const drawerWidth = 240;
 
@@ -68,12 +66,21 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function ChannelArea(props) {
-  const { window, channels } = props;
+function ChannelArea({ window, channels, Chat }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const channelName = useSelector(selectChannelName);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+  const renderChannels = (channel) => {
+    return (
+      <Channel
+        key={channel.id}
+        id={channel.id}
+        channelName={channel?.data().channelName}
+      />
+    );
   };
 
   const drawer = (
@@ -101,14 +108,7 @@ function ChannelArea(props) {
           </Box>
         </Box>
         <Divider />
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        {channels?.map((channel) => renderChannels(channel))}
       </List>
       {/* <Divider /> */}
       {/* <List>
@@ -176,6 +176,7 @@ function ChannelArea(props) {
               <AccountCircleIcon
                 sx={{ marginRight: "10px", marginLeft: "10px" }}
               />
+              <LogOutDialog />
             </Box>
           </Toolbar>
         </AppBar>
@@ -234,17 +235,13 @@ function ChannelArea(props) {
               ></FontAwesomeIcon>
             </Box>
             <Box sx={{ mr: 0.5 }}>
-              <Typography>SubChannel Name</Typography>
-            </Box>
-            <Box>
-              <FontAwesomeIcon
-                icon={faAngleDown}
-                className="faAngleDown_2"
-              ></FontAwesomeIcon>
+              <Typography>{channelName}</Typography>
             </Box>
           </Box>
           <Divider />
-          <Typography>Chat</Typography>
+          <Box>
+            <Chat />
+          </Box>
         </Box>
       </Box>
     </>
