@@ -34,6 +34,7 @@ const StyledSpan = styled("span")({
 function Message({ msgInfo, id }) {
   const [editedMsg, setEditedMsg] = useState(null);
   const [removeMsg, setRemoveMsg] = useState(null);
+  const [hoverToggler, setHoverToggler] = useState(false);
   const channelId = useSelector(selectChannelId);
   const loggedUser = useSelector(selectLoggedInUser);
   const onRemoveClose = () => {
@@ -43,14 +44,14 @@ function Message({ msgInfo, id }) {
     setEditedMsg(null);
   };
   return (
-    <Li>
+    <Li onClick={() => setHoverToggler((prev) => !prev)}>
       {/* <img src={msgInfo.photoURL} alt="avatar" /> */}
       <span>
         <strong>{msgInfo.name}</strong>
       </span>
       <StyledSpan>{msgInfo.message}</StyledSpan>
       <span>{moment(msgInfo.timestamp?.toDate().getTime()).format("lll")}</span>
-      {loggedUser?.email === msgInfo.name && (
+      {loggedUser?.email === msgInfo.name && hoverToggler && (
         <HoverPopUp>
           <ModeEditIcon
             sx={{ marginRight: 0.45, "&:hover": { color: "#75e6da" } }}

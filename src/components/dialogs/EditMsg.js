@@ -7,6 +7,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { handleEdit } from "../helpers/handlers";
 
+// add on Enter save
+
 export default function EditMsg({ onEditClose, msgInfo, id, channelId }) {
   const [msg, setMsg] = useState(msgInfo.message);
 
