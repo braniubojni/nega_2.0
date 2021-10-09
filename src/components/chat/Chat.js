@@ -27,6 +27,7 @@ const Arrow = styled("div")(({ theme }) => ({
 const Field = styled("div")(({ theme }) => ({
   marginRight: theme.spacing(1),
   display: "flex",
+  justifyContent: "center",
   alignItems: "center",
   width: "53vw",
 }));
@@ -38,6 +39,7 @@ const MenuBar = styled("div")(({ theme }) => ({
 const MainContentWrapper = styled("div")(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
+  alignItems: "center",
   height: "70vh",
 }));
 const Ul = styled("ul")({
@@ -45,8 +47,8 @@ const Ul = styled("ul")({
   overflowY: "auto",
   display: "flex",
   flexDirection: "column",
-  flexGrow: 1,
-  paddingLeft: 0,
+  paddingLeft: "1%",
+  width: "100%",
 });
 const TextFieldWrapper = styled("div")(({ theme }) => ({
   display: "flex",
@@ -112,6 +114,7 @@ function Chat() {
         {messages?.map((msg) => renderMsg(msg))}
         <li ref={chatRef} />
       </Ul>
+      <div style={{ flex: "1 1 auto" }} />
       <TextFieldWrapper>
         <Box
           component="form"
@@ -134,17 +137,17 @@ function Chat() {
               }
               sx={{
                 marginLeft: "1%",
-                width: "100%",
+                flex: "1 1 auto",
               }}
               variant="standard"
-              fullWidth
+              fullWidth={true}
             />
+            <MenuBar>
+              <Arrow>
+                <SendIcon onClick={sendMessage} />
+              </Arrow>
+            </MenuBar>
           </Field>
-          <MenuBar>
-            <Arrow>
-              <SendIcon onClick={sendMessage} />
-            </Arrow>
-          </MenuBar>
         </Box>
       </TextFieldWrapper>
     </MainContentWrapper>

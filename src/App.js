@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Redirect } from "react-router";
 import Auth from "./components/auth/Auth";
 import Home from "./components/Home";
 import Channels from "./components/Channels";
@@ -13,18 +14,11 @@ import {
 } from "./constants/paths";
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
 import { collection, onSnapshot } from "@firebase/firestore";
-import Loader from "./components/loader/Loader";
 import db from "./firebase";
 
 function App() {
   const dispatch = useDispatch();
-  const [loader, setLoader] = useState(true);
   const auth = getAuth();
-  const timer = () => {
-    setTimeout(() => {
-      setLoader(false);
-    }, 1500);
-  };
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -38,7 +32,6 @@ function App() {
                 .find((user) => user.email === currentUser.email)
             )
           );
-          setLoader(false);
         });
       }
     });
@@ -47,30 +40,24 @@ function App() {
   return (
     <>
       <Router>
-        {loader ? (
-          <>
-            <Loader loader={loader} />
-            {timer()}
-          </>
-        ) : (
-          <Switch>
-            <Route exact path={HOME_ROUTE}>
-              <Home />
-            </Route>
-            <Route path={SIGN_UP_ROUTE}>
-              <Auth />
-            </Route>
-            <Route path={SIGN_IN_ROUTE}>
-              <Auth />
-            </Route>
-            <Route exact path={CHANNELS_ROUTE}>
-              <Channels />
-            </Route>
-            <Route exact path={`${CHANNELS_ROUTE}/:id`}>
-              <Channels />
-            </Route>
-          </Switch>
-        )}
+        <Switch>
+          <Route exact path={HOME_ROUTE}>
+            <Home />
+          </Route>
+          <Route exact path={SIGN_UP_ROUTE}>
+            <Auth />
+          </Route>
+          <Route exact path={SIGN_IN_ROUTE}>
+            <Auth />
+          </Route>
+          <Route exact path={CHANNELS_ROUTE}>
+            <Channels />
+          </Route>
+          <Route exact path={`${CHANNELS_ROUTE}/:id`}>
+            <Channels />
+          </Route>
+          <Redirect to={HOME_ROUTE} />
+        </Switch>
       </Router>
     </>
   );

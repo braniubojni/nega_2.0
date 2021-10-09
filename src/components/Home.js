@@ -6,8 +6,8 @@ function Home() {
   return (
     <div>
       <h1>This should be the home page</h1>
-      <button onClick={history.push(CHANNELS_ROUTE)}>To channels</button>
-      <button onClick={history.push(SIGN_IN_ROUTE)}>To Sign in</button>
+      <button onClick={() => history.push(CHANNELS_ROUTE)}>To channels</button>
+      <button onClick={() => history.push(SIGN_IN_ROUTE)}>To Sign in</button>
     </div>
   );
 }

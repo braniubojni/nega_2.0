@@ -21,6 +21,7 @@ import { faAngleDown, faHashtag } from "@fortawesome/free-solid-svg-icons";
 import Channel from "../channels/Channel";
 import { useSelector } from "react-redux";
 import LogOutDialog from "../dialogs/LogOutDialog";
+import AddNewChannel from "../dialogs/AddChannel";
 
 const drawerWidth = 240;
 
@@ -73,6 +74,7 @@ function ChannelArea({ window, channels, Chat }) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+  const handleAddChannel = () => {};
   const renderChannels = (channel) => {
     return (
       <Channel
@@ -97,14 +99,17 @@ function ChannelArea({ window, channels, Chat }) {
             pb: 1.5,
           }}
         >
-          <Box sx={{ mr: 1 }}>
-            <Typography>Channel Name</Typography>
-          </Box>
           <Box>
             <FontAwesomeIcon
               icon={faAngleDown}
               className="faAngleDown"
             ></FontAwesomeIcon>
+          </Box>
+          <Box sx={{ mr: 1, ml: 1 }}>
+            <Typography>Channel Name</Typography>
+          </Box>
+          <Box>
+            <AddNewChannel />
           </Box>
         </Box>
         <Divider />
