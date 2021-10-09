@@ -1,10 +1,10 @@
-import AppbarDrawer from "../components/header/AppbarDrawer";
+import ChannelArea from "./header/ChannelArea";
 
 function Home() {
   return (
-    <header style={{ display: "flex" }}>
-      <AppbarDrawer />
-    </header>
+    <div>
+      <ChannelArea />
+    </div>
   );
 }
 
