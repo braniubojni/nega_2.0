@@ -239,7 +239,7 @@ function ChannelArea({ window, channels, Chat }) {
             </Box>
           </Box>
           <Divider />
-          <Box>
+          <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
             <Chat />
           </Box>
         </Box>
