@@ -14,10 +14,9 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { collection, addDoc } from "firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoggedinUser } from "../../redux/common/auth/actions";
-import DoneIcon from "@mui/icons-material/Done";
 import {
   CHANNELS_ROUTE,
-  SIGN_UP_ROUTE,
+  SIGN_IN_ROUTE,
   HOME_ROUTE,
 } from "../../constants/paths";
 import { selectLoggedInUser } from "../../redux/common/auth/selectors";
@@ -202,9 +201,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link to={SIGN_UP_ROUTE} variant="body2">
-                  Already have an account? Sign in
-                </Link>
+                <Link to={SIGN_IN_ROUTE}>Already have an account? Sign in</Link>
               </Grid>
             </Grid>
           </Box>
