@@ -155,7 +155,10 @@ function ChannelArea({ window, channels, Chat }) {
 
                 {open &&
                   channels?.map((channel) => (
-                    <ListItemButton> {renderChannels(channel)}</ListItemButton>
+                    <ListItemButton key={channel.id}>
+                      {" "}
+                      {renderChannels(channel)}
+                    </ListItemButton>
                   ))}
               </Box>
             </Paper>

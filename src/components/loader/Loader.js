@@ -1,18 +1,18 @@
-import { FireworkSpinner } from "react-spinners-kit";
-import styled from "styled-components";
+import { CircleSpinner } from "react-spinners-kit";
+import { styled } from "@mui/system";
 
-const Spinner = styled.div`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-`;
+const Spinner = styled("div")({
+  position: "absolute",
+  left: "50%",
+  top: "50%",
+  WebkitTransform: "translate(-50%, -50%)",
+  transform: "translate(-50%, -50%)",
+});
 
-export default function Loader({ loader }) {
+export default function Loader() {
   return (
     <Spinner>
-      <FireworkSpinner size={40} color="#000" loading={loader} />
+      <CircleSpinner size={55} color="#611f69" loading={true} />
     </Spinner>
   );
 }
