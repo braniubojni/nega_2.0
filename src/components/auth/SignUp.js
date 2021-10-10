@@ -54,7 +54,13 @@ export default function SignUp() {
   const [alert, setAlert] = useState(false);
   const [text, setText] = useState("You typed incorrect credentials");
 
-  const userData = { email, password, id: uuidv4() };
+  const userData = {
+    email,
+    password,
+    id: uuidv4(),
+    isAdmin: false,
+    isOnline: true,
+  };
 
   const loggedUser = useSelector(selectLoggedInUser);
   const dispatch = useDispatch();
@@ -68,6 +74,7 @@ export default function SignUp() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    let isResolved = false;
     if (
       email === "" ||
       password === "" ||
@@ -80,20 +87,24 @@ export default function SignUp() {
     setLoader(true);
     const usrCollection = collection(db, "users");
     const auth = getAuth();
+    setLoader(true);
     createUserWithEmailAndPassword(auth, email, password)
       .then(() => {
-        setLoader(true);
+        isResolved = true;
         addDoc(usrCollection, userData, userData.id);
         dispatch(setLoggedinUser(userData));
-        history.push("/");
       })
       .catch((error) => {
         setAlert(true);
         setText(`We already have the user with email ${email}`);
+        isResolved = false;
         console.log(new Error(error));
       })
       .finally(() => {
         setLoader(false);
+        if (isResolved) {
+          history.push(CHANNELS_ROUTE);
+        }
       });
   };
 
