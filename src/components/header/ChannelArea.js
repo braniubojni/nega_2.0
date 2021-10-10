@@ -15,12 +15,19 @@ import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import HelpIcon from "@mui/icons-material/Help";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDown, faHashtag } from "@fortawesome/free-solid-svg-icons";
+import { faHashtag } from "@fortawesome/free-solid-svg-icons";
 import Channel from "../channels/Channel";
 import { useSelector } from "react-redux";
-import LogOutDialog from "../dialogs/LogOutDialog";
+
+import ProfileDropdown from "./ProfileDropdown";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import Paper from "@mui/material/Paper";
+import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
+
+// import LogOutDialog from "../dialogs/LogOutDialog";
 import AddNewChannel from "../dialogs/AddChannel";
 
 const drawerWidth = 240;
@@ -70,6 +77,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 function ChannelArea({ window, channels, Chat }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const channelName = useSelector(selectChannelName);
+  const [open, setOpen] = React.useState(true);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -90,42 +98,71 @@ function ChannelArea({ window, channels, Chat }) {
       <Toolbar />
       <Divider />
       <List>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            pt: 0.5,
-            pb: 1.5,
-          }}
-        >
-          <Box>
-            <FontAwesomeIcon
-              icon={faAngleDown}
-              className="faAngleDown"
-            ></FontAwesomeIcon>
-          </Box>
-          <Box sx={{ mr: 1, ml: 1 }}>
-            <Typography>Channel Name</Typography>
-          </Box>
-          <Box>
-            <AddNewChannel />
-          </Box>
+        <Box sx={{ display: "flex" }}>
+          <ThemeProvider
+            theme={createTheme({
+              components: {
+                MuiListItemButton: {
+                  defaultProps: {
+                    disableTouchRipple: true,
+                  },
+                },
+              },
+              palette: {
+                mode: "light",
+                primary: { main: "rgb(0,0,0)" },
+                background: { paper: "rgb(255,255,255)" },
+              },
+            })}
+          >
+            <Paper elevation={0} sx={{ maxWidth: 500 }}>
+              <Box
+                sx={{
+                  bgcolor: open ? "rgba(255,255,255, 1)" : null,
+                  pb: open ? 2 : 0,
+                }}
+              >
+                <ListItemButton
+                  alignItems="flex-start"
+                  onClick={() => setOpen(!open)}
+                  sx={{
+                    px: 3,
+                    pt: 2.5,
+                    pb: open ? 0 : 2.5,
+                    "&:hover, &:focus": { "& svg": { opacity: open ? 1 : 0 } },
+                  }}
+                >
+                  <ListItemText
+                    primary="Channels"
+                    primaryTypographyProps={{
+                      fontSize: 17,
+                      fontWeight: "bold",
+                      lineHeight: "20px",
+                      mb: "2px",
+                    }}
+                  />
+                  <KeyboardArrowDown
+                    sx={{
+                      mr: -1,
+                      opacity: 0,
+                      transform: open ? "rotate(-180deg)" : "rotate(0)",
+                      transition: "0.2s",
+                    }}
+                  />
+                  <Box>
+                    <AddNewChannel />
+                  </Box>
+                </ListItemButton>
+
+                {open &&
+                  channels?.map((channel) => (
+                    <ListItemButton> {renderChannels(channel)}</ListItemButton>
+                  ))}
+              </Box>
+            </Paper>
+          </ThemeProvider>
         </Box>
-        <Divider />
-        {channels?.map((channel) => renderChannels(channel))}
       </List>
-      {/* <Divider /> */}
-      {/* <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List> */}
     </div>
   );
 
@@ -147,6 +184,7 @@ function ChannelArea({ window, channels, Chat }) {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
+              background: "#611f69",
             }}
           >
             <IconButton
@@ -177,11 +215,8 @@ function ChannelArea({ window, channels, Chat }) {
                 <HelpIcon />
               </Box>
             </Box>
-            <Box>
-              <AccountCircleIcon
-                sx={{ marginRight: "10px", marginLeft: "10px" }}
-              />
-              <LogOutDialog />
+            <Box sx={{ backgroundColor: "black" }}>
+              <ProfileDropdown />
             </Box>
           </Toolbar>
         </AppBar>
@@ -191,14 +226,13 @@ function ChannelArea({ window, channels, Chat }) {
           sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
           aria-label="mailbox folders"
         >
-          {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
           <Drawer
             container={container}
             variant="temporary"
             open={mobileOpen}
             onClose={handleDrawerToggle}
             ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
+              keepMounted: true,
             }}
             sx={{
               display: { xs: "block", sm: "none" },
