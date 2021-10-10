@@ -19,18 +19,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHashtag } from "@fortawesome/free-solid-svg-icons";
 import Channel from "../channels/Channel";
 import { useSelector } from "react-redux";
-
 import ProfileDropdown from "./ProfileDropdown";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
-
-// import LogOutDialog from "../dialogs/LogOutDialog";
 import AddNewChannel from "../dialogs/AddChannel";
+import DirectMessages from "./DirectMessages";
 
-const drawerWidth = 240;
+const drawerWidth = 220;
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -76,8 +74,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 function ChannelArea({ window, channels, Chat }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const channelName = useSelector(selectChannelName);
   const [open, setOpen] = React.useState(true);
+  const channelName = useSelector(selectChannelName);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -126,7 +124,7 @@ function ChannelArea({ window, channels, Chat }) {
                   onClick={() => setOpen(!open)}
                   sx={{
                     px: 3,
-                    pt: 2.5,
+                    pt: 1.1,
                     pb: open ? 0 : 2.5,
                     "&:hover, &:focus": { "& svg": { opacity: open ? 1 : 0 } },
                   }}
@@ -134,7 +132,7 @@ function ChannelArea({ window, channels, Chat }) {
                   <ListItemText
                     primary="Channels"
                     primaryTypographyProps={{
-                      fontSize: 17,
+                      fontSize: 15,
                       fontWeight: "bold",
                       lineHeight: "20px",
                       mb: "2px",
@@ -142,7 +140,7 @@ function ChannelArea({ window, channels, Chat }) {
                   />
                   <KeyboardArrowDown
                     sx={{
-                      mr: -1,
+                      ml: 0,
                       opacity: 0,
                       transform: open ? "rotate(-180deg)" : "rotate(0)",
                       transition: "0.2s",
@@ -152,16 +150,23 @@ function ChannelArea({ window, channels, Chat }) {
                     <AddNewChannel />
                   </Box>
                 </ListItemButton>
+                <Divider />
 
                 {open &&
                   channels?.map((channel) => (
-                    <ListItemButton> {renderChannels(channel)}</ListItemButton>
+                    <ListItemButton sx={{ mb: -4 }}>
+                      {renderChannels(channel)}
+                    </ListItemButton>
                   ))}
+                <Divider sx={{ mt: 2, mb: 2 }} />
               </Box>
             </Paper>
           </ThemeProvider>
         </Box>
       </List>
+      <Box>
+        <DirectMessages />
+      </Box>
     </div>
   );
 

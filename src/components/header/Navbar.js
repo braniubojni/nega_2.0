@@ -12,7 +12,7 @@ import {
 
 import Dropdown from "./Dropdown";
 import DrawerComponent from "./Drawer";
-import Logo from "Logo/logo.svg";
+import Logo from "../../Logo/logo.svg";
 
 function Navbar() {
   const [value, setValue] = useState(0);
