@@ -19,7 +19,7 @@ function Channels() {
       history.push(SIGN_IN_ROUTE);
     } else {
       onSnapshot(collection(db, "channels"), (snapshot) =>
-        setChannels(() => snapshot?.docs)
+        setChannels(snapshot?.docs)
       );
     }
   }, [history, loggedUser]);

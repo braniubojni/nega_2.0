@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -25,8 +25,8 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
-
-import AddNewChannel from "../dialogs/AddChannel";
+import { getAllUsers } from "../helpers/getters";
+import EachUser from "../user/EachUser";
 
 const drawerWidth = 240;
 
@@ -61,8 +61,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
   borderRadius: "10px",
   "& .MuiInputBase-input": {
-    // padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
@@ -72,14 +70,24 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function DirectMessages({ window, channels, Chat }) {
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [open, setOpen] = React.useState(true);
-  const channelName = useSelector(selectChannelName);
+function DirectMessages({ window }) {
+  const [users, setUsers] = useState();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [open, setOpen] = useState(true);
+  useEffect(() => {
+    getAllUsers({ setUsers });
+  }, []);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+  const renderUsers = (userData) => (
+    <EachUser
+      key={userData.id}
+      id={userData.id}
+      userName={userData?.data().email}
+    />
+  );
 
   return (
     <Paper elevation={0} sx={{ maxWidth: 500 }}>
@@ -117,18 +125,15 @@ function DirectMessages({ window, channels, Chat }) {
               transition: "0.2s",
             }}
           />
-          <Box>
-            <AddNewChannel />
-          </Box>
         </ListItemButton>
         <Divider />
 
-        {/* {open &&
-          channels?.map((channel) => (
-            <ListItemButton sx={{ mb: -4 }}>
-              {renderChannels(channel)}
+        {open &&
+          users?.map((user) => (
+            <ListItemButton key={user.id} sx={{ mb: -4 }}>
+              {renderUsers(user)}
             </ListItemButton>
-          ))} */}
+          ))}
         <Divider sx={{ mt: 2, mb: 2 }} />
       </Box>
     </Paper>
