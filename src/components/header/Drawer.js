@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import Logo from "Logo/logo.svg";
+import Logo from "../../Logo/logo.svg";
 import SmallDropdown from "./SmallDropdown";
 
 import {

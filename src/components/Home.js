@@ -1,13 +1,14 @@
 import { Toolbar } from "@mui/material";
 import { useHistory } from "react-router";
 import { CHANNELS_ROUTE, SIGN_IN_ROUTE } from "../constants/paths";
-import HomeAppBar from "./homeHeader/HomeAppBar";
+// import HomeAppBar from "./homeHeader/HomeAppBar";
+import Navbar from "./header/Navbar";
 
 function Home() {
   const history = useHistory();
   return (
     <>
-      <HomeAppBar />
+      <Navbar />
       <Toolbar />
       <div>
         <h1>Main content here</h1>
