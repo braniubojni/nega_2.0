@@ -18,10 +18,7 @@ function Channel({ id, channelName }) {
   return (
     <ListItem onClick={setChannel}>
       <Box sx={{ fontSize: 12, mr: 1 }}>
-        <FontAwesomeIcon
-          icon={faHashtag}
-          className="faHashtag"
-        ></FontAwesomeIcon>
+        <FontAwesomeIcon icon={faHashtag} className="faHashtag" />
       </Box>
       <ListItemText sx={{ cursor: "pointer" }} primary={channelName} />
     </ListItem>
