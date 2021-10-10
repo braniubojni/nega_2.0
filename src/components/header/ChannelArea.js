@@ -74,7 +74,6 @@ function ChannelArea({ window, channels, Chat }) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  const handleAddChannel = () => {};
   const renderChannels = (channel) => {
     return (
       <Channel

@@ -3,12 +3,8 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -18,9 +14,14 @@ import { useDispatch, useSelector } from "react-redux";
 import db from "../../firebase";
 import { collection, onSnapshot } from "@firebase/firestore";
 import { setLoggedinUser } from "../../redux/common/auth/actions";
-import { CHANNELS_ROUTE, SIGN_UP_ROUTE } from "../../constants/paths";
+import {
+  CHANNELS_ROUTE,
+  SIGN_UP_ROUTE,
+  HOME_ROUTE,
+} from "../../constants/paths";
 import { signInWithEmailAndPassword, getAuth } from "@firebase/auth";
 import { selectLoggedInUser } from "../../redux/common/auth/selectors";
+import { Link } from "react-router-dom";
 import Alert from "../dialogs/Alert";
 import Loader from "../loader/Loader";
 
@@ -33,9 +34,9 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://aca.am/">
+      <Link color="inherit" to={HOME_ROUTE}>
         Slack NEGA
-      </Link>{" "}
+      </Link>
       {new Date().getFullYear()}
       {"."}
     </Typography>
@@ -44,7 +45,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignInCopy() {
+export default function SignIn() {
   const history = useHistory();
   const dispatch = useDispatch();
   const auth = getAuth();
@@ -111,11 +112,11 @@ export default function SignInCopy() {
                   }}
                 >
                   <svg
-                    class="c-nav--footer__svgicon c-slackhash"
+                    className="c-nav--footer__svgicon c-slackhash"
                     viewBox="0 0 54 54"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <g fill="none" fill-rule="evenodd">
+                    <g fill="none" fillRule="evenodd">
                       <path
                         d="M19.712.133a5.381 5.381 0 0 0-5.376 5.387 5.381 5.381 0 0 0 5.376 5.386h5.376V5.52A5.381 5.381 0 0 0 19.712.133m0 14.365H5.376A5.381 5.381 0 0 0 0 19.884a5.381 5.381 0 0 0 5.376 5.387h14.336a5.381 5.381 0 0 0 5.376-5.387 5.381 5.381 0 0 0-5.376-5.386"
                         fill="#36C5F0"
@@ -168,10 +169,7 @@ export default function SignInCopy() {
                     onChange={(e) => setUsrPassword(e.target.value)}
                     autoComplete="current-password"
                   />
-                  <FormControlLabel
-                    control={<Checkbox value="remember" color="primary" />}
-                    label="Remember me"
-                  />
+
                   <Button
                     type="submit"
                     fullWidth
