@@ -4,7 +4,7 @@ function validateEmail(email) {
   return re.test(String(email).toLowerCase());
 }
 function validatePassword(pass) {
-  const re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/;
+  const re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9]{8,16}$/;
   return re.test(String(pass));
 }
 
