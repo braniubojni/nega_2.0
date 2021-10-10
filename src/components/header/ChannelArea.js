@@ -19,12 +19,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHashtag } from "@fortawesome/free-solid-svg-icons";
 import Channel from "../channels/Channel";
 import { useSelector } from "react-redux";
+
 import ProfileDropdown from "./ProfileDropdown";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
+
+// import LogOutDialog from "../dialogs/LogOutDialog";
+import AddNewChannel from "../dialogs/AddChannel";
 
 const drawerWidth = 240;
 
@@ -78,6 +82,7 @@ function ChannelArea({ window, channels, Chat }) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+  const handleAddChannel = () => {};
   const renderChannels = (channel) => {
     return (
       <Channel
@@ -144,6 +149,9 @@ function ChannelArea({ window, channels, Chat }) {
                       transition: "0.2s",
                     }}
                   />
+                  <Box>
+                    <AddNewChannel />
+                  </Box>
                 </ListItemButton>
 
                 {open &&
@@ -270,7 +278,7 @@ function ChannelArea({ window, channels, Chat }) {
             </Box>
           </Box>
           <Divider />
-          <Box>
+          <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
             <Chat />
           </Box>
         </Box>

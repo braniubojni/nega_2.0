@@ -59,7 +59,7 @@ export default function LogOutDialog() {
   return (
     <div>
       <Button
-        sx={{ backgroundColor: "black" }}
+        sx={{ backgroundColor: "white", whiteSpace: "nowrap" }}
         variant="outlined"
         onClick={handleClickOpen}
       >

@@ -20,30 +20,39 @@ import SendIcon from "@mui/icons-material/Send";
 import { styled } from "@mui/system";
 import Emoji from "./emoji/Emoji";
 
-const H4 = styled("div")(({ theme }) => ({
-  position: "absolute",
-  top: theme.spacing(2),
-}));
-const Ul = styled("ul")({
-  listStyle: "none",
-  overflowY: "auto",
-  display: "flex",
-  flexDirection: "column",
-  height: "30vh",
-});
 const Arrow = styled("div")(({ theme }) => ({
   cursor: "pointer",
   paddingLeft: theme.spacing(1),
 }));
 const Field = styled("div")(({ theme }) => ({
   marginRight: theme.spacing(1),
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "53vw",
 }));
-const TextFieldWrapper = styled("div")(({ theme }) => ({
+const MenuBar = styled("div")(({ theme }) => ({
+  display: "flex",
   position: "relative",
+  marginTop: theme.spacing(1),
+}));
+const MainContentWrapper = styled("div")(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  justifyContent: "center",
+  height: "70vh",
+}));
+const Ul = styled("ul")({
+  listStyle: "none",
+  overflowY: "auto",
+  display: "flex",
+  flexDirection: "column",
+  paddingLeft: "1%",
+  width: "100%",
+});
+const TextFieldWrapper = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
   border: "1px solid gray",
   borderRadius: theme.spacing(1),
   padding: 10,
@@ -51,11 +60,6 @@ const TextFieldWrapper = styled("div")(({ theme }) => ({
     border: "2px solid black",
     transition: "all 0.2s",
   },
-}));
-const MenuBar = styled("div")(({ theme }) => ({
-  display: "flex",
-  position: "relative",
-  marginTop: theme.spacing(1),
 }));
 
 function Chat() {
@@ -105,28 +109,25 @@ function Chat() {
   };
 
   return (
-    <Box>
-      <H4>
-        {!channelName
-          ? "Select any channel"
-          : `You are in the channel ${channelName}`}
-      </H4>
+    <MainContentWrapper>
       <Ul>
         {messages?.map((msg) => renderMsg(msg))}
         <li ref={chatRef} />
       </Ul>
-      <Box
-        component="form"
-        onSubmit={sendMessage}
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <TextFieldWrapper sx={{ width: "100%", mx: "20px" }}>
+      <div style={{ flex: "1 1 auto" }} />
+      <TextFieldWrapper>
+        <Box
+          component="form"
+          onSubmit={sendMessage}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+          noValidate
+          autoComplete="off"
+        >
           <Field>
+            <Emoji inputRef={inputRef} isDisabled={channelId} Sent={sent} />
             <TextField
               id="standard-basic"
               disabled={!channelId}
@@ -135,21 +136,21 @@ function Chat() {
                 channelId ? `Message # ${channelName}` : "Select any channel"
               }
               sx={{
-                width: "30vw",
+                marginLeft: "1%",
+                flex: "1 1 auto",
               }}
               variant="standard"
-              fullWidth
+              fullWidth={true}
             />
+            <MenuBar>
+              <Arrow>
+                <SendIcon onClick={sendMessage} />
+              </Arrow>
+            </MenuBar>
           </Field>
-          <MenuBar>
-            <Emoji inputRef={inputRef} isDisabled={channelId} Sent={sent} />
-            <Arrow>
-              <SendIcon onClick={sendMessage} />
-            </Arrow>
-          </MenuBar>
-        </TextFieldWrapper>
-      </Box>
-    </Box>
+        </Box>
+      </TextFieldWrapper>
+    </MainContentWrapper>
   );
 }
 

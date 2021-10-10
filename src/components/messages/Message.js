@@ -8,6 +8,7 @@ import { selectChannelId } from "../../redux/common/channel/selectors";
 import EditMsg from "../dialogs/EditMsg";
 import RemoveMsg from "../dialogs/RemoveMsg";
 import { useState } from "react";
+
 const HoverPopUp = styled("div")(() => ({
   position: "absolute",
   top: -15,
@@ -16,20 +17,24 @@ const HoverPopUp = styled("div")(() => ({
 }));
 const Li = styled("li")(({ theme }) => ({
   position: "relative",
-  gap: theme.spacing(1),
   display: "flex",
-  height: theme.spacing(2),
+  height: theme.spacing(4),
   padding: theme.spacing(1),
   marginTop: theme.spacing(1),
   marginBottom: theme.spacing(1),
   alignItems: "center",
   borderRadius: theme.spacing(1),
 }));
-const StyledSpan = styled("span")({
+const StyledMsg = styled("div")({
   "&:hover": {
     color: "red",
   },
 });
+const StyledTime = styled("span")(({ theme }) => ({
+  position: "relative",
+  fontSize: "0.718em",
+  marginLeft: theme.spacing(1),
+}));
 
 function Message({ msgInfo, id }) {
   const [editedMsg, setEditedMsg] = useState(null);
@@ -46,11 +51,16 @@ function Message({ msgInfo, id }) {
   return (
     <Li onClick={() => setHoverToggler((prev) => !prev)}>
       {/* <img src={msgInfo.photoURL} alt="avatar" /> */}
-      <span>
-        <strong>{msgInfo.name}</strong>
-      </span>
-      <StyledSpan>{msgInfo.message}</StyledSpan>
-      <span>{moment(msgInfo.timestamp?.toDate().getTime()).format("lll")}</span>
+      <div>
+        <div>
+          <strong>{msgInfo.name}</strong>
+          <StyledTime>
+            {moment(msgInfo.timestamp?.toDate().getTime()).format("lll")}
+          </StyledTime>
+        </div>
+
+        <StyledMsg>{msgInfo.message}</StyledMsg>
+      </div>
       {loggedUser?.email === msgInfo.name && hoverToggler && (
         <HoverPopUp>
           <ModeEditIcon
