@@ -105,7 +105,7 @@ function Chat() {
   };
 
   return (
-    <div>
+    <Box>
       <H4>
         {!channelName
           ? "Select any channel"
@@ -125,7 +125,7 @@ function Chat() {
         noValidate
         autoComplete="off"
       >
-        <TextFieldWrapper>
+        <TextFieldWrapper sx={{ width: "100%", mx: "20px" }}>
           <Field>
             <TextField
               id="standard-basic"
@@ -149,7 +149,7 @@ function Chat() {
           </MenuBar>
         </TextFieldWrapper>
       </Box>
-    </div>
+    </Box>
   );
 }
 
