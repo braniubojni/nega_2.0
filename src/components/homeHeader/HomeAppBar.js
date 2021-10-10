@@ -22,7 +22,7 @@ export default function HomeAppBar() {
   return (
     <Box sx={{ flexGrow: 1, background: SLACK_MAIN }}>
       <AppBar position="fixed">
-        <Toolbar>
+        <Toolbar sx={{ background: "#611f69" }}>
           <IconButton
             size="large"
             edge="start"
