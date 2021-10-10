@@ -1,14 +1,22 @@
+import { Toolbar } from "@mui/material";
 import { useHistory } from "react-router";
 import { CHANNELS_ROUTE, SIGN_IN_ROUTE } from "../constants/paths";
+import HomeAppBar from "./homeHeader/HomeAppBar";
 
 function Home() {
   const history = useHistory();
   return (
-    <div>
-      <h1>This should be the home page</h1>
-      <button onClick={() => history.push(CHANNELS_ROUTE)}>To channels</button>
-      <button onClick={() => history.push(SIGN_IN_ROUTE)}>To Sign in</button>
-    </div>
+    <>
+      <HomeAppBar />
+      <Toolbar />
+      <div>
+        <h1>Main content here</h1>
+        <button onClick={() => history.push(CHANNELS_ROUTE)}>
+          To channels
+        </button>
+        <button onClick={() => history.push(SIGN_IN_ROUTE)}>To Sign in</button>
+      </div>
+    </>
   );
 }
 
