@@ -130,9 +130,9 @@ function DirectMessages({ window }) {
 
         {open &&
           users?.map((user) => (
-            <ListItemButton key={user.id} sx={{ mb: -4 }}>
+            <List key={user.id} sx={{ mb: -4 }}>
               {renderUsers(user)}
-            </ListItemButton>
+            </List>
           ))}
         <Divider sx={{ mt: 2, mb: 2 }} />
       </Box>

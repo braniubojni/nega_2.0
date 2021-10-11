@@ -154,9 +154,9 @@ function ChannelArea({ window, channels, Chat }) {
 
                 {open &&
                   channels?.map((channel) => (
-                    <ListItemButton sx={{ mb: -4 }} key={channel.id}>
+                    <List sx={{ mb: -4 }} key={channel.id}>
                       {renderChannels(channel)}
-                    </ListItemButton>
+                    </List>
                   ))}
 
                 <Divider sx={{ mt: 2, mb: 2 }} />
