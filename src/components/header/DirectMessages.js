@@ -12,22 +12,14 @@ import Typography from "@mui/material/Typography";
 import { selectChannelName } from "../../redux/common/channel/selectors";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
-import SearchIcon from "@mui/icons-material/Search";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import HelpIcon from "@mui/icons-material/Help";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHashtag } from "@fortawesome/free-solid-svg-icons";
-import Channel from "../channels/Channel";
-import { useSelector } from "react-redux";
-import ProfileDropdown from "./ProfileDropdown";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
-import { getAllUsers } from "../helpers/getters";
-import EachUser from "../user/EachUser";
 
+import EachUser from "../user/EachUser";
+import { collection, onSnapshot } from "@firebase/firestore";
+import db from "../../firebase";
 const drawerWidth = 240;
 
 const Search = styled("div")(({ theme }) => ({
@@ -71,11 +63,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 function DirectMessages({ window }) {
-  const [users, setUsers] = useState();
+  const [users, setUsers] = useState([]);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [open, setOpen] = useState(true);
   useEffect(() => {
-    getAllUsers({ setUsers });
+    onSnapshot(collection(db, "users"), (snapshot) => setUsers(snapshot.docs));
+    return () => {
+      setUsers([]);
+    };
   }, []);
 
   const handleDrawerToggle = () => {
