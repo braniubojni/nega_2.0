@@ -1,4 +1,5 @@
 import { getAuth } from "@firebase/auth";
+import { query, orderBy } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import {
@@ -17,50 +18,74 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import SendIcon from "@mui/icons-material/Send";
 import { styled } from "@mui/system";
+import Emoji from "./emoji/Emoji";
 
-const H4 = styled("div")(({ theme }) => ({
-  position: "absolute",
-  top: theme.spacing(2),
-}));
-const Ul = styled("ul")({
-  listStyle: "none",
-  overflowY: "auto",
-  display: "flex",
-  flexDirection: "column",
-  height: "50vh",
-});
 const Arrow = styled("div")(({ theme }) => ({
   cursor: "pointer",
   paddingLeft: theme.spacing(1),
 }));
 const Field = styled("div")(({ theme }) => ({
   marginRight: theme.spacing(1),
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "53vw",
 }));
-const TextFieldWrapper = styled("div")(({ theme }) => ({
+const MenuBar = styled("div")(({ theme }) => ({
+  display: "flex",
   position: "relative",
+  marginTop: theme.spacing(1),
+}));
+const MainContentWrapper = styled("div")(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  height: "70vh",
+}));
+const Ul = styled("ul")({
+  listStyle: "none",
+  overflowY: "auto",
+  display: "flex",
+  flexDirection: "column",
+  paddingLeft: "1%",
+  width: "100%",
+});
+const TextFieldWrapper = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  justifyContent: "center",
+  border: "1px solid gray",
+  borderRadius: theme.spacing(1),
+  padding: 10,
+  "&:focus-within": {
+    border: "2px solid black",
+    transition: "all 0.2s",
+  },
 }));
 
 function Chat() {
+  const [messages, setMessages] = useState([]);
+  const [sent, setSent] = useState(false);
   const channelId = useSelector(selectChannelId);
   const channelName = useSelector(selectChannelName);
-  const [messages, setMessages] = useState([]);
   const inputRef = useRef("");
+  const chatRef = useRef(null);
 
   useEffect(() => {
-    onSnapshot(collection(db, `channels/${channelId}/messages`), (snapshot) => {
+    const messagesRef = query(
+      collection(db, `channels/${channelId}/messages`),
+      orderBy("timestamp")
+    );
+    onSnapshot(messagesRef, (snapshot) => {
       setMessages(snapshot?.docs);
     });
   }, [channelId]);
 
-  // const scrollToBottom = () => {
-  //   chatRef.current.scrollIntoView({
-  //     behavior: "smooth",
-  //     block: "start",
-  //   });
-  // };
+  const scrollToBottom = () => {
+    chatRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
 
   const sendMessage = async (evn) => {
     evn.preventDefault();
@@ -71,8 +96,9 @@ function Chat() {
         message: inputRef.current.value,
         name: auth.currentUser.email,
       });
+      setSent(true);
       inputRef.current.value = "";
-      // scrollToBottom(); // need for reach the last msg
+      scrollToBottom();
     }
   };
 
@@ -83,23 +109,25 @@ function Chat() {
   };
 
   return (
-    <div>
-      <H4>
-        {!channelName
-          ? "Select any channel"
-          : `You are in the channel ${channelName}`}
-      </H4>
-      <Ul>{messages?.map((msg) => renderMsg(msg))}</Ul>
-      <Box
-        component="form"
-        sx={{
-          "& > :not(style)": { m: 1, width: "25ch" },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <TextFieldWrapper>
+    <MainContentWrapper>
+      <Ul>
+        {messages?.map((msg) => renderMsg(msg))}
+        <li ref={chatRef} />
+      </Ul>
+      <div style={{ flex: "1 1 auto" }} />
+      <TextFieldWrapper>
+        <Box
+          component="form"
+          onSubmit={sendMessage}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+          noValidate
+          autoComplete="off"
+        >
           <Field>
+            <Emoji inputRef={inputRef} isDisabled={channelId} Sent={sent} />
             <TextField
               id="standard-basic"
               disabled={!channelId}
@@ -107,15 +135,22 @@ function Chat() {
               placeholder={
                 channelId ? `Message # ${channelName}` : "Select any channel"
               }
+              sx={{
+                marginLeft: "1%",
+                flex: "1 1 auto",
+              }}
               variant="standard"
+              fullWidth={true}
             />
+            <MenuBar>
+              <Arrow>
+                <SendIcon onClick={sendMessage} />
+              </Arrow>
+            </MenuBar>
           </Field>
-          <Arrow>
-            <SendIcon onClick={sendMessage} />
-          </Arrow>
-        </TextFieldWrapper>
-      </Box>
-    </div>
+        </Box>
+      </TextFieldWrapper>
+    </MainContentWrapper>
   );
 }
 

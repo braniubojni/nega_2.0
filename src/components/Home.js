@@ -1,29 +1,22 @@
-import { useSelector } from "react-redux";
+import { Toolbar } from "@mui/material";
 import { useHistory } from "react-router";
 import { CHANNELS_ROUTE, SIGN_IN_ROUTE } from "../constants/paths";
-import { selectLoggedInUser } from "../redux/common/auth/selectors";
-
-// yst redux -i kimananq te SignIn exaca te piti lini
-// ev yst dran kimananq te renderi
+import HomeAppBar from "./homeHeader/HomeAppBar";
 
 function Home() {
   const history = useHistory();
-  const loggedUser = useSelector(selectLoggedInUser);
-
   return (
-    <header style={{ display: "flex" }}>
-      <p>Icon</p>
-      <h1>I am header</h1>
-      <button
-        onClick={() =>
-          !loggedUser
-            ? history.push(SIGN_IN_ROUTE)
-            : history.push(CHANNELS_ROUTE)
-        }
-      >
-        {!loggedUser ? "Try for free" : "Open channels"}
-      </button>
-    </header>
+    <>
+      <HomeAppBar />
+      <Toolbar />
+      <div>
+        <h1>Main content here</h1>
+        <button onClick={() => history.push(CHANNELS_ROUTE)}>
+          To channels
+        </button>
+        <button onClick={() => history.push(SIGN_IN_ROUTE)}>To Sign in</button>
+      </div>
+    </>
   );
 }
 
