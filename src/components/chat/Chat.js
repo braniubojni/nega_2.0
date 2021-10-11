@@ -1,6 +1,6 @@
 import { getAuth } from "@firebase/auth";
 import { query, orderBy } from "firebase/firestore";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 import {
   collection,
@@ -63,7 +63,7 @@ const TextFieldWrapper = styled("div")(({ theme }) => ({
 }));
 
 function Chat() {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState(null);
   const [sent, setSent] = useState(false);
   const channelId = useSelector(selectChannelId);
   const channelName = useSelector(selectChannelName);
@@ -71,13 +71,17 @@ function Chat() {
   const chatRef = useRef(null);
 
   useEffect(() => {
-    const messagesRef = query(
+    //`channels/${channelId}/messages`
+    const msgRef = query(
       collection(db, `channels/${channelId}/messages`),
       orderBy("timestamp")
     );
-    onSnapshot(messagesRef, (snapshot) => {
-      setMessages(snapshot.docs);
+    onSnapshot(msgRef, (snapshot) => {
+      setMessages(snapshot?.docs);
     });
+    return () => {
+      setMessages([]);
+    };
   }, [channelId]);
 
   const scrollToBottom = () => {
@@ -111,7 +115,7 @@ function Chat() {
   return (
     <MainContentWrapper>
       <Ul>
-        {messages?.map((msg) => renderMsg(msg))}
+        {!!messages?.length && messages?.map((msg) => renderMsg(msg))}
         <li ref={chatRef} />
       </Ul>
       <div style={{ flex: "1 1 auto" }} />

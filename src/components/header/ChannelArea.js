@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -27,6 +27,10 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
 import AddNewChannel from "../dialogs/AddChannel";
 import DirectMessages from "./DirectMessages";
+import { collection, doc, onSnapshot } from "@firebase/firestore";
+import db from "../../firebase";
+import { getAuth } from "@firebase/auth";
+import { selectUserRole } from "../../redux/common/auth/selectors";
 
 const drawerWidth = 220;
 
@@ -73,10 +77,28 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 function ChannelArea({ window, channels, Chat }) {
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [open, setOpen] = React.useState(true);
+  const [mobileOpen, setMobileOpen] = useState({});
+  const [open, setOpen] = useState(true);
   const channelName = useSelector(selectChannelName);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const auth = getAuth();
 
+  useEffect(() => {
+    // const currentUser = auth.currentUser;
+    // Here would be the place where I can know is the user is admin
+    // onSnapshot(collection(db, "users"), (snapshot) => {
+    //   setIsAdmin(
+    //     snapshot?.docs.map((doc) => {
+    //       if (doc.data().email === currentUser.email) {
+    //       }
+    //       return doc;
+    //     })
+    //   );
+    // });
+    // return () => {
+    //   setIsAdmin({});
+    // };
+  }, [auth]);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
