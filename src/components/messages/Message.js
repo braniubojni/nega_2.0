@@ -11,7 +11,7 @@ import { useState } from "react";
 
 const HoverPopUp = styled("div")(() => ({
   position: "absolute",
-  top: -15,
+  top: 35,
   right: 0,
   transition: "all 0.2s",
 }));

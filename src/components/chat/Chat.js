@@ -71,15 +71,13 @@ function Chat() {
   const chatRef = useRef(null);
 
   useEffect(() => {
-    const msgQuery = async () => {
-      const messagesRef = await query(
-        collection(db, `channels/${channelId}/messages`),
-        orderBy("timestamp")
-      );
-      onSnapshot(messagesRef, (snapshot) => {
-        setMessages(snapshot.docs);
-      });
-    };
+    const messagesRef = query(
+      collection(db, `channels/${channelId}/messages`),
+      orderBy("timestamp")
+    );
+    onSnapshot(messagesRef, (snapshot) => {
+      setMessages(snapshot.docs);
+    });
   }, [channelId]);
 
   const scrollToBottom = () => {
@@ -129,7 +127,6 @@ function Chat() {
           autoComplete="off"
         >
           <Field>
-            <Emoji inputRef={inputRef} isDisabled={channelId} Sent={sent} />
             <TextField
               id="standard-basic"
               disabled={!channelId}
@@ -138,12 +135,13 @@ function Chat() {
                 channelId ? `Message # ${channelName}` : "Select any channel"
               }
               sx={{
-                marginLeft: "1%",
+                marginRight: "1%",
                 flex: "1 1 auto",
               }}
               variant="standard"
               fullWidth={true}
             />
+            <Emoji inputRef={inputRef} isDisabled={channelId} Sent={sent} />
             <MenuBar>
               <Arrow>
                 <SendIcon onClick={sendMessage} />
