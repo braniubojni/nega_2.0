@@ -66,17 +66,24 @@ export default function SignIn() {
   const handleChangeUserEmail = (e) => setUsrEmail(e.target.value);
   const handleChangeUserPassword = (e) => setUsrPassword(e.target.value);
   useEffect(() => {
+    setLoader(true);
     if (loggedInUser) {
+      setLoader(false);
       history.push(CHANNELS_ROUTE);
     }
+    let timerId = setTimeout(() => setLoader(false), 1500);
+    return () => {
+      clearTimeout(timerId);
+    };
   }, [history, loggedInUser]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    let isResolved = false;
     setLoader(true);
     signInWithEmailAndPassword(auth, usrEmail, usrPassword)
       .then(() => {
-        setLoader(true);
+        isResolved = true;
         const currentUser = auth.currentUser;
         onSnapshot(collection(db, "users"), (snapshot) => {
           dispatch(
@@ -87,21 +94,24 @@ export default function SignIn() {
             )
           );
         });
-        history.push(CHANNELS_ROUTE);
       })
       .catch((error) => {
+        isResolved = false;
         setAlert((prev) => !prev);
         return new Error(error);
       })
       .finally(() => {
         setLoader(false);
+        if (isResolved) {
+          history.push(CHANNELS_ROUTE);
+        }
       });
   };
 
   return (
     <>
       {loader ? (
-        <Loader loader={loader} />
+        <Loader />
       ) : (
         <>
           <ThemeProvider theme={theme}>

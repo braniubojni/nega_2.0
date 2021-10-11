@@ -9,6 +9,7 @@ import { useHistory } from "react-router";
 import AddIcon from "@mui/icons-material/Add";
 import { TextField } from "@mui/material";
 import { handleNewChannel } from "../helpers/handlers";
+import { Box } from "@mui/system";
 
 export default function AddNewChannel() {
   const [open, setOpen] = useState(false);
@@ -32,7 +33,9 @@ export default function AddNewChannel() {
 
   return (
     <div>
-      <AddIcon cursor="pointer" onClick={handleClickOpen} />
+      <Box sx={{ ml: 9 }}>
+        <AddIcon cursor="pointer" onClick={handleClickOpen} />
+      </Box>
       <Dialog
         open={open}
         onClose={closeModal}

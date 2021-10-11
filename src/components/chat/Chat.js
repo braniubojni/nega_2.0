@@ -71,13 +71,15 @@ function Chat() {
   const chatRef = useRef(null);
 
   useEffect(() => {
-    const messagesRef = query(
-      collection(db, `channels/${channelId}/messages`),
-      orderBy("timestamp")
-    );
-    onSnapshot(messagesRef, (snapshot) => {
-      setMessages(snapshot?.docs);
-    });
+    const msgQuery = async () => {
+      const messagesRef = await query(
+        collection(db, `channels/${channelId}/messages`),
+        orderBy("timestamp")
+      );
+      onSnapshot(messagesRef, (snapshot) => {
+        setMessages(snapshot.docs);
+      });
+    };
   }, [channelId]);
 
   const scrollToBottom = () => {
