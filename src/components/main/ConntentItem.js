@@ -45,8 +45,7 @@ const ContentImgConTainer = styled("div")(({ theme }) => ({
   [theme.breakpoints.down(600)]: {},
 }));
 const Video = styled("video")({
-  minWidth: 400,
-  width: "125%",
+  width: 430,
 });
 const Img = styled("img")(({ theme }) => ({
   borderRadius: 10,
@@ -56,7 +55,7 @@ const Img = styled("img")(({ theme }) => ({
   },
 }));
 
-function Contents({ content, index }) {
+function ContentItem({ content, index }) {
   const windowWidth = useWindowResize();
 
   // playVideo
@@ -65,7 +64,6 @@ function Contents({ content, index }) {
   // bolor qo componentneri warningnery
   // flex reverse
   // avelacnel useWindowResize ekrani chapsy voroshelu hamar
-  console.log(windowWidth);
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   const handleOpen = () => setOpen(true);
@@ -87,6 +85,7 @@ function Contents({ content, index }) {
                 lineHeight: 1.44444444,
                 letterSpacing: -0.2,
                 fontSize: "1.125rem",
+                marginBottom: 1.87,
               }}
             >
               {content.text}
@@ -106,7 +105,7 @@ function Contents({ content, index }) {
               ))}
             </ContentImgItem>
           </ContentItemWraper>
-          <ContentImgConTainer
+          <div
             style={
               index % 2 === 0
                 ? {
@@ -120,11 +119,11 @@ function Contents({ content, index }) {
                 <source src={content.video} />
               </Video>
             ) : null}
-          </ContentImgConTainer>
+          </div>
         </Content>
       </Container>
     </>
   );
 }
 
-export default Contents;
+export default ContentItem;

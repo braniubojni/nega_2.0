@@ -8,7 +8,7 @@ import whatAreChannels from "../../image/MainContentImg/what-are-channels.IN.jpg
 import video1 from "../../video/img-hp-section-01.mp4";
 import video2 from "../../video/img-hp-section-02.mp4";
 import video3 from "../../video/img-hp-section-03.mp4";
-import Contents from "./Conntent";
+import ContentItem from "./ConntentItem";
 
 function MainCOntent(props) {
   const main = [
@@ -44,7 +44,7 @@ function MainCOntent(props) {
     },
   ];
   const renderMainContext = (item, index) => (
-    <Contents index={index} content={item} />
+    <ContentItem index={index} content={item} />
   );
   return <>{main.map((item, index) => renderMainContext(item, index))}</>;
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 function useWindowResize() {
   const [windowResize, setWindowResize] = useState(window.innerWidth);
