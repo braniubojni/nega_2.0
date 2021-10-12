@@ -18,7 +18,10 @@ function EachUser({ id, userName }) {
   };
 
   return (
-    <ListItemButton onClick={setUser}>
+    <ListItemButton
+      onClick={setUser}
+      sx={{ "&:hover": { backgroundColor: "unset" } }}
+    >
       <Box sx={{ fontSize: 12, mr: 1 }}>
         <FontAwesomeIcon icon={faHashtag} className="faHashtag" />
       </Box>
