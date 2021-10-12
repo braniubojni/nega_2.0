@@ -25,10 +25,8 @@ import { Link } from "react-router-dom";
 import Alert from "../dialogs/Alert";
 import Loader from "../loader/Loader";
 
-import { Button, Container, TextField } from "@mui/material";
-import { FlexContainer, ImgContainer, ImgLogo } from "./SignInStyle";
-import logo from "../../../src/image/slack_logo.svg";
-
+// import { Button, Container, TextField } from "@mui/material";
+//
 function Copyright(props) {
   return (
     <Typography
