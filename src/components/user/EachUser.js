@@ -1,6 +1,6 @@
 import { faHashtag } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ListItem, ListItemText } from "@mui/material";
+import { ListItemButton, ListItemText } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import { useDispatch } from "react-redux";
@@ -18,12 +18,12 @@ function EachUser({ id, userName }) {
   };
 
   return (
-    <ListItem onClick={setUser}>
+    <ListItemButton onClick={setUser}>
       <Box sx={{ fontSize: 12, mr: 1 }}>
         <FontAwesomeIcon icon={faHashtag} className="faHashtag" />
       </Box>
       <ListItemText sx={{ cursor: "pointer" }} primary={userName} />
-    </ListItem>
+    </ListItemButton>
   );
 }
 

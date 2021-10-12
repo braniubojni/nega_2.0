@@ -13,6 +13,8 @@ import {
 import Dropdown from "./Dropdown";
 import DrawerComponent from "./Drawer";
 import Logo from "../../Logo/logo.svg";
+import { Link } from "react-router-dom";
+import { SIGN_IN_ROUTE, SIGN_UP_ROUTE } from "../../constants/paths";
 
 function Navbar() {
   const [value, setValue] = useState(0);
@@ -34,7 +36,7 @@ function Navbar() {
           ) : (
             <>
               <Typography>
-                <img src={Logo} width="100px"></img>
+                <img src={Logo} width="100px" />
               </Typography>
               <Tabs
                 onChange={handleClickTab}
@@ -45,9 +47,13 @@ function Navbar() {
                 <Tab disableRipple label="Enterprise" />
                 <Tab disableRipple label="Recources" />
                 <Tab disableRipple label="Pricing" />
-                <Button>Sign In</Button>
-                <Button>Try for free</Button>
               </Tabs>
+              <Button>
+                <Link to={SIGN_UP_ROUTE}>SIGN UP</Link>
+              </Button>
+              <Button>
+                <Link to={SIGN_IN_ROUTE}>Try for free</Link>
+              </Button>
             </>
           )}
         </Toolbar>

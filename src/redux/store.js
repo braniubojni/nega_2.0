@@ -1,4 +1,5 @@
-import { combineReducers, createStore } from "redux";
+import { applyMiddleware, combineReducers, createStore } from "redux";
+import thunk from "redux-thunk";
 import auth from "./common/auth/reducer";
 import channel from "./common/channel/reducer";
 import user from "./common/user/reducer";
@@ -15,6 +16,7 @@ const RootReducer = (state, action) => {
 
 const store = createStore(
   RootReducer,
+  applyMiddleware(thunk),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 

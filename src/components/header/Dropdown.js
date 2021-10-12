@@ -2,6 +2,8 @@ import * as React from "react";
 import { useState } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Menu, MenuItem, Button, Divider } from "@mui/material";
+import { v4 as uuidv4 } from "uuid";
+import { Box } from "@mui/system";
 
 function Dropdown() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -28,7 +30,7 @@ function Dropdown() {
 
   return (
     <div>
-      <Button
+      <Box
         id="basic-button"
         aria-controls="basic-menu"
         aria-haspopup="true"
@@ -37,7 +39,7 @@ function Dropdown() {
         endIcon={<KeyboardArrowDownIcon />}
       >
         Product
-      </Button>
+      </Box>
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}
@@ -47,16 +49,9 @@ function Dropdown() {
           "aria-labelledby": "basic-button",
         }}
       >
-        {dropdownItems.map((item, index) => {
-          return index === dropdownItems.length - 1 ? (
-            <>
-              <Divider />
-              <MenuItem onClick={handleClose} key={item}>
-                {item}
-              </MenuItem>
-            </>
-          ) : (
-            <MenuItem onClick={handleClose} key={item}>
+        {dropdownItems.map((item) => {
+          return (
+            <MenuItem key={uuidv4()} onClick={handleClose}>
               {item}
             </MenuItem>
           );
