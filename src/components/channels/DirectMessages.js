@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
+// import ListItemButton from "@mui/material/ListItemButton";
+import { ListItem } from "@mui/material";
 import ListItemText from "@mui/material/ListItemText";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
@@ -10,7 +11,6 @@ import { createTheme } from "@mui/system";
 import EachUser from "../user/EachUser";
 import { collection, onSnapshot } from "@firebase/firestore";
 import db from "../../firebase";
-import AddNewChannel from "../dialogs/AddChannel";
 import { Divider } from "@mui/material";
 
 function SmallDropdown({ window }) {
@@ -57,7 +57,7 @@ function SmallDropdown({ window }) {
               pb: open ? 2 : 0,
             }}
           >
-            <ListItemButton
+            <ListItem
               alignItems="flex-start"
               onClick={() => setOpen(!open)}
               sx={{
@@ -84,11 +84,8 @@ function SmallDropdown({ window }) {
                   transition: "0.2s",
                 }}
               />
-            </ListItemButton>
+            </ListItem>
             <Divider sx={{ width: "200px" }} />
-            <Box>
-              <AddNewChannel />
-            </Box>
             {open &&
               users?.map((user) => (
                 <List key={user.id} sx={{ mb: -4 }}>
