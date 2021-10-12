@@ -16,12 +16,16 @@ function Channel({ id, channelName }) {
     history.push(`${CHANNELS_ROUTE}/${id}`);
   };
   return (
-    <ListItemButton onClick={setChannel}>
+    <ListItemButton>
       <Box sx={{ fontSize: 12, mr: 1 }}>
         <FontAwesomeIcon icon={faHashtag} className="faHashtag" />
       </Box>
 
-      <ListItemText sx={{ cursor: "pointer" }} primary={channelName} />
+      <ListItemText
+        onClick={setChannel}
+        sx={{ cursor: "pointer" }}
+        primary={channelName}
+      />
     </ListItemButton>
   );
 }
