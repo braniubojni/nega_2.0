@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { styled } from "@mui/system";
 import { Container, Typography } from "@mui/material";
-import DialogVideo from "./VideoDialogs";
-import useWindowResize from "../helpers/customHooks/useWindowResize";
+import useWindowResize from "../../helpers/customHooks/useWindowResize";
+import VideoDialog from "./VideoDialogs";
 
 const Content = styled("div")(({ theme }) => ({
   marginTop: 60,
@@ -95,7 +95,7 @@ function ContentItem({ content, index }) {
                 <div key={content.imgName[index]}>
                   <Img src={item} onClick={handleOpen} />
                   {open && (
-                    <DialogVideo
+                    <VideoDialog
                       open={open}
                       video={content.videoLink[index]}
                       handleClose={handleClose}

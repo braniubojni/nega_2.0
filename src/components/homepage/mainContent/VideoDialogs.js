@@ -2,7 +2,7 @@ import { Button, Dialog } from "@mui/material";
 import React from "react";
 import YouTubeVideo from "./YouTube";
 
-function DialogVideo(props) {
+function VideoDialog(props) {
   const { handleClose, video, open } = props;
   return (
     <Dialog
@@ -17,4 +17,4 @@ function DialogVideo(props) {
   );
 }
 
-export default DialogVideo;
+export default VideoDialog;

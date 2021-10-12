@@ -1,24 +1,23 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
-import partnersChannel from "../../image/MainContentImg/add-external-partners-to-a-channel.IN.jpg";
-import brainstormChannel from "../../image/MainContentImg/brainstorm-in-a-channel.IN.jpg";
-import createChannel from "../../image/MainContentImg/create-a-channel.IN.jpg";
-import pauseNotifications from "../../image/MainContentImg/pause-notifications.IN.jpg";
-import whatAreChannels from "../../image/MainContentImg/what-are-channels.IN.jpg";
-import video1 from "../../video/img-hp-section-01.mp4";
-import video2 from "../../video/img-hp-section-02.mp4";
-import video3 from "../../video/img-hp-section-03.mp4";
+import partnersChannel from "./Images/mainContentImg/add-external-partners-to-a-channel.IN.jpg";
+import brainstormChannel from "./Images/mainContentImg/brainstorm-in-a-channel.IN.jpg";
+import createChannel from "./Images/mainContentImg/create-a-channel.IN.jpg";
+import pauseNotifications from "./Images/mainContentImg/pause-notifications.IN.jpg";
+import whatAreChannels from "./Images/mainContentImg/what-are-channels.IN.jpg";
+import video1 from "./video/img-hp-section-01.mp4";
+import video2 from "./video/img-hp-section-02.mp4";
+import video3 from "./video/img-hp-section-03.mp4";
 import ContentItem from "./ConntentItem";
 
-function MainCOntent(props) {
+function MainContent() {
   const main = [
     {
       title: "Move faster by organizing your work life",
       text: "The key to productivity in Slack is organized spaces called channels—a different one for everything you’re working on. With all the people, messages and files related to a topic in one place, you can move a whole lot faster.",
       type: "video",
       img: [whatAreChannels, createChannel],
-      imgName: ["whatAreChannels", "createChannel"],
-      id: uuidv4(),
+      imgName: ["whatAreChannels", "createCh"],
       videoLink: ["G1TYS5K7CqM", "OhL2RNgS_cU"],
       video: video1,
     },
@@ -43,10 +42,10 @@ function MainCOntent(props) {
       video: [video3],
     },
   ];
-  const renderMainContext = (item, index) => (
-    <ContentItem index={index} content={item} />
+  const renderMainContent = (item, index) => (
+    <ContentItem key={item + index} index={index} content={item} />
   );
-  return <>{main.map((item, index) => renderMainContext(item, index))}</>;
+  return <div>{main.map((item, index) => renderMainContent(item, index))}</div>;
 }
 
-export default MainCOntent;
+export default MainContent;

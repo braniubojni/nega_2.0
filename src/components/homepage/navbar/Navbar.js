@@ -12,13 +12,12 @@ import {
 
 import Dropdown from "./Dropdown";
 import DrawerComponent from "./Drawer";
-import Logo from "../../Logo/logo.svg";
+import Logo from "../../../logo/logo.svg";
 import { Link } from "react-router-dom";
-import { SIGN_IN_ROUTE, SIGN_UP_ROUTE } from "../../constants/paths";
+import { SIGN_IN_ROUTE, SIGN_UP_ROUTE } from "../../../constants/paths";
 
 function Navbar() {
   const [value, setValue] = useState(0);
-  const [selectValue, setSelectValue] = useState("");
 
   const handleClickTab = (evt, newValue) => {
     setValue(newValue);
@@ -36,7 +35,7 @@ function Navbar() {
           ) : (
             <>
               <Typography>
-                <img src={Logo} width="100px" />
+                <img src={Logo} width="100px" alt="slack_logo" />
               </Typography>
               <Tabs
                 onChange={handleClickTab}
