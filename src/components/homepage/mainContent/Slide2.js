@@ -23,17 +23,17 @@ const slideData = [
   },
 ];
 
-function useWindowResize() {
-  const [windowResize, setWindowResize] = useState(window.innerWidth);
-  useEffect(() => {
-    const handleResize = () => setWindowResize(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [windowResize]);
-  return windowResize;
-}
+// function useWindowResize() {
+//   const [windowResize, setWindowResize] = useState(window.innerWidth);
+//   useEffect(() => {
+//     const handleResize = () => setWindowResize(window.innerWidth);
+//     window.addEventListener("resize", handleResize);
+//     return () => {
+//       window.removeEventListener("resize", handleResize);
+//     };
+//   }, [windowResize]);
+//   return windowResize;
+// }
 
 function Slide2(incomeData = slideData) {
   const renderSlides = (card) => {

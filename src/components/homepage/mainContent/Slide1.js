@@ -3,10 +3,10 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { Typography, List } from "@mui/material";
-import img1 from "../../Images/image_1.jpg";
-import img2 from "../../Images/image_2.jpg";
-import img3 from "../../Images/image_3.jpg";
-import img4 from "../../Images/image_4.jpg";
+import img1 from "./Images/image_1.jpg";
+import img2 from "./Images/image_2.jpg";
+import img3 from "./Images/image_3.jpg";
+import img4 from "./Images/image_4.jpg";
 import { Box } from "@mui/system";
 
 const slideData = [
@@ -38,6 +38,7 @@ function Slide1(incomeData = slideData) {
           p: "10px",
           borderRadius: 0,
           m: "10px",
+          "&:hover": { transform: "scale(1.1)", transition: "all 0.4s" },
         }}
       >
         <CardMedia

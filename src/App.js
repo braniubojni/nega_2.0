@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Redirect } from "react-router";
 import Auth from "./components/auth/Auth";
-import Home from "./components/Home";
-import Channels from "./components/Channels";
+import Home from "./components/homepage/Home";
+import Channels from "./components/channels/Channels";
 import { useDispatch } from "react-redux";
 import { setLoggedinUser } from "./redux/common/auth/actions";
 import {

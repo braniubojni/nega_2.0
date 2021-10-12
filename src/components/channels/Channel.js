@@ -16,7 +16,7 @@ function Channel({ id, channelName }) {
     history.push(`${CHANNELS_ROUTE}/${id}`);
   };
   return (
-    <ListItemButton>
+    <ListItemButton sx={{ "&:hover": { backgroundColor: "unset" } }}>
       <Box sx={{ fontSize: 12, mr: 1 }}>
         <FontAwesomeIcon icon={faHashtag} className="faHashtag" />
       </Box>
