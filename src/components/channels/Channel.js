@@ -20,6 +20,7 @@ function Channel({ id, channelName }) {
       <Box sx={{ fontSize: 12, mr: 1 }}>
         <FontAwesomeIcon icon={faHashtag} className="faHashtag" />
       </Box>
+
       <ListItemText sx={{ cursor: "pointer" }} primary={channelName} />
     </ListItemButton>
   );

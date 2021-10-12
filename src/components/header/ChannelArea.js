@@ -156,7 +156,7 @@ function ChannelArea({ window, channels, Chat }) {
                     primaryTypographyProps={{
                       fontSize: 15,
                       fontWeight: "bold",
-                      lineHeight: "15px",
+                      lineHeight: "20px",
                       mb: "2px",
                     }}
                   />
