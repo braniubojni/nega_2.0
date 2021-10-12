@@ -1,5 +1,4 @@
-import { applyMiddleware, combineReducers, createStore } from "redux";
-import thunk from "redux-thunk";
+import { combineReducers, createStore } from "redux";
 import auth from "./common/auth/reducer";
 import channel from "./common/channel/reducer";
 import user from "./common/user/reducer";

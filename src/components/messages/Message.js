@@ -50,7 +50,6 @@ function Message({ msgInfo, id }) {
   };
   return (
     <Li onClick={() => setHoverToggler((prev) => !prev)}>
-      {/* <img src={msgInfo.photoURL} alt="avatar" /> */}
       <div>
         <div>
           <strong>{msgInfo.name}</strong>
