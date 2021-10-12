@@ -1,7 +1,6 @@
 import { Toolbar } from "@mui/material";
 import { useHistory } from "react-router";
 import { CHANNELS_ROUTE, SIGN_IN_ROUTE } from "../constants/paths";
-// import HomeAppBar from "./homeHeader/HomeAppBar";
 import Navbar from "./header/Navbar";
 
 function Home() {
