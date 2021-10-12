@@ -8,7 +8,6 @@ const Content = styled("div")(({ theme }) => ({
   marginTop: 60,
   display: "flex",
   justifyContent: "space-between",
-  //   alignItems: "center",
   paddingLeft: 15,
   paddingRight: 15,
   flexDirection: "row",
@@ -39,11 +38,6 @@ const ContentImgItem = styled("div")(({ theme }) => ({
   },
 }));
 
-const ContentImgConTainer = styled("div")(({ theme }) => ({
-  display: "flex",
-  justifyContent: "space-between",
-  [theme.breakpoints.down(600)]: {},
-}));
 const Video = styled("video")({
   width: 430,
 });
@@ -57,13 +51,6 @@ const Img = styled("img")(({ theme }) => ({
 
 function ContentItem({ content, index }) {
   const windowWidth = useWindowResize();
-
-  // playVideo
-  // ContentItem componenti anuny
-  // <ul><li>tag</li></ul>
-  // bolor qo componentneri warningnery
-  // flex reverse
-  // avelacnel useWindowResize ekrani chapsy voroshelu hamar
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   const handleOpen = () => setOpen(true);

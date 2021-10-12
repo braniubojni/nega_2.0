@@ -1,6 +1,6 @@
 import React from "react";
 import YouTube from "react-youtube";
-import { Box, styled } from "@mui/system";
+import { styled } from "@mui/system";
 
 const VideoStyled = styled("div")(({ theme }) => ({
   width: "100vh",
@@ -12,7 +12,6 @@ function YouTubeVideo(props) {
     width: "450px",
     height: "450px",
     playerVars: {
-      // https://developers.google.com/youtube/player_parameters
       autoplay: 1,
     },
   };
