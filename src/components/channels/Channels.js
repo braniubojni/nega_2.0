@@ -177,8 +177,6 @@ function Channels({ window }) {
                       {renderChannels(channel)}
                     </List>
                   ))}
-
-                {/* <Divider sx={{ mt: 2, mb: 2 }} /> */}
               </Box>
             </Paper>
           </ThemeProvider>

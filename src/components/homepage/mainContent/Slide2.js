@@ -23,18 +23,6 @@ const slideData = [
   },
 ];
 
-// function useWindowResize() {
-//   const [windowResize, setWindowResize] = useState(window.innerWidth);
-//   useEffect(() => {
-//     const handleResize = () => setWindowResize(window.innerWidth);
-//     window.addEventListener("resize", handleResize);
-//     return () => {
-//       window.removeEventListener("resize", handleResize);
-//     };
-//   }, [windowResize]);
-//   return windowResize;
-// }
-
 function Slide2(incomeData = slideData) {
   const renderSlides = (card) => {
     return (
@@ -103,9 +91,12 @@ function Slide2(incomeData = slideData) {
         >
           Get started with Slack
         </Typography>
-        <List sx={{ display: "flex" }}>
-          {slideData.map((slideItem) => renderSlides(slideItem))}
-        </List>
+
+        {slideData.map((slideItem) => (
+          <List sx={{ display: "flex" }} key={slideItem.h1}>
+            {renderSlides(slideItem)}
+          </List>
+        ))}
       </Box>
     </>
   );
