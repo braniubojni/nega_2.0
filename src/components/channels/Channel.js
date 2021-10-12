@@ -34,7 +34,9 @@ function Channel({ id, channelName }) {
         sx={{ cursor: "pointer" }}
         primary={channelName}
       />
-      {toggleRemove && <RemoveIcon sx={{ position: "absolute", right: 0 }} />}
+      {toggleRemove && role && (
+        <RemoveIcon sx={{ position: "absolute", right: "-100%" }} />
+      )}
     </ListItemButton>
   );
 }
