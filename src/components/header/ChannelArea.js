@@ -134,7 +134,7 @@ function ChannelArea({ window, channels, Chat }) {
                     primaryTypographyProps={{
                       fontSize: 15,
                       fontWeight: "bold",
-                      lineHeight: "15px",
+                      lineHeight: "20px",
                       mb: "2px",
                     }}
                   />
@@ -154,9 +154,9 @@ function ChannelArea({ window, channels, Chat }) {
 
                 {open &&
                   channels?.map((channel) => (
-                    <List sx={{ mb: -4 }} key={channel.id}>
+                    <ListItemButton sx={{ mb: -4 }} key={channel.id}>
                       {renderChannels(channel)}
-                    </List>
+                    </ListItemButton>
                   ))}
 
                 <Divider sx={{ mt: 2, mb: 2 }} />

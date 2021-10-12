@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { setChannelInfo } from "../../redux/common/channel/actions";
 import { CHANNELS_ROUTE } from "../../constants/paths";
-import { ListItem, ListItemButton, ListItemText } from "@mui/material";
+import { ListItemButton, ListItemText } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHashtag } from "@fortawesome/free-solid-svg-icons";
 import { Box } from "@mui/system";
@@ -16,11 +16,16 @@ function Channel({ id, channelName }) {
     history.push(`${CHANNELS_ROUTE}/${id}`);
   };
   return (
-    <ListItemButton onClick={setChannel}>
+    <ListItemButton>
       <Box sx={{ fontSize: 12, mr: 1 }}>
         <FontAwesomeIcon icon={faHashtag} className="faHashtag" />
       </Box>
-      <ListItemText sx={{ cursor: "pointer" }} primary={channelName} />
+
+      <ListItemText
+        onClick={setChannel}
+        sx={{ cursor: "pointer" }}
+        primary={channelName}
+      />
     </ListItemButton>
   );
 }

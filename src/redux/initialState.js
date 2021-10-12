@@ -1,6 +1,7 @@
 const initialState = {
   auth: {
     loggedInUser: null,
+    isAdmin: null,
   },
   channel: {
     channelId: null,
