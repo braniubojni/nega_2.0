@@ -68,11 +68,14 @@ function Slide1(incomeData = slideData) {
   return (
     <>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <List sx={{ display: "flex" }}>
-          {slideData.map((slideItem) => renderSlides(slideItem))}
-        </List>
+        {slideData.map((slideItem) => (
+          <List sx={{ display: "flex" }} key={slideItem.h1}>
+            {renderSlides(slideItem)}
+          </List>
+        ))}
       </Box>
     </>
   );
 }
+
 export default Slide1;

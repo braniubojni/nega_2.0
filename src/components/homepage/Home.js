@@ -6,6 +6,7 @@ import Navbar from "./navbar/Navbar";
 import Footer from "./footer/Footer";
 import Slide1 from "./mainContent/Slide1";
 import Slide2 from "./mainContent/Slide2";
+import MainContent from "./mainContent/MainContent";
 
 // const MainWrapper = styled();
 
@@ -17,7 +18,7 @@ function Home() {
       >
         <Navbar />
         <Toolbar />
-
+        <MainContent />
         <Box>
           <Slide1 />
           <Slide2 />
