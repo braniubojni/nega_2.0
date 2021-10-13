@@ -15,6 +15,7 @@ import DrawerComponent from "./Drawer";
 import Logo from "../../../logo/logo.svg";
 import { Link } from "react-router-dom";
 import { SIGN_IN_ROUTE, SIGN_UP_ROUTE } from "../../../constants/paths";
+import { Box } from "@mui/system";
 
 function Navbar() {
   const [value, setValue] = useState(0);
@@ -28,8 +29,8 @@ function Navbar() {
 
   return (
     <>
-      <AppBar color="secondary">
-        <Toolbar>
+      <AppBar sx={{ backgroundColor: "black" }}>
+        <Toolbar sx={{ backgroundColor: "#f6efe8" }}>
           {isSmallScreen ? (
             <DrawerComponent />
           ) : (
@@ -37,22 +38,40 @@ function Navbar() {
               <Typography>
                 <img src={Logo} width="100px" alt="slack_logo" />
               </Typography>
-              <Tabs
-                onChange={handleClickTab}
-                indicatorColor="primary"
-                value={value}
-              >
-                <Tab disableRipple label={<Dropdown />} />
-                <Tab disableRipple label="Enterprise" />
-                <Tab disableRipple label="Recources" />
-                <Tab disableRipple label="Pricing" />
-              </Tabs>
-              <Button>
-                <Link to={SIGN_UP_ROUTE}>SIGN UP</Link>
-              </Button>
-              <Button>
-                <Link to={SIGN_IN_ROUTE}>Try for free</Link>
-              </Button>
+              <Box sx={{ display: "flex" }}>
+                <Tabs
+                  TabIndicatorProps={{ style: { background: "black" } }}
+                  onChange={handleClickTab}
+                  value={value}
+                >
+                  <Tab
+                    disableRipple
+                    label={
+                      <span style={{ color: "#1d1d1d" }}>{<Dropdown />}</span>
+                    }
+                  />
+                  <Tab
+                    disableRipple
+                    label={<span style={{ color: "#1d1d1d" }}>Enterprise</span>}
+                  />
+                  <Tab
+                    disableRipple
+                    label={<span style={{ color: "#1d1d1d" }}>Recources</span>}
+                  />
+                  <Tab
+                    disableRipple
+                    label={<span style={{ color: "#1d1d1d" }}>Pricing</span>}
+                  />
+                </Tabs>
+              </Box>
+              <Box width="100%" display="flex" justifyContent="flex-end">
+                <Button variant="outlined">
+                  <Link to={SIGN_UP_ROUTE}>Sign Up</Link>
+                </Button>
+                <Button>
+                  <Link to={SIGN_IN_ROUTE}>Try for free</Link>
+                </Button>
+              </Box>
             </>
           )}
         </Toolbar>

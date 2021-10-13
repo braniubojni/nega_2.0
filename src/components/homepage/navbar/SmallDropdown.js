@@ -19,9 +19,9 @@ const data = [
 ];
 
 function SmallDropdown() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", ml: -1, mt: "25px" }}>
       <ThemeProvider
         theme={createTheme({
           components: {
@@ -51,7 +51,7 @@ function SmallDropdown() {
               sx={{
                 px: 3,
                 pt: 2.5,
-                pb: open ? 0 : 2.5,
+                pb: open ? 0 : 1.5,
                 "&:hover, &:focus": { "& svg": { opacity: open ? 1 : 0 } },
               }}
             >
@@ -59,9 +59,7 @@ function SmallDropdown() {
                 primary="Product"
                 primaryTypographyProps={{
                   fontSize: 17,
-                  fontWeight: "bold",
                   lineHeight: "20px",
-                  mb: "2px",
                 }}
               />
               <KeyboardArrowDown
@@ -77,13 +75,13 @@ function SmallDropdown() {
               data.map((item) => (
                 <ListItemButton
                   key={item.label}
-                  sx={{ py: 0, minHeight: 32, color: "rgba(0,0,0,.8)" }}
+                  sx={{ py: 0, minHeight: 32, color: "rgba(0,0,0,.8)", ml: 4 }}
                 >
                   <ListItemText
                     sx={{ minWidth: 1000 }}
                     primary={item.label}
                     primaryTypographyProps={{
-                      fontSize: 14,
+                      fontSize: 16,
                       fontWeight: "medium",
                     }}
                   />

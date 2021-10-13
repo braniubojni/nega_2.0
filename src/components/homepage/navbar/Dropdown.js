@@ -2,7 +2,6 @@ import * as React from "react";
 import { useState } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Menu, MenuItem } from "@mui/material";
-import { v4 as uuidv4 } from "uuid";
 import { Box } from "@mui/system";
 
 function Dropdown() {
@@ -37,6 +36,7 @@ function Dropdown() {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon />}
+        fontWeight="lighter"
       >
         Product
       </Box>
@@ -51,7 +51,7 @@ function Dropdown() {
       >
         {dropdownItems.map((item) => {
           return (
-            <MenuItem key={uuidv4()} onClick={handleClose}>
+            <MenuItem color="#1d1d1d" key={item} onClick={handleClose}>
               {item}
             </MenuItem>
           );
