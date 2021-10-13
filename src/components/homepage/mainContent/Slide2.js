@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useEffect, useState } from "react";
+import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { Typography, List } from "@mui/material";
 import { Box } from "@mui/system";
@@ -21,6 +23,18 @@ const slideData = [
   },
 ];
 
+function useWindowResize() {
+  const [windowResize, setWindowResize] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => setWindowResize(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [windowResize]);
+  return windowResize;
+}
+
 function Slide2(incomeData = slideData) {
   const renderSlides = (card) => {
     return (
@@ -31,7 +45,7 @@ function Slide2(incomeData = slideData) {
           borderRadius: 0,
           background: "#FFF5EE",
           display: "flex",
-          justifyContent: "center",
+          mr: "50px",
         }}
       >
         <CardContent>
@@ -72,28 +86,37 @@ function Slide2(incomeData = slideData) {
   return (
     <>
       <Box
-        sx={{
-          background: "#FFF5EE",
-          display: "flex",
-          flexDirection: "column",
-          mx: "150px",
-        }}
+        backgroundColor="#FFF5EE"
+        // backgroundColor="black"
+        marginLeft="20px"
+        marginRight="20px"
+        width="100%"
       >
         <Typography
           variant="h1"
-          fontWeight="950"
+          fontWeight="bold"
           fontSize="30px"
           textAlign="center"
           marginTop="40px"
-          letterSpacing="3px"
         >
           Get started with Slack
         </Typography>
-        <Box sx={{ display: "flex", justifyContent: "space-evenly" }}>
-          {slideData.map((slideItem) => (
-            <List key={slideItem.h1}>{renderSlides(slideItem)}</List>
-          ))}
-        </Box>
+      </Box>
+      <Box
+        sx={{
+          background: "#FFF5EE",
+          // background: "green",
+          width: "100%",
+          display: "flex",
+          justifyContent: "space-evenly",
+          mx: "20px",
+        }}
+      >
+        {slideData.map((slideItem) => (
+          <List sx={{ display: "flex" }} key={slideItem.h1}>
+            {renderSlides(slideItem)}
+          </List>
+        ))}
       </Box>
     </>
   );
