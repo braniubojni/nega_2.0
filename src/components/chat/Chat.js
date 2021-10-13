@@ -18,7 +18,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import SendIcon from "@mui/icons-material/Send";
 import { styled } from "@mui/system";
-import Emoji from "./emoji/Emoji";
+import Emoji from "../dialogs/chat/emoji/Emoji";
 
 const Arrow = styled("div")(({ theme }) => ({
   cursor: "pointer",
