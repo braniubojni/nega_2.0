@@ -107,16 +107,3 @@ function Message({ msgInfo, id }) {
 }
 
 export default Message;
-
-/* <HoverPopUp>
-<ModeEditIcon
-  sx={{ marginRight: 0.45, "&:hover": { color: "#75e6da" } }}
-  cursor="pointer"
-  onClick={() => setEditedMsg(msgInfo)}
-/>
-<DeleteForeverIcon
-  sx={{ paddingLeft: 0.45, "&:hover": { color: "red" } }}
-  cursor="pointer"
-  onClick={() => setRemoveMsg({ channelId, id })}
-/>
-</HoverPopUp> */
