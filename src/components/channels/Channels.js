@@ -25,7 +25,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
-import AddNewChannel from "../dialogs/AddChannel";
+import AddNewChannel from "../chat/AddChannel";
 import DirectMessages from "./DirectMessages";
 import Chat from "../chat/Chat";
 import { selectLoggedInUser } from "../../redux/common/auth/selectors";

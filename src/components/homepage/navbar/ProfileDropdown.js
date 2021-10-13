@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Menu, MenuItem, Button } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import LogOutDialog from "../../dialogs/LogOutDialog";
+import LogOutDialog from "../../chat/LogOutDialog";
 import { Box } from "@mui/system";
 
 function ProfileDropdown() {
