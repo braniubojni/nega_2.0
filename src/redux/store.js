@@ -1,7 +1,8 @@
-import { combineReducers, createStore } from "redux";
+import { combineReducers, createStore, applyMiddleware } from "redux";
 import auth from "./common/auth/reducer";
 import channel from "./common/channel/reducer";
 import user from "./common/user/reducer";
+import thunk from "./common/auth/thunk";
 
 const reducer = combineReducers({
   auth,
