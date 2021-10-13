@@ -1,30 +1,45 @@
 import { addDoc, collection, onSnapshot } from "@firebase/firestore";
-import { setLoggedinUser } from "./actions";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "@firebase/auth";
+import { setLoggedinUser, setError } from "./actions";
 import db from "../../../firebase";
 
-const signInUser = (auth) => (dispatch) => {
-  const currentUser = auth.currentUser;
-  onSnapshot(collection(db, "users"), (snapshot) => {
-    dispatch(
-      setLoggedinUser(
-        snapshot.docs
-          .map((doc) => doc.data())
-          .find((user) => user.email === currentUser.email)
-      )
-    );
-  });
-};
+const usrCollection = collection(db, "users");
 
-const signUpUser =
-  ({ usrCollection, userData }) =>
+const signInUser =
+  ({ auth, usrEmail, usrPassword }) =>
   (dispatch) => {
-    addDoc(usrCollection, userData, userData.id);
-    dispatch(setLoggedinUser(userData));
+    signInWithEmailAndPassword(auth, usrEmail, usrPassword)
+      .then(() => {
+        const currentUser = auth.currentUser;
+        onSnapshot(usrCollection, (snapshot) => {
+          dispatch(
+            setLoggedinUser(
+              snapshot?.docs
+                .map((doc) => doc.data())
+                .find((user) => user.email === currentUser.email)
+            )
+          );
+        });
+      })
+      .catch((err) => {
+        dispatch(setError(err.name));
+      });
   };
 
-const thunk = {
-  signInUser,
-  signUpUser,
-};
+const signUpUser =
+  ({ userData, auth, email, password }) =>
+  (dispatch) => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        addDoc(usrCollection, userData, userData.id);
+        dispatch(setLoggedinUser(userData));
+      })
+      .catch((err) => {
+        dispatch(setError(err));
+      });
+  };
 
-export default thunk;
+export { signInUser, signUpUser };
