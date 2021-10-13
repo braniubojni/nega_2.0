@@ -7,12 +7,10 @@ import { useSelector } from "react-redux";
 import { selectChannelId } from "../../redux/common/channel/selectors";
 import EditMsg from "../dialogs/EditMsg";
 import RemoveMsg from "../dialogs/RemoveMsg";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useState } from "react";
 
 const HoverPopUp = styled("div")(() => ({
-  position: "absolute",
-  top: 35,
-  right: 0,
   transition: "all 0.2s",
 }));
 const Li = styled("li")(({ theme }) => ({
@@ -39,6 +37,7 @@ const StyledTime = styled("span")(({ theme }) => ({
 function Message({ msgInfo, id }) {
   const [editedMsg, setEditedMsg] = useState(null);
   const [removeMsg, setRemoveMsg] = useState(null);
+  const [showPopUp, setShowPopUp] = useState(false);
   const [hoverToggler, setHoverToggler] = useState(false);
   const channelId = useSelector(selectChannelId);
   const loggedUser = useSelector(selectLoggedInUser);
@@ -49,8 +48,13 @@ function Message({ msgInfo, id }) {
     setEditedMsg(null);
   };
   return (
-    <Li onClick={() => setHoverToggler((prev) => !prev)}>
-      {/* <img src={msgInfo.photoURL} alt="avatar" /> */}
+    <Li
+      onMouseEnter={() => setHoverToggler(true)}
+      onMouseLeave={() => {
+        setHoverToggler(false);
+        setShowPopUp(false);
+      }}
+    >
       <div>
         <div>
           <strong>{msgInfo.name}</strong>
@@ -62,6 +66,12 @@ function Message({ msgInfo, id }) {
         <StyledMsg>{msgInfo.message}</StyledMsg>
       </div>
       {loggedUser?.email === msgInfo.name && hoverToggler && (
+        <MoreVertIcon
+          cursor="pointer"
+          onClick={() => setShowPopUp((prev) => !prev)}
+        />
+      )}
+      {showPopUp && (
         <HoverPopUp>
           <ModeEditIcon
             sx={{ marginRight: 0.45, "&:hover": { color: "#75e6da" } }}
@@ -75,6 +85,7 @@ function Message({ msgInfo, id }) {
           />
         </HoverPopUp>
       )}
+
       {!!removeMsg && (
         <RemoveMsg
           id={id}

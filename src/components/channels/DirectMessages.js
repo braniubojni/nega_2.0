@@ -63,7 +63,7 @@ function SmallDropdown({ window }) {
               sx={{
                 px: 3,
                 pt: 2.5,
-                pb: open ? 0 : 2.5,
+                pb: open ? 0 : 1.5,
                 "&:hover, &:focus": { "& svg": { opacity: open ? 1 : 0 } },
               }}
             >
@@ -78,14 +78,15 @@ function SmallDropdown({ window }) {
               />
               <KeyboardArrowDown
                 sx={{
-                  ml: 0,
+                  mt: 0.4,
+                  mr: 12.5,
                   opacity: 0,
                   transform: open ? "rotate(-180deg)" : "rotate(0)",
                   transition: "0.2s",
                 }}
               />
             </ListItem>
-            <Divider sx={{ width: "200px" }} />
+            <Divider sx={{ width: "300px" }} />
             {open &&
               users?.map((user) => (
                 <List key={user.id} sx={{ mb: -4 }}>

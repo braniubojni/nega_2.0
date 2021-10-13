@@ -1,4 +1,3 @@
-import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -12,7 +11,7 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import db from "../../firebase";
-import { collection, limit, onSnapshot } from "@firebase/firestore";
+import { collection, onSnapshot } from "@firebase/firestore";
 import { setLoggedinUser } from "../../redux/common/auth/actions";
 import {
   CHANNELS_ROUTE,
@@ -25,8 +24,6 @@ import { Link } from "react-router-dom";
 import Alert from "../dialogs/Alert";
 import Loader from "../loader/Loader";
 
-// import { Button, Container, TextField } from "@mui/material";
-//
 function Copyright(props) {
   return (
     <Typography
@@ -56,13 +53,6 @@ export default function SignIn() {
   const loggedInUser = useSelector(selectLoggedInUser);
   const [alert, setAlert] = useState(false);
   const [loader, setLoader] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-  const handleChangeUserEmail = (e) => setUsrEmail(e.target.value);
-  const handleChangeUserPassword = (e) => setUsrPassword(e.target.value);
   useEffect(() => {
     setLoader(true);
     if (loggedInUser) {

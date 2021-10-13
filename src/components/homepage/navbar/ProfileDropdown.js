@@ -1,9 +1,10 @@
 import * as React from "react";
 import { useState } from "react";
-import { Menu, MenuItem, Button, Divider } from "@mui/material";
+import { Menu, MenuItem, Button } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import LogOutDialog from "../../dialogs/LogOutDialog";
+import { Box } from "@mui/system";
 
 function ProfileDropdown() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -18,7 +19,7 @@ function ProfileDropdown() {
   };
 
   return (
-    <div>
+    <Box>
       <Button
         id="basic-button"
         aria-controls="basic-menu"
@@ -26,10 +27,13 @@ function ProfileDropdown() {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        <FontAwesomeIcon
-          icon={faUserCircle}
-          className="faUserCircle"
-        ></FontAwesomeIcon>
+        <Box fontSize="25px">
+          <FontAwesomeIcon
+            icon={faUserCircle}
+            className="faUserCircle"
+            color="#FFFFFF"
+          ></FontAwesomeIcon>
+        </Box>
       </Button>
       <Menu
         id="basic-menu"
@@ -44,7 +48,7 @@ function ProfileDropdown() {
           <LogOutDialog />
         </MenuItem>
       </Menu>
-    </div>
+    </Box>
   );
 }
 

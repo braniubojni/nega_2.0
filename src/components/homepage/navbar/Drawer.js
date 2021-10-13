@@ -36,7 +36,7 @@ function DrawerComponent() {
         >
           <Box>
             <Typography>
-              <img src={Logo} width="100px"></img>
+              <img src={Logo} width="100px" alt="Slack" />
             </Typography>
           </Box>
           <Box>
@@ -66,7 +66,7 @@ function DrawerComponent() {
       >
         <Box>
           <Typography>
-            <img src={Logo} width="100px"></img>
+            <img src={Logo} width="100px" alt="nega"></img>
           </Typography>
         </Box>
         <Box>

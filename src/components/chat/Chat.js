@@ -1,6 +1,6 @@
 import { getAuth } from "@firebase/auth";
 import { query, orderBy } from "firebase/firestore";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   collection,
@@ -47,7 +47,7 @@ const Ul = styled("ul")({
   overflowY: "auto",
   display: "flex",
   flexDirection: "column",
-  paddingLeft: "1%",
+  paddingLeft: "0.5%",
   width: "100%",
 });
 const TextFieldWrapper = styled("div")(({ theme }) => ({
@@ -71,7 +71,6 @@ function Chat() {
   const chatRef = useRef(null);
 
   useEffect(() => {
-    //`channels/${channelId}/messages`
     const msgRef = query(
       collection(db, `channels/${channelId}/messages`),
       orderBy("timestamp")

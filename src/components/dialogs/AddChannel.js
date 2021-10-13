@@ -1,11 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useHistory } from "react-router";
 import AddIcon from "@mui/icons-material/Add";
 import { TextField } from "@mui/material";
 import { handleNewChannel } from "../helpers/handlers";
@@ -14,7 +12,6 @@ import { Box } from "@mui/system";
 export default function AddNewChannel() {
   const [open, setOpen] = useState(false);
   const [newChannel, setNewChannel] = useState("");
-  const history = useHistory();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -33,7 +30,7 @@ export default function AddNewChannel() {
 
   return (
     <div>
-      <Box sx={{ ml: 9 }}>
+      <Box>
         <AddIcon cursor="pointer" onClick={handleClickOpen} />
       </Box>
       <Dialog

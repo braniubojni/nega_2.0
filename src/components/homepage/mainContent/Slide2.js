@@ -1,6 +1,4 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
-import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { Typography, List } from "@mui/material";
 import { Box } from "@mui/system";
@@ -32,10 +30,8 @@ function Slide2(incomeData = slideData) {
           height: 270,
           borderRadius: 0,
           background: "#FFF5EE",
-          width: "100%",
           display: "flex",
           justifyContent: "center",
-          mr: "50px",
         }}
       >
         <CardContent>
@@ -80,23 +76,24 @@ function Slide2(incomeData = slideData) {
           background: "#FFF5EE",
           display: "flex",
           flexDirection: "column",
+          mx: "150px",
         }}
       >
         <Typography
           variant="h1"
-          fontWeight="bold"
+          fontWeight="950"
           fontSize="30px"
           textAlign="center"
           marginTop="40px"
+          letterSpacing="3px"
         >
           Get started with Slack
         </Typography>
-
-        {slideData.map((slideItem) => (
-          <List sx={{ display: "flex" }} key={slideItem.h1}>
-            {renderSlides(slideItem)}
-          </List>
-        ))}
+        <Box sx={{ display: "flex", justifyContent: "space-evenly" }}>
+          {slideData.map((slideItem) => (
+            <List key={slideItem.h1}>{renderSlides(slideItem)}</List>
+          ))}
+        </Box>
       </Box>
     </>
   );
