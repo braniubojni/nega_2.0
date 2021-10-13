@@ -19,12 +19,9 @@ function Channel({ id, channelName }) {
     dispatch(setChannelInfo({ channelId: id, channelName: channelName }));
     history.push(`${CHANNELS_ROUTE}/${id}`);
   };
+  console.log(role);
   return (
-    <ListItemButton
-      sx={{ "&:hover": { backgroundColor: "unset" } }}
-      onMouseEnter={() => setToggleRemove(true)}
-      onMouseOut={() => setToggleRemove(false)}
-    >
+    <ListItemButton sx={{ "&:hover": { backgroundColor: "unset" } }}>
       <Box sx={{ fontSize: 12, mr: 1 }}>
         <FontAwesomeIcon icon={faHashtag} className="faHashtag" />
       </Box>
@@ -33,9 +30,11 @@ function Channel({ id, channelName }) {
         onClick={setChannel}
         sx={{ cursor: "pointer" }}
         primary={channelName}
+        onMouseEnter={() => setToggleRemove(true)}
+        onMouseOut={() => setToggleRemove(false)}
       />
       {toggleRemove && role && (
-        <RemoveIcon sx={{ position: "absolute", right: "-100%" }} />
+        <RemoveIcon sx={{ position: "absolute", right: "30%" }} />
       )}
     </ListItemButton>
   );
