@@ -1,4 +1,3 @@
-import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -54,7 +53,6 @@ export default function SignIn() {
   const loggedInUser = useSelector(selectLoggedInUser);
   const [alert, setAlert] = useState(false);
   const [loader, setLoader] = useState(false);
-
   useEffect(() => {
     setLoader(true);
     if (loggedInUser) {
@@ -200,7 +198,6 @@ export default function SignIn() {
               <Copyright sx={{ mt: 8, mb: 4 }} />
             </Container>
           </ThemeProvider>
-
           {alert && <Alert alert={alert} setAlert={setAlert} />}
         </>
       )}

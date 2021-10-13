@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import Logo from "../../Logo/logo.svg";
+import Logo from "../../../logo/logo.svg";
 import SmallDropdown from "./SmallDropdown";
 
 import {
@@ -36,12 +36,12 @@ function DrawerComponent() {
         >
           <Box>
             <Typography>
-              <img src={Logo} width="100px"></img>
+              <img src={Logo} width="100px" alt="Slack" />
             </Typography>
           </Box>
           <Box>
             <IconButton onClick={() => setOpenDrawer(!openDrawer)}>
-              <CloseIcon />
+              <CloseIcon background="black" />
             </IconButton>
           </Box>
         </Box>
@@ -66,7 +66,7 @@ function DrawerComponent() {
       >
         <Box>
           <Typography>
-            <img src={Logo} width="100px"></img>
+            <img src={Logo} width="100px" alt="nega"></img>
           </Typography>
         </Box>
         <Box>

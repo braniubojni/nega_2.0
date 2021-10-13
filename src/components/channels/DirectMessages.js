@@ -1,26 +1,37 @@
-import * as React from "react";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-
-import ListItemButton from "@mui/material/ListItemButton";
+import List from "@mui/material/List";
+// import ListItemButton from "@mui/material/ListItemButton";
+import { ListItem } from "@mui/material";
 import ListItemText from "@mui/material/ListItemText";
 import Paper from "@mui/material/Paper";
-
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
+import { ThemeProvider } from "styled-components";
+import { createTheme } from "@mui/system";
+import EachUser from "../user/EachUser";
+import { collection, onSnapshot } from "@firebase/firestore";
+import db from "../../firebase";
+import { Divider } from "@mui/material";
 
-const data = [
-  { label: "Features" },
-  { label: "Channels" },
-  { label: "Integrations" },
-  { label: "Security" },
-  { label: "Slack Connect" },
-  { label: "Solutions" },
-  { label: "Customers" },
-  { label: "Download Slack" },
-];
+function SmallDropdown({ window }) {
+  const [users, setUsers] = useState([]);
+  const [open, setOpen] = useState(true);
 
-function SmallDropdown() {
-  const [open, setOpen] = React.useState(true);
+  useEffect(() => {
+    onSnapshot(collection(db, "users"), (snapshot) => setUsers(snapshot.docs));
+    return () => {
+      setUsers([]);
+    };
+  }, []);
+
+  const renderUsers = (userData) => (
+    <EachUser
+      key={userData.id}
+      id={userData.id}
+      userName={userData?.data().email}
+    />
+  );
+
   return (
     <Box sx={{ display: "flex" }}>
       <ThemeProvider
@@ -46,7 +57,7 @@ function SmallDropdown() {
               pb: open ? 2 : 0,
             }}
           >
-            <ListItemButton
+            <ListItem
               alignItems="flex-start"
               onClick={() => setOpen(!open)}
               sx={{
@@ -57,7 +68,7 @@ function SmallDropdown() {
               }}
             >
               <ListItemText
-                primary="Product"
+                primary="Direct messages"
                 primaryTypographyProps={{
                   fontSize: 17,
                   fontWeight: "bold",
@@ -67,28 +78,19 @@ function SmallDropdown() {
               />
               <KeyboardArrowDown
                 sx={{
-                  mr: -1,
+                  ml: 0,
                   opacity: 0,
                   transform: open ? "rotate(-180deg)" : "rotate(0)",
                   transition: "0.2s",
                 }}
               />
-            </ListItemButton>
+            </ListItem>
+            <Divider sx={{ width: "200px" }} />
             {open &&
-              data.map((item) => (
-                <ListItemButton
-                  key={item.label}
-                  sx={{ py: 0, minHeight: 32, color: "rgba(0,0,0,.8)" }}
-                >
-                  <ListItemText
-                    sx={{ minWidth: 1000 }}
-                    primary={item.label}
-                    primaryTypographyProps={{
-                      fontSize: 14,
-                      fontWeight: "medium",
-                    }}
-                  />
-                </ListItemButton>
+              users?.map((user) => (
+                <List key={user.id} sx={{ mb: -4 }}>
+                  {renderUsers(user)}
+                </List>
               ))}
           </Box>
         </Paper>

@@ -1,9 +1,9 @@
-import * as React from "react";
+import { useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
-import Drawer from "@mui/material/Drawer";
+import { Drawer } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -19,7 +19,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHashtag } from "@fortawesome/free-solid-svg-icons";
 import Channel from "../channels/Channel";
 import { useSelector } from "react-redux";
-import ProfileDropdown from "./ProfileDropdown";
+import ProfileDropdown from "../homepage/navbar/ProfileDropdown";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
@@ -27,8 +27,14 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
 import AddNewChannel from "../dialogs/AddChannel";
 import DirectMessages from "./DirectMessages";
+import Chat from "../chat/Chat";
+import { selectLoggedInUser } from "../../redux/common/auth/selectors";
+import { useHistory } from "react-router";
+import { SIGN_IN_ROUTE } from "../../constants/paths";
+import { collection, onSnapshot } from "@firebase/firestore";
+import db from "../../firebase";
 
-const drawerWidth = 220;
+const drawerWidth = 240;
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -61,8 +67,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
   borderRadius: "10px",
   "& .MuiInputBase-input": {
-    // padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
+    padding: theme.spacing(1, 1, 1, 0),
+
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
@@ -72,10 +78,23 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function ChannelArea({ window, channels, Chat }) {
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [open, setOpen] = React.useState(true);
+function Channels({ window }) {
+  const loggedUser = useSelector(selectLoggedInUser);
+  const history = useHistory();
+  const [channels, setChannels] = useState([]);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const channelName = useSelector(selectChannelName);
+
+  useEffect(() => {
+    if (!loggedUser) {
+      history.push(SIGN_IN_ROUTE);
+    } else {
+      onSnapshot(collection(db, "channels"), (snapshot) =>
+        setChannels(snapshot?.docs)
+      );
+    }
+  }, [history, loggedUser]);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -117,6 +136,7 @@ function ChannelArea({ window, channels, Chat }) {
                 sx={{
                   bgcolor: open ? "rgba(255,255,255, 1)" : null,
                   pb: open ? 2 : 0,
+                  position: "relative",
                 }}
               >
                 <ListItemButton
@@ -146,20 +166,17 @@ function ChannelArea({ window, channels, Chat }) {
                       transition: "0.2s",
                     }}
                   />
-                  <Box>
-                    <AddNewChannel />
-                  </Box>
                 </ListItemButton>
-                <Divider />
-
+                <Box sx={{ position: "absolute", top: 0, right: 0 }}>
+                  <AddNewChannel />
+                </Box>
+                <Divider sx={{ width: "200px" }} />
                 {open &&
                   channels?.map((channel) => (
-                    <ListItemButton sx={{ mb: -4 }} key={channel.id}>
+                    <List sx={{ mb: -4 }} key={channel.id}>
                       {renderChannels(channel)}
-                    </ListItemButton>
+                    </List>
                   ))}
-
-                <Divider sx={{ mt: 2, mb: 2 }} />
               </Box>
             </Paper>
           </ThemeProvider>
@@ -292,4 +309,4 @@ function ChannelArea({ window, channels, Chat }) {
   );
 }
 
-export default ChannelArea;
+export default Channels;

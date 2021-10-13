@@ -1,9 +1,9 @@
 import * as React from "react";
 import { useState } from "react";
-import { Menu, MenuItem, Button, Divider } from "@mui/material";
+import { Menu, MenuItem, Button } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import LogOutDialog from "../dialogs/LogOutDialog";
+import LogOutDialog from "../../dialogs/LogOutDialog";
 
 function ProfileDropdown() {
   const [anchorEl, setAnchorEl] = useState(null);

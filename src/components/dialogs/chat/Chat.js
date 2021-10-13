@@ -1,6 +1,6 @@
 import { getAuth } from "@firebase/auth";
 import { query, orderBy } from "firebase/firestore";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   collection,
@@ -47,7 +47,7 @@ const Ul = styled("ul")({
   overflowY: "auto",
   display: "flex",
   flexDirection: "column",
-  paddingLeft: "0.5%",
+  paddingLeft: "1%",
   width: "100%",
 });
 const TextFieldWrapper = styled("div")(({ theme }) => ({
@@ -63,7 +63,7 @@ const TextFieldWrapper = styled("div")(({ theme }) => ({
 }));
 
 function Chat() {
-  const [messages, setMessages] = useState(null);
+  const [messages, setMessages] = useState([]);
   const [sent, setSent] = useState(false);
   const channelId = useSelector(selectChannelId);
   const channelName = useSelector(selectChannelName);
@@ -71,15 +71,14 @@ function Chat() {
   const chatRef = useRef(null);
 
   useEffect(() => {
-    const msgRef = query(
-      collection(db, `channels/${channelId}/messages`),
-      orderBy("timestamp")
-    );
-    onSnapshot(msgRef, (snapshot) => {
-      setMessages(snapshot?.docs);
-    });
-    return () => {
-      setMessages([]);
+    const msgQuery = async () => {
+      const messagesRef = await query(
+        collection(db, `channels/${channelId}/messages`),
+        orderBy("timestamp")
+      );
+      onSnapshot(messagesRef, (snapshot) => {
+        setMessages(snapshot.docs);
+      });
     };
   }, [channelId]);
 
@@ -114,7 +113,7 @@ function Chat() {
   return (
     <MainContentWrapper>
       <Ul>
-        {!!messages?.length && messages?.map((msg) => renderMsg(msg))}
+        {messages?.map((msg) => renderMsg(msg))}
         <li ref={chatRef} />
       </Ul>
       <div style={{ flex: "1 1 auto" }} />
@@ -130,6 +129,7 @@ function Chat() {
           autoComplete="off"
         >
           <Field>
+            <Emoji inputRef={inputRef} isDisabled={channelId} Sent={sent} />
             <TextField
               id="standard-basic"
               disabled={!channelId}
@@ -138,13 +138,12 @@ function Chat() {
                 channelId ? `Message # ${channelName}` : "Select any channel"
               }
               sx={{
-                marginRight: "1%",
+                marginLeft: "1%",
                 flex: "1 1 auto",
               }}
               variant="standard"
               fullWidth={true}
             />
-            <Emoji inputRef={inputRef} isDisabled={channelId} Sent={sent} />
             <MenuBar>
               <Arrow>
                 <SendIcon onClick={sendMessage} />
