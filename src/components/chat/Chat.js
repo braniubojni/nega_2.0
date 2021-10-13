@@ -18,7 +18,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import SendIcon from "@mui/icons-material/Send";
 import { styled } from "@mui/system";
-import Emoji from "../dialogs/chat/emoji/Emoji";
+import Emoji from "./Emoji";
 
 const Arrow = styled("div")(({ theme }) => ({
   cursor: "pointer",
@@ -71,15 +71,13 @@ function Chat() {
   const chatRef = useRef(null);
 
   useEffect(() => {
-    const msgQuery = async () => {
-      const messagesRef = await query(
-        collection(db, `channels/${channelId}/messages`),
-        orderBy("timestamp")
-      );
-      onSnapshot(messagesRef, (snapshot) => {
-        setMessages(snapshot.docs);
-      });
-    };
+    const messagesRef = query(
+      collection(db, `channels/${channelId}/messages`),
+      orderBy("timestamp")
+    );
+    onSnapshot(messagesRef, (snapshot) => {
+      setMessages(snapshot.docs);
+    });
   }, [channelId]);
 
   const scrollToBottom = () => {
