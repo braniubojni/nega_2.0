@@ -24,7 +24,7 @@ import { validateEmail, validatePassword } from "./validation";
 import db from "../../firebase";
 import { v4 as uuidv4 } from "uuid";
 import Loader from "../loader/Loader";
-import Alert from "../dialogs/Alert";
+import Alert from "../chat/Alert";
 
 function Copyright(props) {
   return (

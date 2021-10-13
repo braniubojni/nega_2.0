@@ -86,8 +86,8 @@ function Slide2(incomeData = slideData) {
   return (
     <>
       <Box
-        // backgroundColor="#FFF5EE"
-        backgroundColor="black"
+        backgroundColor="#FFF5EE"
+        // backgroundColor="black"
         marginLeft="20px"
         marginRight="20px"
         width="100%"
@@ -104,9 +104,9 @@ function Slide2(incomeData = slideData) {
       </Box>
       <Box
         sx={{
-          // background: "#FFF5EE",
+          background: "#FFF5EE",
+          // background: "green",
           width: "100%",
-          background: "green",
           display: "flex",
           justifyContent: "space-evenly",
           mx: "20px",

@@ -21,7 +21,7 @@ import {
 import { signInWithEmailAndPassword, getAuth } from "@firebase/auth";
 import { selectLoggedInUser } from "../../redux/common/auth/selectors";
 import { Link } from "react-router-dom";
-import Alert from "../dialogs/Alert";
+import Alert from "../chat/Alert";
 import Loader from "../loader/Loader";
 
 function Copyright(props) {

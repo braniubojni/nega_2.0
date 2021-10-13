@@ -5,7 +5,6 @@ import {
   Tabs,
   Tab,
   Toolbar,
-  Button,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -13,9 +12,8 @@ import {
 import Dropdown from "./Dropdown";
 import DrawerComponent from "./Drawer";
 import Logo from "../../../logo/logo.svg";
-import { Link } from "react-router-dom";
-import { SIGN_IN_ROUTE, SIGN_UP_ROUTE } from "../../../constants/paths";
 import { Box } from "@mui/system";
+import Buttons from "../../../shared/ButtonTemplate";
 
 function Navbar() {
   const [value, setValue] = useState(0);
@@ -35,7 +33,7 @@ function Navbar() {
             <DrawerComponent />
           ) : (
             <>
-              <Typography>
+              <Typography sx={{ mr: "20px", mt: "10px" }}>
                 <img src={Logo} width="100px" alt="slack_logo" />
               </Typography>
               <Box sx={{ display: "flex" }}>
@@ -64,14 +62,7 @@ function Navbar() {
                   />
                 </Tabs>
               </Box>
-              <Box width="100%" display="flex" justifyContent="flex-end">
-                <Button variant="outlined">
-                  <Link to={SIGN_UP_ROUTE}>Sign Up</Link>
-                </Button>
-                <Button>
-                  <Link to={SIGN_IN_ROUTE}>Try for free</Link>
-                </Button>
-              </Box>
+              <Buttons />
             </>
           )}
         </Toolbar>
