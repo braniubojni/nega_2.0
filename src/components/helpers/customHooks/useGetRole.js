@@ -22,5 +22,5 @@ export function useGetRole() {
       setRole({});
     };
   }, [loggedUser]);
-  return role.isAdmin;
+  return role?.isAdmin;
 }
