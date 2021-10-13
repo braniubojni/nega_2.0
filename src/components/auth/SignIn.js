@@ -1,4 +1,3 @@
-import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -54,13 +53,6 @@ export default function SignIn() {
   const loggedInUser = useSelector(selectLoggedInUser);
   const [alert, setAlert] = useState(false);
   const [loader, setLoader] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-  const handleChangeUserEmail = (e) => setUsrEmail(e.target.value);
-  const handleChangeUserPassword = (e) => setUsrPassword(e.target.value);
   useEffect(() => {
     setLoader(true);
     if (loggedInUser) {

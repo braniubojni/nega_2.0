@@ -47,7 +47,7 @@ const Ul = styled("ul")({
   overflowY: "auto",
   display: "flex",
   flexDirection: "column",
-  paddingLeft: "1%",
+  paddingLeft: "0.5%",
   width: "100%",
 });
 const TextFieldWrapper = styled("div")(({ theme }) => ({
@@ -71,7 +71,6 @@ function Chat() {
   const chatRef = useRef(null);
 
   useEffect(() => {
-    //`channels/${channelId}/messages`
     const msgRef = query(
       collection(db, `channels/${channelId}/messages`),
       orderBy("timestamp")
