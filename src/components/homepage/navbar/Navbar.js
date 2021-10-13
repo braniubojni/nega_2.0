@@ -8,6 +8,7 @@ import {
   Button,
   useMediaQuery,
   useTheme,
+  createTheme,
 } from "@mui/material";
 
 import Dropdown from "./Dropdown";
@@ -15,6 +16,19 @@ import DrawerComponent from "./Drawer";
 import Logo from "../../../logo/logo.svg";
 import { Link } from "react-router-dom";
 import { SIGN_IN_ROUTE, SIGN_UP_ROUTE } from "../../../constants/paths";
+import { ThemeProvider } from "@mui/system";
+
+const Theme = createTheme({
+  palette: {
+    primary: {
+      main: "#f6efe8",
+      contrastText: "#1d1d1d",
+    },
+    secondary: {
+      main: "#1d1d1d",
+    },
+  },
+});
 
 function Navbar() {
   const [value, setValue] = useState(0);
@@ -28,7 +42,8 @@ function Navbar() {
 
   return (
     <>
-      <AppBar color="secondary">
+      {/* <ThemeProvider theme={Theme}> */}
+      <AppBar sx={{ backgroundColor: "#f6efe8" }}>
         <Toolbar>
           {isSmallScreen ? (
             <DrawerComponent />
@@ -39,7 +54,7 @@ function Navbar() {
               </Typography>
               <Tabs
                 onChange={handleClickTab}
-                indicatorColor="primary"
+                indicatorColor="secondary"
                 value={value}
               >
                 <Tab disableRipple label={<Dropdown />} />
@@ -57,6 +72,7 @@ function Navbar() {
           )}
         </Toolbar>
       </AppBar>
+      {/* </ThemeProvider> */}
     </>
   );
 }

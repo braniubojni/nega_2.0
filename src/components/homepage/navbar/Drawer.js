@@ -66,7 +66,7 @@ function DrawerComponent() {
       >
         <Box>
           <Typography>
-            <img src={Logo} width="100px" alt="nega"></img>
+            <img src={Logo} width="100px" alt="slack_logo"></img>
           </Typography>
         </Box>
         <Box>
