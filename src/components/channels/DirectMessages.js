@@ -61,7 +61,7 @@ function SmallDropdown({ window }) {
               alignItems="flex-start"
               onClick={() => setOpen(!open)}
               sx={{
-                px: 3,
+                px: 2.5,
                 pt: 2.5,
                 pb: open ? 0 : 1.5,
                 "&:hover, &:focus": { "& svg": { opacity: open ? 1 : 0 } },
