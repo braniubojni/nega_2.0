@@ -33,7 +33,7 @@ export default function AddNewChannel() {
 
   return (
     <div>
-      <Box sx={{ ml: 9 }}>
+      <Box>
         <AddIcon cursor="pointer" onClick={handleClickOpen} />
       </Box>
       <Dialog

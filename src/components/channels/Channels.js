@@ -46,7 +46,7 @@ const Search = styled("div")(({ theme }) => ({
   marginLeft: theme.spacing(2),
   width: "100%",
   [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
+    marginLeft: theme.spacing(-30),
     width: "auto",
   },
 }));
@@ -64,11 +64,9 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   width: "550px",
-
   borderRadius: "10px",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
@@ -145,32 +143,40 @@ function Channels({ window }) {
                   sx={{
                     px: 3,
                     pt: 1.1,
-                    pb: open ? 0 : 2.5,
+                    pb: open ? 0 : 1.5,
                     "&:hover, &:focus": { "& svg": { opacity: open ? 1 : 0 } },
                   }}
                 >
                   <ListItemText
                     primary="Channels"
                     primaryTypographyProps={{
-                      fontSize: 15,
+                      fontSize: 17,
                       fontWeight: "bold",
                       lineHeight: "20px",
-                      mb: "2px",
+                      mb: "3px",
                     }}
                   />
                   <KeyboardArrowDown
                     sx={{
-                      ml: 0,
+                      mt: 0.4,
+                      mr: 21,
                       opacity: 0,
                       transform: open ? "rotate(-180deg)" : "rotate(0)",
                       transition: "0.2s",
                     }}
                   />
                 </ListItemButton>
-                <Box sx={{ position: "absolute", top: 0, right: 0 }}>
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: 10,
+                    right: 1,
+                    mr: 10,
+                  }}
+                >
                   <AddNewChannel />
                 </Box>
-                <Divider sx={{ width: "200px" }} />
+                <Divider sx={{ width: "300px" }} />
                 {open &&
                   channels?.map((channel) => (
                     <List sx={{ mb: -4 }} key={channel.id}>
@@ -218,7 +224,14 @@ function Channels({ window }) {
             >
               <MenuIcon />
             </IconButton>
-            <Box sx={{ display: "flex", justifyContent: "flex-end", ml: 23 }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                ml: 23,
+                alignItems: "center",
+              }}
+            >
               <AccessTimeIcon />
             </Box>
             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -233,11 +246,11 @@ function Channels({ window }) {
                   />
                 </Search>
               </Box>
-              <Box sx={{ ml: 5 }}>
+              <Box sx={{ ml: 3, display: "flex", alignItems: "center" }}>
                 <HelpIcon />
               </Box>
             </Box>
-            <Box sx={{ backgroundColor: "black" }}>
+            <Box sx={{ backgroundColor: "#611f69", mr: -3 }}>
               <ProfileDropdown />
             </Box>
           </Toolbar>
@@ -286,7 +299,9 @@ function Channels({ window }) {
             sx={{
               display: "flex",
               alignItems: "center",
-              p: "12.5px",
+              pl: "12.5px",
+              pt: "20px",
+              pb: "5px",
             }}
           >
             <Box sx={{ mr: 0.5 }}>
@@ -295,7 +310,7 @@ function Channels({ window }) {
                 className="faHashtag"
               ></FontAwesomeIcon>
             </Box>
-            <Box sx={{ mr: 0.5 }}>
+            <Box>
               <Typography>{channelName}</Typography>
             </Box>
           </Box>

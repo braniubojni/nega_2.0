@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import db from "../../firebase";
-import { collection, limit, onSnapshot } from "@firebase/firestore";
+import { collection, onSnapshot } from "@firebase/firestore";
 import { setLoggedinUser } from "../../redux/common/auth/actions";
 import {
   CHANNELS_ROUTE,
@@ -25,8 +25,6 @@ import { Link } from "react-router-dom";
 import Alert from "../dialogs/Alert";
 import Loader from "../loader/Loader";
 
-// import { Button, Container, TextField } from "@mui/material";
-//
 function Copyright(props) {
   return (
     <Typography
