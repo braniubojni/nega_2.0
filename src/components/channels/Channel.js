@@ -21,7 +21,7 @@ function Channel({ id, channelName }) {
   };
   return (
     <ListItemButton
-      sx={{ "&:hover": { backgroundColor: "unset" } }}
+      sx={{ "&:hover": { backgroundColor: "unset" }, cursor: "pointer" }}
       onMouseEnter={() => setToggleRemove(true)}
       onMouseOut={() => setToggleRemove(false)}
     >
@@ -29,11 +29,7 @@ function Channel({ id, channelName }) {
         <FontAwesomeIcon icon={faHashtag} className="faHashtag" />
       </Box>
 
-      <ListItemText
-        onClick={setChannel}
-        sx={{ cursor: "pointer" }}
-        primary={channelName}
-      />
+      <ListItemText onClick={setChannel} primary={channelName} />
       {toggleRemove && role && (
         <RemoveIcon sx={{ position: "absolute", right: "-100%" }} />
       )}

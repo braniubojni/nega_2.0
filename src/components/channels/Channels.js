@@ -3,7 +3,7 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
-import { Drawer } from "@mui/material";
+import { Container, Drawer } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -205,61 +205,63 @@ function Channels({ window }) {
   return (
     <>
       <Box sx={{ display: "flex" }}>
-        <CssBaseline />
-        <AppBar
-          position="absolute"
-          sx={{
-            zIndex: (theme) => theme.zIndex.drawer + 1,
-          }}
-        >
-          <Toolbar
+        <Container maxWidth="lg">
+          <CssBaseline />
+          <AppBar
+            position="absolute"
             sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              background: "#611f69",
+              zIndex: (theme) => theme.zIndex.drawer + 1,
             }}
           >
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              sx={{ mr: 2, display: { sm: "none" } }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Box
+            <Toolbar
               sx={{
                 display: "flex",
-                justifyContent: "flex-end",
-                ml: widthwindow > 960 ? 23 : 0,
+                justifyContent: "space-between",
                 alignItems: "center",
+                background: "#611f69",
               }}
             >
-              <AccessTimeIcon />
-            </Box>
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Box sx={{ ml: 2 }}>
-                <Search>
-                  <SearchIconWrapper>
-                    <SearchIcon />
-                  </SearchIconWrapper>
-                  <StyledInputBase
-                    placeholder="Search…"
-                    inputProps={{ "aria-label": "search" }}
-                  />
-                </Search>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ mr: 2, display: { sm: "none" } }}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  ml: widthwindow > 960 ? 23 : 0,
+                  alignItems: "center",
+                }}
+              >
+                <AccessTimeIcon />
               </Box>
-              <Box sx={{ ml: 3, display: "flex", alignItems: "center" }}>
-                <HelpIcon />
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Box sx={{ ml: 2 }}>
+                  {/* <Search>
+                    <SearchIconWrapper>
+                      <SearchIcon />
+                    </SearchIconWrapper>
+                    <StyledInputBase
+                      placeholder="Search…"
+                      inputProps={{ "aria-label": "search" }}
+                    />
+                  </Search> */}
+                </Box>
+                <Box sx={{ ml: 3, display: "flex", alignItems: "center" }}>
+                  <HelpIcon />
+                </Box>
               </Box>
-            </Box>
-            <Box sx={{ backgroundColor: "#611f69", mr: -3 }}>
-              <ProfileDropdown />
-            </Box>
-          </Toolbar>
-        </AppBar>
+              <Box sx={{ backgroundColor: "#611f69", mr: -3 }}>
+                <ProfileDropdown />
+              </Box>
+            </Toolbar>
+          </AppBar>
+        </Container>
 
         <Box
           component="nav"
