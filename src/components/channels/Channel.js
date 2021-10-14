@@ -38,11 +38,7 @@ function Channel({ id, channelName }) {
         onMouseOut={() => setToggleRemove(false)}
       />
       {toggleRemove && role && (
-<<<<<<< HEAD
         <RemoveIcon sx={{ position: "absolute", right: "30%" }} />
-=======
-        <RemoveIcon sx={{ position: "absolute", right: "60%" }} />
->>>>>>> b46b623146a076b5b99bb66aea0fe005bf546bf5
       )}
     </ListItem>
   );
