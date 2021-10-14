@@ -25,7 +25,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
-import AddNewChannel from "../dialogs/AddChannel";
+import AddNewChannel from "../chat/AddChannel";
 import DirectMessages from "./DirectMessages";
 import Chat from "../chat/Chat";
 import { selectLoggedInUser } from "../../redux/common/auth/selectors";
@@ -33,6 +33,7 @@ import { useHistory } from "react-router";
 import { SIGN_IN_ROUTE } from "../../constants/paths";
 import { collection, onSnapshot } from "@firebase/firestore";
 import db from "../../firebase";
+import useWindowResize from "../helpers/customHooks/useWindowResize";
 
 const drawerWidth = 240;
 
@@ -45,9 +46,11 @@ const Search = styled("div")(({ theme }) => ({
   },
   marginLeft: theme.spacing(2),
   width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(-30),
-    width: "auto",
+  [theme.breakpoints.down(800)]: {
+    width: 400,
+  },
+  [theme.breakpoints.down(600)]: {
+    width: 300,
   },
 }));
 
@@ -77,6 +80,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 function Channels({ window }) {
+  const widthwindow = useWindowResize();
   const loggedUser = useSelector(selectLoggedInUser);
   const history = useHistory();
   const [channels, setChannels] = useState([]);
@@ -228,7 +232,7 @@ function Channels({ window }) {
               sx={{
                 display: "flex",
                 justifyContent: "flex-end",
-                ml: 23,
+                ml: widthwindow > 960 ? 23 : 0,
                 alignItems: "center",
               }}
             >

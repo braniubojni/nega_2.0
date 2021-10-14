@@ -10,19 +10,20 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import db from "../../firebase";
-import { collection, onSnapshot } from "@firebase/firestore";
-import { setLoggedinUser } from "../../redux/common/auth/actions";
 import {
   CHANNELS_ROUTE,
   SIGN_UP_ROUTE,
   HOME_ROUTE,
 } from "../../constants/paths";
-import { signInWithEmailAndPassword, getAuth } from "@firebase/auth";
-import { selectLoggedInUser } from "../../redux/common/auth/selectors";
+import { getAuth } from "@firebase/auth";
+import {
+  selectError,
+  selectLoggedInUser,
+} from "../../redux/common/auth/selectors";
 import { Link } from "react-router-dom";
-import Alert from "../dialogs/Alert";
+import Alert from "../chat/Alert";
 import Loader from "../loader/Loader";
+import { signInUser } from "../../redux/common/auth/thunk";
 
 function Copyright(props) {
   return (
@@ -51,8 +52,10 @@ export default function SignIn() {
   const [usrEmail, setUsrEmail] = useState("");
   const [usrPassword, setUsrPassword] = useState("");
   const loggedInUser = useSelector(selectLoggedInUser);
+  const error = useSelector(selectError);
   const [alert, setAlert] = useState(false);
   const [loader, setLoader] = useState(false);
+
   useEffect(() => {
     setLoader(true);
     if (loggedInUser) {
@@ -65,35 +68,15 @@ export default function SignIn() {
     };
   }, [history, loggedInUser]);
 
+  useEffect(() => {
+    if (error === "FirebaseError") {
+      setAlert((prev) => !prev);
+    }
+  }, [error]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    let isResolved = false;
-    setLoader(true);
-    signInWithEmailAndPassword(auth, usrEmail, usrPassword)
-      .then(() => {
-        isResolved = true;
-        const currentUser = auth.currentUser;
-        onSnapshot(collection(db, "users"), (snapshot) => {
-          dispatch(
-            setLoggedinUser(
-              snapshot?.docs
-                .map((doc) => doc.data())
-                .find((user) => user.email === currentUser.email)
-            )
-          );
-        });
-      })
-      .catch((error) => {
-        isResolved = false;
-        setAlert((prev) => !prev);
-        return new Error(error);
-      })
-      .finally(() => {
-        setLoader(false);
-        if (isResolved) {
-          history.push(CHANNELS_ROUTE);
-        }
-      });
+    dispatch(signInUser({ auth, usrEmail, usrPassword }));
   };
 
   return (

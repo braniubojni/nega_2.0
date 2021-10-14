@@ -10,21 +10,22 @@ import { Link } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useHistory } from "react-router";
 import { useEffect, useState } from "react";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { collection, addDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoggedinUser } from "../../redux/common/auth/actions";
 import {
   CHANNELS_ROUTE,
   SIGN_IN_ROUTE,
   HOME_ROUTE,
 } from "../../constants/paths";
-import { selectLoggedInUser } from "../../redux/common/auth/selectors";
+import {
+  selectError,
+  selectLoggedInUser,
+} from "../../redux/common/auth/selectors";
 import { validateEmail, validatePassword } from "./validation";
-import db from "../../firebase";
 import { v4 as uuidv4 } from "uuid";
 import Loader from "../loader/Loader";
-import Alert from "../dialogs/Alert";
+import Alert from "../chat/Alert";
+import { signUpUser } from "../../redux/common/auth/thunk";
 
 function Copyright(props) {
   return (
@@ -52,7 +53,6 @@ export default function SignUp() {
   const [rePassword, setRePassword] = useState("");
   const [loader, setLoader] = useState(false);
   const [alert, setAlert] = useState(false);
-  const [text, setText] = useState("You typed incorrect credentials");
 
   const userData = {
     email,
@@ -62,22 +62,36 @@ export default function SignUp() {
     isOnline: true,
   };
 
-  const loggedUser = useSelector(selectLoggedInUser);
+  const loggedInUser = useSelector(selectLoggedInUser);
   const dispatch = useDispatch();
   const history = useHistory();
+  const error = useSelector(selectError);
 
   useEffect(() => {
-    if (loggedUser) {
+    setLoader(true);
+    if (loggedInUser) {
+      setLoader(false);
       history.push(CHANNELS_ROUTE);
     }
-  }, [history, loggedUser]);
+    let timerId = setTimeout(() => setLoader(false), 1500);
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [history, loggedInUser]);
+
+  useEffect(() => {
+    console.log(error);
+    if (error?.name === "FirebaseError") {
+      setAlert((prev) => !prev);
+    }
+  }, [error]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    let isResolved = false;
     if (
       email === "" ||
       password === "" ||
+      email === password ||
       rePassword === "" ||
       (!validateEmail(email) && !validatePassword(password))
     ) {
@@ -85,27 +99,8 @@ export default function SignUp() {
       return null;
     }
     setLoader(true);
-    const usrCollection = collection(db, "users");
     const auth = getAuth();
-    setLoader(true);
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        isResolved = true;
-        addDoc(usrCollection, userData, userData.id);
-        dispatch(setLoggedinUser(userData));
-      })
-      .catch((error) => {
-        setAlert(true);
-        setText(`We already have the user with email ${email}`);
-        isResolved = false;
-        console.log(new Error(error));
-      })
-      .finally(() => {
-        setLoader(false);
-        if (isResolved) {
-          history.push(CHANNELS_ROUTE);
-        }
-      });
+    dispatch(signUpUser({ auth, email, password, userData }));
   };
 
   return (
@@ -226,7 +221,7 @@ export default function SignUp() {
               </Box>
               <Copyright sx={{ mt: 5 }} />
             </Container>
-            <Alert alert={alert} setAlert={setAlert} text={text} />
+            <Alert alert={alert} setAlert={setAlert} />
           </ThemeProvider>
         </>
       )}

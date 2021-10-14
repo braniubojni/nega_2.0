@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { setChannelInfo } from "../../redux/common/channel/actions";
 import { CHANNELS_ROUTE } from "../../constants/paths";
-import { ListItemButton, ListItemText } from "@mui/material";
+import { ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHashtag } from "@fortawesome/free-solid-svg-icons";
 import { Box } from "@mui/system";
@@ -21,7 +21,11 @@ function Channel({ id, channelName }) {
   };
   console.log(role);
   return (
-    <ListItemButton sx={{ "&:hover": { backgroundColor: "unset" } }}>
+    <ListItem
+      sx={{ "&:hover": { backgroundColor: "unset" } }}
+      onMouseEnter={() => setToggleRemove(true)}
+      onMouseOut={() => setToggleRemove(false)}
+    >
       <Box sx={{ fontSize: 12, mr: 1 }}>
         <FontAwesomeIcon icon={faHashtag} className="faHashtag" />
       </Box>
@@ -34,9 +38,13 @@ function Channel({ id, channelName }) {
         onMouseOut={() => setToggleRemove(false)}
       />
       {toggleRemove && role && (
+<<<<<<< HEAD
         <RemoveIcon sx={{ position: "absolute", right: "30%" }} />
+=======
+        <RemoveIcon sx={{ position: "absolute", right: "60%" }} />
+>>>>>>> b46b623146a076b5b99bb66aea0fe005bf546bf5
       )}
-    </ListItemButton>
+    </ListItem>
   );
 }
 

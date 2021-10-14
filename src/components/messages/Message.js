@@ -5,8 +5,8 @@ import moment from "moment";
 import { selectLoggedInUser } from "../../redux/common/auth/selectors";
 import { useSelector } from "react-redux";
 import { selectChannelId } from "../../redux/common/channel/selectors";
-import EditMsg from "../dialogs/EditMsg";
-import RemoveMsg from "../dialogs/RemoveMsg";
+import EditMsg from "../chat/EditMsg";
+import RemoveMsg from "../chat/RemoveMsg";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useState } from "react";
 
