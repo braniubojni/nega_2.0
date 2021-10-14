@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import List from "@mui/material/List";
 import { getAuth } from "@firebase/auth";
 import { ListItem } from "@mui/material";
 import ListItemText from "@mui/material/ListItemText";
@@ -28,8 +27,8 @@ function SmallDropdown({ window }) {
   const renderUsers = (userData) => {
     return userData?.data().email === auth.currentUser.email ? null : (
       <EachUser
-        key={userData.id}
-        id={userData.id}
+        key={userData?.id}
+        id={userData?.id}
         userName={userData?.data().email}
       />
     );
@@ -89,12 +88,10 @@ function SmallDropdown({ window }) {
                 }}
               />
             </ListItem>
-            <Divider sx={{ width: "300px" }} />
+            <Divider sx={{ width: "300px", marginBottom: "2%" }} />
             {open &&
               users?.map((user) => (
-                <List key={user.id} sx={{ mb: -4 }}>
-                  {renderUsers(user)}
-                </List>
+                <Box key={user.id}>{renderUsers(user)}</Box>
               ))}
           </Box>
         </Paper>

@@ -8,6 +8,7 @@ import {
 import db from "../../firebase";
 
 const channelRef = collection(db, "channels");
+const usersRef = collection(db, "users");
 
 export const handleNewChannel = async (channelName) => {
   addDoc(channelRef, { channelName });
@@ -24,4 +25,8 @@ export const handleEdit = async ({ channelId, id, msgInfo }) => {
 
 export const handleRemove = async ({ channelId, id }) => {
   await deleteDoc(doc(collection(db, "channels", channelId, "messages"), id));
+};
+
+export const handleUserRemove = async (id) => {
+  await deleteDoc(doc(usersRef, id));
 };
