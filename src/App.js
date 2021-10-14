@@ -11,10 +11,12 @@ import {
   SIGN_IN_ROUTE,
   SIGN_UP_ROUTE,
   CHANNELS_ROUTE,
+  VIDEO_ROUTE,
 } from "./constants/paths";
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
 import { collection, onSnapshot } from "@firebase/firestore";
 import db from "./firebase";
+import WatchVideo from "./components/video/WatchVideo";
 
 function App() {
   const dispatch = useDispatch();
@@ -55,6 +57,9 @@ function App() {
           </Route>
           <Route exact path={`${CHANNELS_ROUTE}/:id`}>
             <Channels />
+          </Route>
+          <Route exact path={`${VIDEO_ROUTE}`}>
+            <WatchVideo />
           </Route>
           <Redirect to={HOME_ROUTE} />
         </Switch>

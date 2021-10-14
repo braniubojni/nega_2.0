@@ -9,6 +9,7 @@ import video1 from "./video/img-hp-section-01.mp4";
 import video2 from "./video/img-hp-section-02.mp4";
 import video3 from "./video/img-hp-section-03.mp4";
 import ContentItem from "./ContentItem";
+import { useDispatch } from "react-redux";
 
 function MainContent() {
   const main = [
