@@ -128,7 +128,6 @@ function Chat() {
           autoComplete="off"
         >
           <Field>
-            <Emoji inputRef={inputRef} isDisabled={channelId} Sent={sent} />
             <TextField
               id="standard-basic"
               disabled={!channelId}
@@ -137,13 +136,15 @@ function Chat() {
                 channelId ? `Message # ${channelName}` : "Select any channel"
               }
               sx={{
-                marginLeft: "1%",
+                marginRight: "1%",
                 flex: "1 1 auto",
               }}
               variant="standard"
               fullWidth={true}
             />
             <MenuBar>
+              <Emoji inputRef={inputRef} isDisabled={channelId} Sent={sent} />
+
               <Arrow>
                 <SendIcon onClick={sendMessage} />
               </Arrow>
