@@ -3,19 +3,21 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { setChannelInfo } from "../../redux/common/channel/actions";
 import { CHANNELS_ROUTE } from "../../constants/paths";
-import { ListItem, ListItemText } from "@mui/material";
+import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHashtag } from "@fortawesome/free-solid-svg-icons";
-import { Box } from "@mui/system";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { useGetRole } from "../helpers/customHooks/useGetRole";
-import RemoveChannel from "../chat/RemChannel";
+import RemoveChannel from "../chat/Remove";
+import { Box } from "@mui/system";
+import { handleChannelRemove } from "../helpers/handlers";
 
 function Channel({ id, channelName }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const role = useGetRole();
   const [removeChannel, setRemoveChannel] = useState(null);
+  const [showRemove, setShowRemove] = useState(false);
   const onRemoveClose = () => {
     setRemoveChannel(null);
   };
@@ -24,34 +26,36 @@ function Channel({ id, channelName }) {
     history.push(`${CHANNELS_ROUTE}/${id}`);
   };
   return (
-    <ListItem sx={{ "&:hover": { backgroundColor: "unset" } }}>
-      <Box sx={{ fontSize: 12, mr: 1 }}>
-        <FontAwesomeIcon icon={faHashtag} className="faHashtag" />
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          padding: "0 10px",
-          justifyContent: "space-between",
-        }}
-      >
+    <ListItemButton
+      sx={{ py: 0, minHeight: 32 }}
+      onMouseEnter={() => setShowRemove(true)}
+      onMouseLeave={() => setShowRemove(false)}
+    >
+      <Box sx={{ display: "flex", alignItems: "center" }}>
+        <ListItemIcon sx={{ color: "inherit", minWidth: 23 }}>
+          <FontAwesomeIcon icon={faHashtag} className="faHashtag" />
+        </ListItemIcon>
         <ListItemText
           onClick={setChannel}
-          sx={{ cursor: "pointer" }}
           primary={channelName}
+          primaryTypographyProps={{
+            fontSize: "1rem",
+            fontWeight: "medium",
+          }}
         />
+        {showRemove && role && (
+          <RemoveIcon cursor="pointer" onClick={() => setRemoveChannel(true)} />
+        )}
       </Box>
-      {role && (
-        <RemoveIcon cursor="pointer" onClick={() => setRemoveChannel(true)} />
-      )}
       {removeChannel && (
         <RemoveChannel
           onRemoveClose={onRemoveClose}
-          channelName={channelName}
-          channelId={id}
+          name={channelName}
+          id={id}
+          removeFunc={handleChannelRemove}
         />
       )}
-    </ListItem>
+    </ListItemButton>
   );
 }
 

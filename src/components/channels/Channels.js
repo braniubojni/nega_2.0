@@ -180,12 +180,10 @@ function Channels({ window }) {
                 >
                   <AddNewChannel />
                 </Box>
-                <Divider sx={{ width: "300px" }} />
+                <Divider sx={{ width: "300px", marginBottom: "2%" }} />
                 {open &&
                   channels?.map((channel) => (
-                    <List sx={{ mb: -4 }} key={channel.id}>
-                      {renderChannels(channel)}
-                    </List>
+                    <Box key={channel.id}>{renderChannels(channel)}</Box>
                   ))}
               </Box>
             </Paper>
