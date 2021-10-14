@@ -78,6 +78,7 @@ function Chat() {
     onSnapshot(messagesRef, (snapshot) => {
       setMessages(snapshot.docs);
     });
+    return () => setMessages([]);
   }, [channelId]);
 
   const scrollToBottom = () => {

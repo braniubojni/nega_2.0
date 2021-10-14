@@ -10,10 +10,8 @@ import { Link } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useHistory } from "react-router";
 import { useEffect, useState } from "react";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { collection, addDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoggedinUser } from "../../redux/common/auth/actions";
 import {
   CHANNELS_ROUTE,
   SIGN_IN_ROUTE,
@@ -24,7 +22,6 @@ import {
   selectLoggedInUser,
 } from "../../redux/common/auth/selectors";
 import { validateEmail, validatePassword } from "./validation";
-import db from "../../firebase";
 import { v4 as uuidv4 } from "uuid";
 import Loader from "../loader/Loader";
 import Alert from "../chat/Alert";
@@ -56,7 +53,6 @@ export default function SignUp() {
   const [rePassword, setRePassword] = useState("");
   const [loader, setLoader] = useState(false);
   const [alert, setAlert] = useState(false);
-  const [text, setText] = useState("You typed incorrect credentials");
 
   const userData = {
     email,
@@ -225,7 +221,7 @@ export default function SignUp() {
               </Box>
               <Copyright sx={{ mt: 5 }} />
             </Container>
-            <Alert alert={alert} setAlert={setAlert} text={text} />
+            <Alert alert={alert} setAlert={setAlert} />
           </ThemeProvider>
         </>
       )}

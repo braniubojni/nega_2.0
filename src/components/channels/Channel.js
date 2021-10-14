@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { setChannelInfo } from "../../redux/common/channel/actions";
 import { CHANNELS_ROUTE } from "../../constants/paths";
-import { ListItemButton, ListItemText } from "@mui/material";
+import { ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHashtag } from "@fortawesome/free-solid-svg-icons";
 import { Box } from "@mui/system";
@@ -20,7 +20,7 @@ function Channel({ id, channelName }) {
     history.push(`${CHANNELS_ROUTE}/${id}`);
   };
   return (
-    <ListItemButton
+    <ListItem
       sx={{ "&:hover": { backgroundColor: "unset" } }}
       onMouseEnter={() => setToggleRemove(true)}
       onMouseOut={() => setToggleRemove(false)}
@@ -35,9 +35,9 @@ function Channel({ id, channelName }) {
         primary={channelName}
       />
       {toggleRemove && role && (
-        <RemoveIcon sx={{ position: "absolute", right: "-100%" }} />
+        <RemoveIcon sx={{ position: "absolute", right: "60%" }} />
       )}
-    </ListItemButton>
+    </ListItem>
   );
 }
 
