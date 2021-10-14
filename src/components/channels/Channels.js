@@ -87,7 +87,6 @@ function Channels({ window }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [open, setOpen] = useState(true);
   const channelName = useSelector(selectChannelName);
-  console.log(widthwindow);
 
   useEffect(() => {
     if (!loggedUser) {

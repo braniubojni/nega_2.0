@@ -1,6 +1,11 @@
 import { handleActions } from "redux-actions";
 import initialState from "../../initialState";
-import { LOG_OUT, SET_LOGGEDIN_USER, SET_USER_ROLE } from "../../actionTypes";
+import {
+  LOG_OUT,
+  SET_ERROR,
+  SET_LOGGEDIN_USER,
+  SET_USER_ROLE,
+} from "../../actionTypes";
 
 const initial = initialState.auth;
 
@@ -22,6 +27,12 @@ const reducer = handleActions(
       return {
         ...state,
         loggedInUser: null,
+      };
+    },
+    [SET_ERROR]: (state, { payload }) => {
+      return {
+        ...state,
+        error: payload,
       };
     },
   },
