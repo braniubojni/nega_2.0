@@ -1,4 +1,7 @@
 import { makeStyles } from "@mui/styles";
+import useWindowResize from "../../helpers/customHooks/useWindowResize";
+import Slider from "infinite-react-carousel";
+
 import { BLACK } from "../../../constants/colors";
 import { GRAY } from "../../../constants/colors";
 // menu item instead of regular
@@ -28,15 +31,20 @@ const useStyles = makeStyles(() => ({
 
 function InfoColumn({ title, menuItem }) {
   const classes = useStyles();
+  const widthWindow = useWindowResize();
   return (
-    <ul className={classes.list_wrapper}>
-      <li className={classes.heading}>{title}</li>
-      {menuItem.map((item) => (
-        <li key={item} className={classes.menuItem}>
-          {item}
-        </li>
-      ))}
-    </ul>
+    <>
+      {widthWindow > 700 ? (
+        <ul className={classes.list_wrapper}>
+          <li className={classes.heading}>{title}</li>
+          {menuItem.map((item) => (
+            <li key={item} className={classes.menuItem}>
+              {item}
+            </li>
+          ))}
+        </ul>
+      ) : null}
+    </>
   );
 }
 

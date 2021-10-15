@@ -12,7 +12,7 @@ import RemoveChannel from "../chat/Remove";
 import { Box } from "@mui/system";
 import { handleChannelRemove } from "../helpers/handlers";
 
-function Channel({ id, channelName }) {
+function Channel({ id, channelName, closeBurger }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const role = useGetRole();
@@ -23,6 +23,7 @@ function Channel({ id, channelName }) {
   };
   const setChannel = () => {
     dispatch(setChannelInfo({ channelId: id, channelName: channelName }));
+    closeBurger(false);
     history.push(`${CHANNELS_ROUTE}/${id}`);
   };
   return (
