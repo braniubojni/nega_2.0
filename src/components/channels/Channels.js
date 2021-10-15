@@ -47,10 +47,10 @@ const Search = styled("div")(({ theme }) => ({
   marginLeft: theme.spacing(2),
   width: "100%",
   [theme.breakpoints.down(800)]: {
-    width: 400,
+    width: "40vw",
   },
   [theme.breakpoints.down(600)]: {
-    width: 300,
+    width: "40vw",
   },
 }));
 
@@ -66,7 +66,7 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
-  width: "550px",
+  width: "40vw",
   borderRadius: "10px",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
@@ -107,6 +107,7 @@ function Channels({ window }) {
         key={channel.id}
         id={channel.id}
         channelName={channel?.data().channelName}
+        closeBurger={setMobileOpen}
       />
     );
   };
@@ -202,63 +203,61 @@ function Channels({ window }) {
   return (
     <>
       <Box sx={{ display: "flex" }}>
-        <Container maxWidth="lg">
-          <CssBaseline />
-          <AppBar
-            position="absolute"
+        <CssBaseline />
+        <AppBar
+          position="absolute"
+          sx={{
+            zIndex: (theme) => theme.zIndex.drawer + 1,
+          }}
+        >
+          <Toolbar
             sx={{
-              zIndex: (theme) => theme.zIndex.drawer + 1,
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              background: "#611f69",
             }}
           >
-            <Toolbar
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { sm: "none" } }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Box
               sx={{
                 display: "flex",
-                justifyContent: "space-between",
+                justifyContent: "flex-end",
+                ml: widthwindow > 960 ? 23 : 0,
                 alignItems: "center",
-                background: "#611f69",
               }}
             >
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                edge="start"
-                onClick={handleDrawerToggle}
-                sx={{ mr: 2, display: { sm: "none" } }}
-              >
-                <MenuIcon />
-              </IconButton>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  ml: widthwindow > 960 ? 23 : 0,
-                  alignItems: "center",
-                }}
-              >
-                <AccessTimeIcon />
+              <AccessTimeIcon />
+            </Box>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Box sx={{ ml: 2 }}>
+                <Search>
+                  <SearchIconWrapper>
+                    <SearchIcon />
+                  </SearchIconWrapper>
+                  <StyledInputBase
+                    placeholder="Search…"
+                    inputProps={{ "aria-label": "search" }}
+                  />
+                </Search>
               </Box>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <Box sx={{ ml: 2 }}>
-                  {/* <Search>
-                    <SearchIconWrapper>
-                      <SearchIcon />
-                    </SearchIconWrapper>
-                    <StyledInputBase
-                      placeholder="Search…"
-                      inputProps={{ "aria-label": "search" }}
-                    />
-                  </Search> */}
-                </Box>
-                <Box sx={{ ml: 3, display: "flex", alignItems: "center" }}>
-                  <HelpIcon />
-                </Box>
+              <Box sx={{ ml: 3, display: "flex", alignItems: "center" }}>
+                <HelpIcon />
               </Box>
-              <Box sx={{ backgroundColor: "#611f69", mr: -3 }}>
-                <ProfileDropdown />
-              </Box>
-            </Toolbar>
-          </AppBar>
-        </Container>
+            </Box>
+            <Box sx={{ backgroundColor: "#611f69" }}>
+              <ProfileDropdown />
+            </Box>
+          </Toolbar>
+        </AppBar>
 
         <Box
           component="nav"

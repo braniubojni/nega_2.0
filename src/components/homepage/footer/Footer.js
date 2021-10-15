@@ -32,11 +32,6 @@ const columns = [
   },
   {
     id: v4(),
-    title: "Pricing",
-    menuItem: ["plans", "paid vs free"],
-  },
-  {
-    id: v4(),
     title: "RESOURCES",
     menuItem: [
       "partners",
