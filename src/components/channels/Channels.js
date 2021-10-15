@@ -34,6 +34,7 @@ import { SIGN_IN_ROUTE } from "../../constants/paths";
 import { collection, onSnapshot } from "@firebase/firestore";
 import db from "../../firebase";
 import useWindowResize from "../helpers/customHooks/useWindowResize";
+import { MAGENTA } from "../../constants/colors";
 
 const drawerWidth = 240;
 
@@ -215,7 +216,7 @@ function Channels({ window }) {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              background: "#611f69",
+              background: MAGENTA,
             }}
           >
             <IconButton
@@ -253,7 +254,8 @@ function Channels({ window }) {
                 <HelpIcon />
               </Box>
             </Box>
-            <Box sx={{ backgroundColor: "#611f69" }}>
+
+            <Box sx={{ backgroundColor: MAGENTA, mr: -3 }}>
               <ProfileDropdown />
             </Box>
           </Toolbar>

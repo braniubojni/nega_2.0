@@ -2,6 +2,7 @@ import * as React from "react";
 import CardContent from "@mui/material/CardContent";
 import { Typography, List } from "@mui/material";
 import { Box } from "@mui/system";
+import { MAGENTA } from "../../../constants/colors";
 
 const slideData = [
   {
@@ -42,7 +43,7 @@ function Slide2(incomeData = slideData) {
               borderRadius: "5px",
               mb: "25px",
               mt: "20px",
-              background: "#611f69",
+              background: MAGENTA,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",

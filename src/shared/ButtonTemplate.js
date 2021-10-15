@@ -11,6 +11,8 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 
 import { selectLoggedInUser } from "../redux/common/auth/selectors";
+import { LIGHT_ORANGE } from "../constants/colors";
+import { MAGENTA } from "../constants/colors";
 
 function Buttons() {
   const history = useHistory();
@@ -35,14 +37,14 @@ function Buttons() {
       <Button
         variant="outlined"
         style={{
-          backgroundColor: "#611f69",
+          backgroundColor: MAGENTA,
           width: "130px",
           padding: "7px",
         }}
       >
         <div
           style={{
-            color: "#f6efe8",
+            color: LIGHT_ORANGE,
             textDecoration: "none",
           }}
           sx={{ fontWeight: "bold" }}

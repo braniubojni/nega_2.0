@@ -3,6 +3,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import Logo from "../../../logo/logo.svg";
 import SmallDropdown from "./SmallDropdown";
+import ButtonTemplate from "../../../shared/ButtonTemplate";
 
 import {
   Drawer,
@@ -64,6 +65,9 @@ function DrawerComponent() {
               </ListItem>
             );
           })}
+          <Box>
+            <ButtonTemplate />
+          </Box>
         </List>
       </Drawer>
 

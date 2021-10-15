@@ -1,5 +1,6 @@
 import { CircleSpinner } from "react-spinners-kit";
 import { styled } from "@mui/system";
+import { MAGENTA } from "../../constants/colors";
 
 const Spinner = styled("div")({
   position: "absolute",
@@ -12,7 +13,7 @@ const Spinner = styled("div")({
 export default function Loader() {
   return (
     <Spinner>
-      <CircleSpinner size={55} color="#611f69" loading={true} />
+      <CircleSpinner size={55} color={MAGENTA} loading={true} />
     </Spinner>
   );
 }
