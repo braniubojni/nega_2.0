@@ -1,16 +1,27 @@
 import { faHashtag } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ListItemButton, ListItemText } from "@mui/material";
+import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { CHANNELS_ROUTE } from "../../constants/paths";
 import { setChannelInfo } from "../../redux/common/channel/actions";
+import { useGetRole } from "../helpers/customHooks/useGetRole";
+import RemoveIcon from "@mui/icons-material/Remove";
+import RemoveUser from "../chat/Remove";
+import { handleUserRemove } from "../helpers/handlers";
 
 function EachUser({ id, userName }) {
   const dispatch = useDispatch();
   const history = useHistory();
+  const role = useGetRole();
+  const [showRemove, setShowRemove] = useState(false);
+  const [removeUser, setRemoveUser] = useState(null);
+
+  const onRemoveClose = () => {
+    setRemoveUser(null);
+  };
 
   const setUser = () => {
     dispatch(setChannelInfo({ userId: id, userName }));
@@ -19,13 +30,34 @@ function EachUser({ id, userName }) {
 
   return (
     <ListItemButton
-      onClick={setUser}
-      sx={{ "&:hover": { backgroundColor: "unset" } }}
+      sx={{ py: 0, minHeight: 32 }}
+      onMouseEnter={() => setShowRemove(true)}
+      onMouseLeave={() => setShowRemove(false)}
     >
-      <Box sx={{ fontSize: 12, mr: 1 }}>
-        <FontAwesomeIcon icon={faHashtag} className="faHashtag" />
+      <Box sx={{ display: "flex", alignItems: "center" }}>
+        <ListItemIcon sx={{ color: "inherit", minWidth: 23 }}>
+          <FontAwesomeIcon icon={faHashtag} className="faHashtag" />
+        </ListItemIcon>
+        <ListItemText
+          onClick={setUser}
+          primary={userName}
+          primaryTypographyProps={{
+            fontSize: "1rem",
+            fontWeight: "medium",
+          }}
+        />
+        {showRemove && role && (
+          <RemoveIcon cursor="pointer" onClick={() => setRemoveUser(true)} />
+        )}
       </Box>
-      <ListItemText sx={{ cursor: "pointer" }} primary={userName} />
+      {removeUser && (
+        <RemoveUser
+          onRemoveClose={onRemoveClose}
+          name={userName}
+          id={id}
+          removeFunc={handleUserRemove}
+        />
+      )}
     </ListItemButton>
   );
 }

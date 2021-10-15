@@ -24,7 +24,7 @@ export default function Alert({
         <DialogTitle id="alert-dialog-title">{"Alert"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            {text}
+            You typed incorrect credentials
           </DialogContentText>
         </DialogContent>
         <DialogActions>

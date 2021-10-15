@@ -43,7 +43,7 @@ export default function AddNewChannel() {
         </DialogTitle>
         <DialogContent>
           <TextField
-            autoFocus
+            autoFocus={true}
             margin="dense"
             id="name"
             type="text"

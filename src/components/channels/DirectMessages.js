@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import List from "@mui/material/List";
-// import ListItemButton from "@mui/material/ListItemButton";
+import { getAuth } from "@firebase/auth";
 import { ListItem } from "@mui/material";
 import ListItemText from "@mui/material/ListItemText";
 import Paper from "@mui/material/Paper";
@@ -16,6 +15,7 @@ import { Divider } from "@mui/material";
 function SmallDropdown({ window }) {
   const [users, setUsers] = useState([]);
   const [open, setOpen] = useState(true);
+  const auth = getAuth();
 
   useEffect(() => {
     onSnapshot(collection(db, "users"), (snapshot) => setUsers(snapshot.docs));
@@ -24,13 +24,15 @@ function SmallDropdown({ window }) {
     };
   }, []);
 
-  const renderUsers = (userData) => (
-    <EachUser
-      key={userData.id}
-      id={userData.id}
-      userName={userData?.data().email}
-    />
-  );
+  const renderUsers = (userData) => {
+    return userData?.data().email === auth.currentUser.email ? null : (
+      <EachUser
+        key={userData?.id}
+        id={userData?.id}
+        userName={userData?.data().email}
+      />
+    );
+  };
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -86,12 +88,10 @@ function SmallDropdown({ window }) {
                 }}
               />
             </ListItem>
-            <Divider sx={{ width: "300px" }} />
+            <Divider sx={{ width: "300px", marginBottom: "2%" }} />
             {open &&
               users?.map((user) => (
-                <List key={user.id} sx={{ mb: -4 }}>
-                  {renderUsers(user)}
-                </List>
+                <Box key={user.id}>{renderUsers(user)}</Box>
               ))}
           </Box>
         </Paper>
