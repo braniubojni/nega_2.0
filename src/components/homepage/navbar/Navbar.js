@@ -51,15 +51,15 @@ function Navbar() {
                   />
                   <Tab
                     disableRipple
-                    label={<span style={{ color: "#1d1d1d" }}>Enterprise</span>}
+                    label={<span style={{ color: BLACK }}>Enterprise</span>}
                   />
                   <Tab
                     disableRipple
-                    label={<span style={{ color: "#1d1d1d" }}>Recources</span>}
+                    label={<span style={{ color: BLACK }}>Recources</span>}
                   />
                   <Tab
                     disableRipple
-                    label={<span style={{ color: "#1d1d1d" }}>Pricing</span>}
+                    label={<span style={{ color: BLACK }}>Pricing</span>}
                   />
                 </Tabs>
               </Box>
