@@ -25,7 +25,7 @@ function SmallDropdown({ window }) {
   }, []);
 
   const renderUsers = (userData) => {
-    return userData?.data().email === auth.currentUser.email ? null : (
+    return userData?.data().email === auth.currentUser?.email ? null : (
       <EachUser
         key={userData?.id}
         id={userData?.id}

@@ -2,6 +2,9 @@ import React from "react";
 import { v4 } from "uuid";
 import InfoColumn from "./InfoColumn";
 import { makeStyles } from "@mui/styles";
+import useWindowResize from "../../helpers/customHooks/useWindowResize";
+
+import { Container } from "@mui/material";
 
 const useStyles = makeStyles(() => ({
   footer: {
@@ -57,15 +60,18 @@ const columns = [
 ];
 
 function Footer() {
+  const widthWindow = useWindowResize();
   const classes = useStyles();
   return (
-    <footer className={classes.footer}>
-      <div className={classes.footer__wrapper}>
-        {columns.map((props) => (
-          <InfoColumn key={props.id} {...props} />
-        ))}
-      </div>
-    </footer>
+    <Container>
+      <footer className={classes.footer}>
+        <div className={classes.footer__wrapper}>
+          {columns.map((props) => (
+            <InfoColumn key={props.id} {...props} />
+          ))}
+        </div>
+      </footer>
+    </Container>
   );
 }
 
