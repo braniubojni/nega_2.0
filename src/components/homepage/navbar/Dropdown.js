@@ -3,6 +3,7 @@ import { useState } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Menu, MenuItem } from "@mui/material";
 import { Box } from "@mui/system";
+import { BLACK } from "../../../constants/colors";
 
 function Dropdown() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -51,7 +52,7 @@ function Dropdown() {
       >
         {dropdownItems.map((item) => {
           return (
-            <MenuItem color="#1d1d1d" key={item} onClick={handleClose}>
+            <MenuItem color={BLACK} key={item} onClick={handleClose}>
               {item}
             </MenuItem>
           );

@@ -1,4 +1,6 @@
 import { makeStyles } from "@mui/styles";
+import { BLACK } from "../../../constants/colors";
+import { GRAY } from "../../../constants/colors";
 // menu item instead of regular
 const useStyles = makeStyles(() => ({
   list_wrapper: {
@@ -12,13 +14,13 @@ const useStyles = makeStyles(() => ({
   heading: {
     fontWeight: 700,
     height: 40,
-    color: "#1d1d1d",
+    color: BLACK,
     textTransform: "uppercase",
     padding: "0 15px",
   },
   menuItem: {
     height: 40,
-    color: "#454545",
+    color: GRAY,
     padding: "0 15px",
     textTransform: "capitalize",
   },

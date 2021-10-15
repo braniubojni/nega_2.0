@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { SIGN_IN_ROUTE, SIGN_UP_ROUTE } from "./../constants/paths";
 import { Box } from "@mui/system";
 import { Button } from "@mui/material";
+import { LIGHT_ORANGE } from "../constants/colors";
+import { MAGENTA } from "../constants/colors";
 
 function Buttons() {
   return (
@@ -10,25 +12,28 @@ function Buttons() {
       <Button
         variant="outlined"
         sx={{
-          borderColor: "#611f69",
+          borderColor: MAGENTA,
           fontWeight: "bolder",
           mr: "20px",
         }}
       >
-        <Link style={{ textDecoration: "none" }} to={SIGN_UP_ROUTE}>
+        <Link
+          style={{ textDecoration: "none", color: MAGENTA }}
+          to={SIGN_UP_ROUTE}
+        >
           Sign Up
         </Link>
       </Button>
       <Button
         style={{
-          backgroundColor: "#611f69",
+          backgroundColor: MAGENTA,
           width: "130px",
           padding: "7px",
         }}
       >
         <Link
           style={{
-            color: "#f6efe8",
+            color: LIGHT_ORANGE,
             textDecoration: "none",
           }}
           sx={{ fontWeight: "bold" }}
