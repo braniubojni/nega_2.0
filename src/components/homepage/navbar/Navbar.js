@@ -15,6 +15,8 @@ import Logo from "../../../logo/logo.svg";
 
 import { Box } from "@mui/system";
 import Buttons from "../../../shared/ButtonTemplate";
+import { LIGHT_ORANGE } from "../../../constants/colors";
+import { BLACK } from "../../../constants/colors";
 
 function Navbar() {
   const [value, setValue] = useState(0);
@@ -29,7 +31,7 @@ function Navbar() {
   return (
     <>
       <AppBar sx={{ backgroundColor: "black" }}>
-        <Toolbar sx={{ backgroundColor: "#f6efe8" }}>
+        <Toolbar sx={{ backgroundColor: LIGHT_ORANGE }}>
           {isSmallScreen ? (
             <DrawerComponent />
           ) : (
@@ -46,20 +48,20 @@ function Navbar() {
                   <Tab
                     disableRipple
                     label={
-                      <span style={{ color: "#1d1d1d" }}>{<Dropdown />}</span>
+                      <span style={{ color: { BLACK } }}>{<Dropdown />}</span>
                     }
                   />
                   <Tab
                     disableRipple
-                    label={<span style={{ color: "#1d1d1d" }}>Enterprise</span>}
+                    label={<span style={{ color: { BLACK } }}>Enterprise</span>}
                   />
                   <Tab
                     disableRipple
-                    label={<span style={{ color: "#1d1d1d" }}>Recources</span>}
+                    label={<span style={{ color: { BLACK } }}>Recources</span>}
                   />
                   <Tab
                     disableRipple
-                    label={<span style={{ color: "#1d1d1d" }}>Pricing</span>}
+                    label={<span style={{ color: { BLACK } }}>Pricing</span>}
                   />
                 </Tabs>
               </Box>

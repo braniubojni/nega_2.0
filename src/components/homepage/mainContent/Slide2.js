@@ -1,9 +1,8 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
-import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { Typography, List } from "@mui/material";
 import { Box } from "@mui/system";
+import { MAGENTA } from "../../../constants/colors";
 
 const slideData = [
   {
@@ -22,18 +21,6 @@ const slideData = [
     h2: "Run a project, coordinate with your team, or just talk it out. Slack is a blank canvas for teamwork.",
   },
 ];
-
-function useWindowResize() {
-  const [windowResize, setWindowResize] = useState(window.innerWidth);
-  useEffect(() => {
-    const handleResize = () => setWindowResize(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [windowResize]);
-  return windowResize;
-}
 
 function Slide2(incomeData = slideData) {
   const renderSlides = (card) => {
@@ -56,7 +43,7 @@ function Slide2(incomeData = slideData) {
               borderRadius: "5px",
               mb: "25px",
               mt: "20px",
-              background: "#611f69",
+              background: MAGENTA,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",

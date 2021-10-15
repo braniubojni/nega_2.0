@@ -3,6 +3,7 @@ import { styled } from "@mui/system";
 import { Container, Typography } from "@mui/material";
 import useWindowResize from "../../helpers/customHooks/useWindowResize";
 import VideoDialog from "./VideoDialogs";
+import { BLACK } from "../../../constants/colors";
 
 const Content = styled("div")(({ theme }) => ({
   marginTop: 60,
@@ -11,7 +12,7 @@ const Content = styled("div")(({ theme }) => ({
   paddingLeft: 15,
   paddingRight: 15,
   flexDirection: "row",
-  color: "#1d1d1d",
+  color: BLACK,
   [theme.breakpoints.down("1000")]: {
     marginTop: 40,
     justifyContent: "center",
