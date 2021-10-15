@@ -2,10 +2,6 @@ import React, { useState, useEffect } from "react";
 import { styled } from "@mui/system";
 import { Container, Typography } from "@mui/material";
 import useWindowResize from "../../helpers/customHooks/useWindowResize";
-import { useHistory } from "react-router";
-import { VIDEO_ROUTE } from "../../../constants/paths";
-import { useDispatch } from "react-redux";
-import { setVideo } from "../../../redux/common/video/actions";
 
 const Content = styled("div")(({ theme }) => ({
   marginTop: 60,
@@ -53,17 +49,8 @@ const Img = styled("img")(({ theme }) => ({
 }));
 
 function ContentItem({ content, index }) {
-  const history = useHistory();
-  const dispatch = useDispatch();
   const windowWidth = useWindowResize();
   const [videoId, setvideoId] = useState(null);
-
-  useEffect(() => {
-    if (videoId) {
-      dispatch(setVideo(videoId));
-      history.push(VIDEO_ROUTE);
-    }
-  }, [videoId, history, dispatch]);
 
   return (
     <>
@@ -90,7 +77,6 @@ function ContentItem({ content, index }) {
             <ContentImgItem>
               {content.img.map((item, index) => (
                 <div key={content.imgName[index]}>
-                  {/* <Link to={VIDEO_ROUTE} > */}
                   <Img
                     src={item}
                     onClick={() => setvideoId(content.videoLink[index])}

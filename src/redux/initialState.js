@@ -12,9 +12,6 @@ const initialState = {
     userId: null,
     userName: null,
   },
-  video: {
-    videoId: null,
-  },
 };
 
 export default initialState;

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import YouTube from "react-youtube";
 import { styled } from "@mui/system";
-import { selectVideo } from "../../redux/common/video/selectors";
-import { useSelector } from "react-redux";
+
 import { useHistory } from "react-router";
 
 import CloseIcon from "@mui/icons-material/Close";
@@ -26,8 +25,8 @@ function WatchVideo() {
       history.push(HOME_ROUTE);
     }
   }, [esc, history]);
+  const video = "";
 
-  const video = useSelector(selectVideo);
   const opts = {
     width: "100%",
     height: "100vh",

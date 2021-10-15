@@ -102,7 +102,10 @@ function Slide1(incomeData = slideData) {
           <Box>
             <Slider dots>
               {slideData.map((slideItem) => (
-                <List sx={{ display: "flex" }} key={slideItem.h1}>
+                <List
+                  key={slideItem.h1}
+                  sx={{ display: "flex !important", justifyContent: "center" }}
+                >
                   {renderSlides(slideItem)}
                 </List>
               ))}

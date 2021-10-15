@@ -33,23 +33,27 @@ function Buttons() {
         </Button>
       )}
       <Button
-        sx={{
-          color: "#f6efe8",
+        variant="outlined"
+        style={{
           backgroundColor: "#611f69",
           width: "130px",
-          fontWeight: "bold",
           padding: "7px",
-          "&:hover": {
-            backgroundColor: "inherit",
-          },
         }}
-        onClick={() =>
-          loggedUser
-            ? history.push(CHANNELS_ROUTE)
-            : history.push(SIGN_IN_ROUTE)
-        }
       >
-        {!loggedUser ? "Try for free" : "Open Chanels"}
+        <div
+          style={{
+            color: "#f6efe8",
+            textDecoration: "none",
+          }}
+          sx={{ fontWeight: "bold" }}
+          onClick={() =>
+            loggedUser
+              ? history.push(CHANNELS_ROUTE)
+              : history.push(SIGN_IN_ROUTE)
+          }
+        >
+          {!loggedUser ? "Try for free" : "Open Chanels"}
+        </div>
       </Button>
     </Box>
   );
