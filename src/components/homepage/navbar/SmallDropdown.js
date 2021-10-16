@@ -38,7 +38,7 @@ function SmallDropdown() {
           },
         })}
       >
-        <Paper elevation={0} sx={{ maxWidth: 500 }}>
+        <Paper elevation={0} sx={{ maxWidth: "100%" }}>
           <Box
             sx={{
               bgcolor: open ? "rgba(255,255,255, 1)" : null,
