@@ -4,6 +4,7 @@ import {
   doc,
   deleteDoc,
   addDoc,
+  serverTimestamp,
 } from "@firebase/firestore";
 import db from "../../firebase";
 
@@ -29,4 +30,26 @@ export const handleRemove = async ({ channelId, id }) => {
 
 export const handleUserRemove = async (id) => {
   await deleteDoc(doc(usersRef, id));
+};
+
+export const sentMsg = async ({ name, message, channelId }) => {
+  await addDoc(collection(db, "channels", channelId, "messages"), {
+    timestamp: serverTimestamp(),
+    message,
+    name,
+  });
+};
+
+export const sentDirectMsg = async ({ toUid, currentUid, message, name }) => {
+  let collecitonRef = await dmCollection(toUid, currentUid);
+  await addDoc(collecitonRef, {
+    timestamp: serverTimestamp(),
+    message,
+    name,
+  });
+};
+
+const dmCollection = async (toUid, currentUid) => {
+  const idPair = [currentUid, toUid].join("_");
+  return collection(db, "dms", idPair, "messages");
 };

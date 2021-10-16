@@ -80,7 +80,6 @@ export default function SignUp() {
   }, [history, loggedInUser]);
 
   useEffect(() => {
-    console.log(error);
     if (error?.name === "FirebaseError") {
       setAlert((prev) => !prev);
     }

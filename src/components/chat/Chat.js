@@ -19,6 +19,8 @@ import TextField from "@mui/material/TextField";
 import SendIcon from "@mui/icons-material/Send";
 import { styled } from "@mui/system";
 import Emoji from "./Emoji";
+import { useLocation } from "react-router";
+import { sentDirectMsg, sentMsg } from "../helpers/handlers";
 
 const Arrow = styled("div")(({ theme }) => ({
   cursor: "pointer",
@@ -65,21 +67,36 @@ const TextFieldWrapper = styled("div")(({ theme }) => ({
 function Chat() {
   const [messages, setMessages] = useState([]);
   const [sent, setSent] = useState(false);
+  const { pathname } = useLocation();
   const channelId = useSelector(selectChannelId);
   const channelName = useSelector(selectChannelName);
   const inputRef = useRef("");
   const chatRef = useRef(null);
+  const auth = getAuth();
 
   useEffect(() => {
-    const messagesRef = query(
-      collection(db, `channels/${channelId}/messages`),
-      orderBy("timestamp")
-    );
-    onSnapshot(messagesRef, (snapshot) => {
-      setMessages(snapshot.docs);
-    });
+    // to get messages from channels
+    if (pathname.includes("channels")) {
+      const messagesRef = query(
+        collection(db, `channels/${channelId}/messages`),
+        orderBy("timestamp")
+      );
+      onSnapshot(messagesRef, (snapshot) => {
+        setMessages(snapshot.docs);
+      });
+    } else if (pathname.includes("users")) {
+      const messagesRef = query(
+        collection(db, `dms/${auth.currentUser.uid}/messages`),
+        orderBy("timestamp")
+      );
+      onSnapshot(messagesRef, (snapshot) => {
+        setMessages(snapshot.docs);
+      });
+    }
+
+    // need to have another to get from DM-s
     return () => setMessages([]);
-  }, [channelId]);
+  }, [channelId, pathname, auth]);
 
   const scrollToBottom = () => {
     chatRef.current.scrollIntoView({
@@ -90,13 +107,20 @@ function Chat() {
 
   const sendMessage = async (evn) => {
     evn.preventDefault();
-    const auth = getAuth();
     if (inputRef.current.value !== "") {
-      await addDoc(collection(db, "channels", channelId, "messages"), {
-        timestamp: serverTimestamp(),
-        message: inputRef.current.value,
-        name: auth.currentUser.email,
-      });
+      pathname.includes("channels")
+        ? sentMsg({
+            channelId,
+            message: inputRef.current.value,
+            name: auth.currentUser.email,
+          })
+        : sentDirectMsg({
+            toUid: channelId,
+            currentUid: auth.currentUser.uid,
+            message: inputRef.current.value,
+            name: auth.currentUser.email,
+          });
+
       setSent(true);
       inputRef.current.value = "";
       scrollToBottom();

@@ -12,7 +12,7 @@ import { collection, onSnapshot } from "@firebase/firestore";
 import db from "../../firebase";
 import { Divider } from "@mui/material";
 
-function SmallDropdown({ window }) {
+function SmallDropdown() {
   const [users, setUsers] = useState([]);
   const [open, setOpen] = useState(true);
   const auth = getAuth();
