@@ -3,6 +3,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import Logo from "../../../logo/logo.svg";
 import SmallDropdown from "./SmallDropdown";
+import ButtonTemplate from "../../../shared/ButtonTemplate";
 
 import {
   Drawer,
@@ -14,8 +15,10 @@ import {
   Typography,
   Box,
 } from "@mui/material";
+import useWindowResize from "../../helpers/customHooks/useWindowResize";
 
 function DrawerComponent() {
+  const widthWindow = useWindowResize();
   const [openDrawer, setOpenDrawer] = useState(true);
 
   const handleDrawerToggling = () => {
@@ -62,6 +65,9 @@ function DrawerComponent() {
               </ListItem>
             );
           })}
+          <Box>
+            <ButtonTemplate />
+          </Box>
         </List>
       </Drawer>
 
@@ -70,7 +76,9 @@ function DrawerComponent() {
       >
         <Box sx={{ ml: "20px", mt: "15px" }}>
           <Typography>
-            <img src={Logo} width="100px" alt="slack_logo"></img>
+            {widthWindow > 1024 ? (
+              <img src={Logo} width="100px" alt="slack_logo" />
+            ) : null}
           </Typography>
         </Box>
         <Box sx={{ mr: "10px", mt: "5px" }}>

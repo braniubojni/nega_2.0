@@ -3,7 +3,7 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
-import { Drawer } from "@mui/material";
+import { Container, Drawer } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -34,6 +34,7 @@ import { SIGN_IN_ROUTE } from "../../constants/paths";
 import { collection, onSnapshot } from "@firebase/firestore";
 import db from "../../firebase";
 import useWindowResize from "../helpers/customHooks/useWindowResize";
+import { MAGENTA } from "../../constants/colors";
 
 const drawerWidth = 240;
 
@@ -47,10 +48,10 @@ const Search = styled("div")(({ theme }) => ({
   marginLeft: theme.spacing(2),
   width: "100%",
   [theme.breakpoints.down(800)]: {
-    width: 400,
+    width: "40vw",
   },
   [theme.breakpoints.down(600)]: {
-    width: 300,
+    width: "40vw",
   },
 }));
 
@@ -66,7 +67,7 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
-  width: "550px",
+  width: "40vw",
   borderRadius: "10px",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
@@ -107,6 +108,7 @@ function Channels({ window }) {
         key={channel.id}
         id={channel.id}
         channelName={channel?.data().channelName}
+        closeBurger={setMobileOpen}
       />
     );
   };
@@ -214,7 +216,7 @@ function Channels({ window }) {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              background: "#611f69",
+              background: MAGENTA,
             }}
           >
             <IconButton
@@ -252,7 +254,8 @@ function Channels({ window }) {
                 <HelpIcon />
               </Box>
             </Box>
-            <Box sx={{ backgroundColor: "#611f69", mr: -3 }}>
+
+            <Box sx={{ backgroundColor: MAGENTA, mr: -3 }}>
               <ProfileDropdown />
             </Box>
           </Toolbar>

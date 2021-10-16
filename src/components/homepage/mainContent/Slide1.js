@@ -2,12 +2,28 @@ import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import { Typography, List } from "@mui/material";
+import { Typography, List, Container } from "@mui/material";
+import { styled } from "@mui/system";
+import Slider from "infinite-react-carousel";
+
 import img1 from "./Images/image_1.jpg";
 import img2 from "./Images/image_2.jpg";
 import img3 from "./Images/image_3.jpg";
 import img4 from "./Images/image_4.jpg";
 import { Box } from "@mui/system";
+import useWindowResize from "../../helpers/customHooks/useWindowResize";
+
+const BoxItems = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  flexWrap: "wrap",
+  [theme.breakpoints.down(1112)]: {
+    "&:nth-child(even)": {
+      marginRight: 10,
+    },
+  },
+}));
 
 const slideData = [
   { h1: "Webinar", h2: "What is Slack?", img: img1 },
@@ -29,6 +45,7 @@ const slideData = [
 ];
 
 function Slide1(incomeData = slideData) {
+  const widthWindow = useWindowResize();
   const renderSlides = (card) => {
     return (
       <Card
@@ -67,13 +84,35 @@ function Slide1(incomeData = slideData) {
 
   return (
     <>
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        {slideData.map((slideItem) => (
-          <List sx={{ display: "flex" }} key={slideItem.h1}>
-            {renderSlides(slideItem)}
-          </List>
-        ))}
-      </Box>
+      <Container
+        maxWidth="lg"
+        sx={{
+          mt: 5,
+        }}
+      >
+        {widthWindow > 600 ? (
+          <BoxItems>
+            {slideData.map((slideItem) => (
+              <List sx={{ display: "flex" }} key={slideItem.h1}>
+                {renderSlides(slideItem)}
+              </List>
+            ))}
+          </BoxItems>
+        ) : (
+          <Box>
+            <Slider dots>
+              {slideData.map((slideItem) => (
+                <List
+                  key={slideItem.h1}
+                  sx={{ display: "flex !important", justifyContent: "center" }}
+                >
+                  {renderSlides(slideItem)}
+                </List>
+              ))}
+            </Slider>
+          </Box>
+        )}
+      </Container>
     </>
   );
 }

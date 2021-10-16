@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "@mui/system";
 import { Container, Typography } from "@mui/material";
 import useWindowResize from "../../helpers/customHooks/useWindowResize";
 import VideoDialog from "./VideoDialogs";
+import { BLACK } from "../../../constants/colors";
 
 const Content = styled("div")(({ theme }) => ({
   marginTop: 60,
@@ -11,7 +12,7 @@ const Content = styled("div")(({ theme }) => ({
   paddingLeft: 15,
   paddingRight: 15,
   flexDirection: "row",
-  color: "#1d1d1d",
+  color: BLACK,
   [theme.breakpoints.down("1000")]: {
     marginTop: 40,
     justifyContent: "center",
@@ -51,9 +52,7 @@ const Img = styled("img")(({ theme }) => ({
 
 function ContentItem({ content, index }) {
   const windowWidth = useWindowResize();
-  const [open, setOpen] = useState(false);
-  const handleClose = () => setOpen(false);
-  const handleOpen = () => setOpen(true);
+  const [videoId, setvideoId] = useState(null);
 
   return (
     <>
@@ -80,14 +79,18 @@ function ContentItem({ content, index }) {
             <ContentImgItem>
               {content.img.map((item, index) => (
                 <div key={content.imgName[index]}>
-                  <Img src={item} onClick={handleOpen} />
-                  {open && (
+                  <Img
+                    src={item}
+                    onClick={() => setvideoId(content.videoLink[index])}
+                  />
+                  {/* </Link> */}
+                  {/* {open && (
                     <VideoDialog
                       open={open}
                       video={content.videoLink[index]}
                       handleClose={handleClose}
                     />
-                  )}
+                  )} */}
                 </div>
               ))}
             </ContentImgItem>
