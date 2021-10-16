@@ -104,7 +104,7 @@ function ContentItem({ content, index }) {
                 : { paddingRight: 15 }
             }
           >
-            {windowWidth > 1000 ? (
+            {windowWidth > 1044 ? (
               <Video autoPlay loop muted>
                 <source src={content.video} />
               </Video>

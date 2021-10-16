@@ -1,8 +1,9 @@
 import * as React from "react";
 import CardContent from "@mui/material/CardContent";
-import { Typography, List } from "@mui/material";
+import { Typography, List, Container } from "@mui/material";
 import { Box } from "@mui/system";
 import { MAGENTA } from "../../../constants/colors";
+import useWindowResize from "../../helpers/customHooks/useWindowResize";
 
 const slideData = [
   {
@@ -23,6 +24,7 @@ const slideData = [
 ];
 
 function Slide2(incomeData = slideData) {
+  const windowWidth = useWindowResize();
   const renderSlides = (card) => {
     return (
       <Box
@@ -32,7 +34,8 @@ function Slide2(incomeData = slideData) {
           borderRadius: 0,
           background: "#FFF5EE",
           display: "flex",
-          mr: "50px",
+          justifyContent: "space-between",
+          // mr: "50px",
         }}
       >
         <CardContent>
@@ -72,39 +75,43 @@ function Slide2(incomeData = slideData) {
 
   return (
     <>
-      <Box
-        backgroundColor="#FFF5EE"
-        // backgroundColor="black"
-        marginLeft="20px"
-        marginRight="20px"
-        width="100%"
-      >
-        <Typography
-          variant="h1"
-          fontWeight="bold"
-          fontSize="30px"
-          textAlign="center"
-          marginTop="40px"
+      <Container maxWidth="lg">
+        <Box
+          backgroundColor="#FFF5EE"
+          // backgroundColor="black"
+          marginLeft="20px"
+          marginRight="20px"
+          width="100%"
         >
-          Get started with Slack
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          background: "#FFF5EE",
-          // background: "green",
-          width: "100%",
-          display: "flex",
-          justifyContent: "space-evenly",
-          mx: "20px",
-        }}
-      >
-        {slideData.map((slideItem) => (
-          <List sx={{ display: "flex" }} key={slideItem.h1}>
-            {renderSlides(slideItem)}
-          </List>
-        ))}
-      </Box>
+          <Typography
+            variant="h1"
+            fontWeight="bold"
+            fontSize="30px"
+            textAlign="center"
+            marginTop="40px"
+          >
+            Get started with Slack
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            background: "#FFF5EE",
+            // background: "green",
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-between",
+            flexDirection: windowWidth > 960 ? "row" : "column",
+            // justifyContent: "space-evenly",
+            mx: "20px",
+          }}
+        >
+          {slideData.map((slideItem) => (
+            <List sx={{ display: "flex" }} key={slideItem.h1}>
+              {renderSlides(slideItem)}
+            </List>
+          ))}
+        </Box>
+      </Container>
     </>
   );
 }
