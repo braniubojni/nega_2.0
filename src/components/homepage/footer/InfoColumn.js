@@ -1,7 +1,18 @@
+import React, { useState } from "react";
 import { makeStyles } from "@mui/styles";
 import useWindowResize from "../../helpers/customHooks/useWindowResize";
-import Slider from "infinite-react-carousel";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Fade from "@mui/material/Fade";
+import Box from "@mui/material/Box";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import Paper from "@mui/material/Paper";
 
+import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
+import { styled } from "@mui/system";
 import { BLACK } from "../../../constants/colors";
 import { GRAY } from "../../../constants/colors";
 // menu item instead of regular
@@ -31,6 +42,9 @@ const useStyles = makeStyles(() => ({
 
 function InfoColumn({ title, menuItem }) {
   const classes = useStyles();
+
+  const [open, setOpen] = React.useState(false);
+
   const widthWindow = useWindowResize();
   return (
     <>
@@ -43,7 +57,83 @@ function InfoColumn({ title, menuItem }) {
             </li>
           ))}
         </ul>
-      ) : null}
+      ) : (
+        <Box sx={{ display: "flex", ml: -1, mt: "25px" }}>
+          <ThemeProvider
+            theme={createTheme({
+              components: {
+                MuiListItemButton: {
+                  defaultProps: {
+                    disableTouchRipple: true,
+                  },
+                },
+              },
+              palette: {
+                mode: "light",
+                primary: { main: "rgb(0,0,0)" },
+                background: { paper: "rgb(255,255,255)" },
+              },
+            })}
+          >
+            <Paper elevation={0} sx={{ maxWidth: "100%" }}>
+              <Box
+                sx={{
+                  bgcolor: open ? "rgba(255,255,255, 1)" : null,
+                  pb: open ? 2 : 0,
+                }}
+              >
+                <ListItemButton
+                  alignItems="flex-start"
+                  onClick={() => setOpen(!open)}
+                  sx={{
+                    px: 3,
+                    pt: 2.5,
+                    pb: open ? 0 : 1.5,
+                    "&:hover, &:focus": { "& svg": { opacity: open ? 1 : 0 } },
+                  }}
+                >
+                  <ListItemText
+                    primary={title}
+                    primaryTypographyProps={{
+                      fontSize: 17,
+                      lineHeight: "20px",
+                    }}
+                  />
+                  <KeyboardArrowDown
+                    sx={{
+                      mr: -1,
+                      opacity: 0,
+                      transform: open ? "rotate(-180deg)" : "rotate(0)",
+                      transition: "0.2s",
+                    }}
+                  />
+                </ListItemButton>
+                {open &&
+                  menuItem.map((item) => (
+                    <ListItemButton
+                      key={item}
+                      sx={{
+                        py: 0,
+                        minHeight: 32,
+                        color: "rgba(0,0,0,.8)",
+                        ml: 4,
+                      }}
+                    >
+                      <ListItemText
+                        sx={{ minWidth: 1000 }}
+                        primary={item}
+                        primaryTypographyProps={{
+                          fontSize: 16,
+                          fontWeight: "medium",
+                        }}
+                      />
+                    </ListItemButton>
+                  ))}
+              </Box>
+            </Paper>
+          </ThemeProvider>
+        </Box>
+      )}
     </>
   );
 }

@@ -12,13 +12,16 @@ import {
 import Dropdown from "./Dropdown";
 import DrawerComponent from "./Drawer";
 import Logo from "../../../logo/logo.svg";
+import Logo_2 from "../../../logo/logo_2.svg";
 
 import { Box } from "@mui/system";
 import Buttons from "../../../shared/ButtonTemplate";
 import { LIGHT_ORANGE } from "../../../constants/colors";
 import { BLACK } from "../../../constants/colors";
+import useWindowResize from "../../helpers/customHooks/useWindowResize";
 
 function Navbar() {
+  const widthWindow = useWindowResize();
   const [value, setValue] = useState(0);
 
   const handleClickTab = (evt, newValue) => {
@@ -37,7 +40,11 @@ function Navbar() {
           ) : (
             <>
               <Typography sx={{ mr: "20px", mt: "10px" }}>
-                <img src={Logo} width="100px" alt="slack_logo" />
+                {widthWindow > 1024 ? (
+                  <img src={Logo} width="100px" alt="slack_logo" />
+                ) : (
+                  <img src={Logo_2} width="100px" alt="slack_logo" />
+                )}
               </Typography>
               <Box sx={{ display: "flex" }}>
                 <Tabs
