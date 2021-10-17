@@ -54,21 +54,19 @@ function Navbar() {
                 >
                   <Tab
                     disableRipple
-                    label={
-                      <span style={{ color: { BLACK } }}>{<Dropdown />}</span>
-                    }
+                    label={<span style={{ color: BLACK }}>{<Dropdown />}</span>}
                   />
                   <Tab
                     disableRipple
-                    label={<span style={{ color: { BLACK } }}>Enterprise</span>}
+                    label={<span style={{ color: BLACK }}>Enterprise</span>}
                   />
                   <Tab
                     disableRipple
-                    label={<span style={{ color: { BLACK } }}>Recources</span>}
+                    label={<span style={{ color: BLACK }}>Recources</span>}
                   />
                   <Tab
                     disableRipple
-                    label={<span style={{ color: { BLACK } }}>Pricing</span>}
+                    label={<span style={{ color: BLACK }}>Pricing</span>}
                   />
                 </Tabs>
               </Box>
