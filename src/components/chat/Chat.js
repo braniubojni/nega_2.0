@@ -2,12 +2,7 @@ import { getAuth } from "@firebase/auth";
 import { query, orderBy } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import {
-  collection,
-  addDoc,
-  serverTimestamp,
-  onSnapshot,
-} from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import db from "../../firebase";
 import {
   selectChannelId,
@@ -20,7 +15,7 @@ import SendIcon from "@mui/icons-material/Send";
 import { styled } from "@mui/system";
 import Emoji from "./Emoji";
 import { useLocation } from "react-router";
-import { sentDirectMsg, sentMsg } from "../helpers/handlers";
+import { getDirectMessages, sentDirectMsg, sentMsg } from "../helpers/handlers";
 
 const Arrow = styled("div")(({ theme }) => ({
   cursor: "pointer",
@@ -67,12 +62,35 @@ const TextFieldWrapper = styled("div")(({ theme }) => ({
 function Chat() {
   const [messages, setMessages] = useState([]);
   const [sent, setSent] = useState(false);
+  const [userId, setUserId] = useState(null);
+  const [currentUserId, setCurrentUserId] = useState(null);
   const { pathname } = useLocation();
   const channelId = useSelector(selectChannelId);
   const channelName = useSelector(selectChannelName);
   const inputRef = useRef("");
   const chatRef = useRef(null);
   const auth = getAuth();
+
+  useEffect(() => {
+    onSnapshot(collection(db, "users"), (snapshot) => {
+      setUserId(
+        snapshot?.docs
+          .map((doc) => doc.data())
+          .find((user) => user.email === channelName)
+      );
+    });
+    onSnapshot(collection(db, "users"), (snapshot) => {
+      setCurrentUserId(
+        snapshot?.docs
+          .map((doc) => doc.data())
+          .find((user) => user.email === auth.currentUser.email)
+      );
+    });
+    return () => {
+      setCurrentUserId(null);
+      setUserId(null);
+    };
+  }, [channelName, auth]);
 
   useEffect(() => {
     // to get messages from channels
@@ -85,18 +103,21 @@ function Chat() {
         setMessages(snapshot.docs);
       });
     } else if (pathname.includes("users")) {
-      const messagesRef = query(
-        collection(db, `dms/${auth.currentUser.uid}/messages`),
-        orderBy("timestamp")
-      );
-      onSnapshot(messagesRef, (snapshot) => {
-        setMessages(snapshot.docs);
-      });
+      if (userId && currentUserId) {
+        // console.log(userId.id, currentUserId.id);
+        getDirectMessages({
+          toUid: userId.id,
+          currentUid: currentUserId.id,
+        }).then((messagesRef) => {
+          onSnapshot(messagesRef, (snapshot) => {
+            setMessages(snapshot.docs);
+          });
+        });
+      }
     }
 
-    // need to have another to get from DM-s
     return () => setMessages([]);
-  }, [channelId, pathname, auth]);
+  }, [channelId, currentUserId, pathname, userId]);
 
   const scrollToBottom = () => {
     chatRef.current.scrollIntoView({
@@ -115,8 +136,8 @@ function Chat() {
             name: auth.currentUser.email,
           })
         : sentDirectMsg({
-            toUid: channelId,
-            currentUid: auth.currentUser.uid,
+            toUid: userId.id,
+            currentUid: currentUserId.id,
             message: inputRef.current.value,
             name: auth.currentUser.email,
           });
