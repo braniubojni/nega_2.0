@@ -12,6 +12,7 @@ import {
   SIGN_UP_ROUTE,
   CHANNELS_ROUTE,
   VIDEO_ROUTE,
+  USERS_ROUTE,
 } from "./constants/paths";
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
 import { collection, onSnapshot } from "@firebase/firestore";
@@ -56,6 +57,9 @@ function App() {
             <Channels />
           </Route>
           <Route exact path={`${CHANNELS_ROUTE}/:id`}>
+            <Channels />
+          </Route>
+          <Route exact path={`${USERS_ROUTE}/:id`}>
             <Channels />
           </Route>
           <Route exact path={`${VIDEO_ROUTE}`}>

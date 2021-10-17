@@ -22,7 +22,7 @@ function Channel({ id, channelName, closeBurger }) {
     setRemoveChannel(null);
   };
   const setChannel = () => {
-    dispatch(setChannelInfo({ channelId: id, channelName: channelName }));
+    dispatch(setChannelInfo({ channelId: id, channelName }));
     closeBurger(false);
     history.push(`${CHANNELS_ROUTE}/${id}`);
   };

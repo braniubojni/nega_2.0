@@ -37,7 +37,6 @@ function WatchVideo() {
   const onReady = (event) => {
     event.target.pauseVideo();
   };
-  console.log(video);
   return (
     <>
       <ConatinerVideo>

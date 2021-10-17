@@ -19,7 +19,7 @@ const BoxItems = styled(Box)(({ theme }) => ({
   alignItems: "center",
   flexWrap: "wrap",
   [theme.breakpoints.down(1112)]: {
-    "&:nth-child(even)": {
+    "&:nth-of-type(even)": {
       marginRight: 10,
     },
   },

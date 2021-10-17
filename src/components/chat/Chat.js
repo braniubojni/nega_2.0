@@ -2,12 +2,7 @@ import { getAuth } from "@firebase/auth";
 import { query, orderBy } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import {
-  collection,
-  addDoc,
-  serverTimestamp,
-  onSnapshot,
-} from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import db from "../../firebase";
 import {
   selectChannelId,
@@ -19,6 +14,8 @@ import TextField from "@mui/material/TextField";
 import SendIcon from "@mui/icons-material/Send";
 import { styled } from "@mui/system";
 import Emoji from "./Emoji";
+import { useLocation } from "react-router";
+import { getDirectMessages, sentDirectMsg, sentMsg } from "../helpers/handlers";
 
 const Arrow = styled("div")(({ theme }) => ({
   cursor: "pointer",
@@ -65,21 +62,62 @@ const TextFieldWrapper = styled("div")(({ theme }) => ({
 function Chat() {
   const [messages, setMessages] = useState([]);
   const [sent, setSent] = useState(false);
+  const [userId, setUserId] = useState(null);
+  const [currentUserId, setCurrentUserId] = useState(null);
+  const { pathname } = useLocation();
   const channelId = useSelector(selectChannelId);
   const channelName = useSelector(selectChannelName);
   const inputRef = useRef("");
   const chatRef = useRef(null);
+  const auth = getAuth();
 
   useEffect(() => {
-    const messagesRef = query(
-      collection(db, `channels/${channelId}/messages`),
-      orderBy("timestamp")
-    );
-    onSnapshot(messagesRef, (snapshot) => {
-      setMessages(snapshot.docs);
+    onSnapshot(collection(db, "users"), (snapshot) => {
+      setUserId(
+        snapshot?.docs
+          .map((doc) => doc.data())
+          .find((user) => user.email === channelName)
+      );
     });
+    onSnapshot(collection(db, "users"), (snapshot) => {
+      setCurrentUserId(
+        snapshot?.docs
+          .map((doc) => doc.data())
+          .find((user) => user.email === auth.currentUser.email)
+      );
+    });
+    return () => {
+      setCurrentUserId(null);
+      setUserId(null);
+    };
+  }, [channelName, auth]);
+
+  useEffect(() => {
+    // to get messages from channels
+    if (pathname.includes("channels")) {
+      const messagesRef = query(
+        collection(db, `channels/${channelId}/messages`),
+        orderBy("timestamp")
+      );
+      onSnapshot(messagesRef, (snapshot) => {
+        setMessages(snapshot.docs);
+      });
+    } else if (pathname.includes("users")) {
+      if (userId && currentUserId) {
+        // console.log(userId.id, currentUserId.id);
+        getDirectMessages({
+          toUid: userId.id,
+          currentUid: currentUserId.id,
+        }).then((messagesRef) => {
+          onSnapshot(messagesRef, (snapshot) => {
+            setMessages(snapshot.docs);
+          });
+        });
+      }
+    }
+
     return () => setMessages([]);
-  }, [channelId]);
+  }, [channelId, currentUserId, pathname, userId]);
 
   const scrollToBottom = () => {
     chatRef.current.scrollIntoView({
@@ -90,13 +128,20 @@ function Chat() {
 
   const sendMessage = async (evn) => {
     evn.preventDefault();
-    const auth = getAuth();
     if (inputRef.current.value !== "") {
-      await addDoc(collection(db, "channels", channelId, "messages"), {
-        timestamp: serverTimestamp(),
-        message: inputRef.current.value,
-        name: auth.currentUser.email,
-      });
+      pathname.includes("channels")
+        ? sentMsg({
+            channelId,
+            message: inputRef.current.value,
+            name: auth.currentUser.email,
+          })
+        : sentDirectMsg({
+            toUid: userId.id,
+            currentUid: currentUserId.id,
+            message: inputRef.current.value,
+            name: auth.currentUser.email,
+          });
+
       setSent(true);
       inputRef.current.value = "";
       scrollToBottom();
@@ -128,7 +173,6 @@ function Chat() {
           autoComplete="off"
         >
           <Field>
-            <Emoji inputRef={inputRef} isDisabled={channelId} Sent={sent} />
             <TextField
               id="standard-basic"
               disabled={!channelId}
@@ -137,13 +181,15 @@ function Chat() {
                 channelId ? `Message # ${channelName}` : "Select any channel"
               }
               sx={{
-                marginLeft: "1%",
+                marginRight: "1%",
                 flex: "1 1 auto",
               }}
               variant="standard"
               fullWidth={true}
             />
             <MenuBar>
+              <Emoji inputRef={inputRef} isDisabled={channelId} Sent={sent} />
+
               <Arrow>
                 <SendIcon onClick={sendMessage} />
               </Arrow>

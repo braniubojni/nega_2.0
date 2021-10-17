@@ -53,7 +53,7 @@ export default function SignIn() {
   const [usrPassword, setUsrPassword] = useState("");
   const loggedInUser = useSelector(selectLoggedInUser);
   const error = useSelector(selectError);
-  const [alert, setAlert] = useState(false);
+  const [alert, setAlert] = useState(null);
   const [loader, setLoader] = useState(false);
 
   useEffect(() => {
@@ -69,10 +69,10 @@ export default function SignIn() {
   }, [history, loggedInUser]);
 
   useEffect(() => {
-    console.log(error);
-    if (error === "FirebaseError") {
+    if (error) {
       setAlert((prev) => !prev);
     }
+    return () => setAlert(null);
   }, [error]);
 
   const handleSubmit = (event) => {

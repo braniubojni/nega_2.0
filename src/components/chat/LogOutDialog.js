@@ -6,7 +6,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useDispatch } from "react-redux";
-import { logOut } from "../../redux/common/auth/actions";
+import { logOut, setError } from "../../redux/common/auth/actions";
 import { useHistory } from "react-router";
 import { getAuth, signOut } from "@firebase/auth";
 import { HOME_ROUTE } from "../../constants/paths";
@@ -21,6 +21,7 @@ export default function LogOutDialog() {
     signOut(auth)
       .then(() => {
         dispatch(logOut());
+        dispatch(setError(null));
         history.push(HOME_ROUTE);
       })
       .catch((error) => {

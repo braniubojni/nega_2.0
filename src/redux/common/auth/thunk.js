@@ -25,7 +25,7 @@ const signInUser =
         });
       })
       .catch((err) => {
-        dispatch(setError(err.name));
+        dispatch(setError(err));
       });
   };
 

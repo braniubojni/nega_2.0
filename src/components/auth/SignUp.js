@@ -59,7 +59,6 @@ export default function SignUp() {
     password,
     id: uuidv4(),
     isAdmin: false,
-    isOnline: true,
   };
 
   const loggedInUser = useSelector(selectLoggedInUser);
@@ -80,8 +79,7 @@ export default function SignUp() {
   }, [history, loggedInUser]);
 
   useEffect(() => {
-    console.log(error);
-    if (error?.name === "FirebaseError") {
+    if (error) {
       setAlert((prev) => !prev);
     }
   }, [error]);
@@ -93,14 +91,28 @@ export default function SignUp() {
       password === "" ||
       email === password ||
       rePassword === "" ||
+      rePassword !== password ||
       (!validateEmail(email) && !validatePassword(password))
     ) {
-      setAlert(true);
+      if (email === "" && password === "") {
+        setAlert("Please fill the email and password");
+      } else if (!validateEmail(email)) {
+        setAlert("Your email is invalid");
+      } else if (!validatePassword(password)) {
+        setAlert(
+          "Your password is invalid, make sure you have 8 characters, number, upper and lower case letters"
+        );
+      } else if (rePassword === "") {
+        setAlert("Retype your password");
+      } else if (rePassword !== password) {
+        setAlert("Your password didn't match");
+      }
       return null;
     }
-    setLoader(true);
     const auth = getAuth();
+    setLoader(true);
     dispatch(signUpUser({ auth, email, password, userData }));
+    setLoader(false);
   };
 
   return (
@@ -221,7 +233,7 @@ export default function SignUp() {
               </Box>
               <Copyright sx={{ mt: 5 }} />
             </Container>
-            <Alert alert={alert} setAlert={setAlert} />
+            <Alert alert={!!alert} setAlert={setAlert} text={alert} />
           </ThemeProvider>
         </>
       )}

@@ -12,7 +12,6 @@ export default function Alert({
   text = "We don't have such a person, please Sign In to see our channels",
 }) {
   const handleClose = () => setAlert((prev) => !prev);
-
   return (
     <div>
       <Dialog
@@ -24,7 +23,7 @@ export default function Alert({
         <DialogTitle id="alert-dialog-title">{"Alert"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            You typed incorrect credentials
+            {text}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

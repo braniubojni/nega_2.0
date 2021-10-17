@@ -4,8 +4,8 @@ import { styled } from "@mui/system";
 
 const StyledEmoji = styled("div")({
   position: "absolute",
-  top: "4vh",
-  right: "4vw",
+  bottom: "120%",
+  left: "-50%",
   transition: "all 0.2s",
 });
 
