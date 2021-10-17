@@ -15,7 +15,7 @@ const channelRef = collection(db, "channels");
 const usersRef = collection(db, "users");
 
 export const handleNewChannel = async (channelName) => {
-  addDoc(channelRef, { channelName });
+  addDoc(channelRef, { channelName, timestamp: serverTimestamp() });
 };
 
 export const handleChannelRemove = async (id) => {
