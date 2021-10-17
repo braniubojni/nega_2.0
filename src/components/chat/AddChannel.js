@@ -43,11 +43,12 @@ export default function AddNewChannel() {
         </DialogTitle>
         <DialogContent>
           <TextField
-            autoFocus={true}
+            autoFocus
             margin="dense"
             id="name"
             type="text"
             fullWidth
+            label="New Channel Name"
             value={newChannel}
             onChange={(e) => setNewChannel(e.target.value)}
             variant="standard"

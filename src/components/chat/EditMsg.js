@@ -5,7 +5,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { handleEdit } from "../helpers/handlers";
+import { handleMsgEdit } from "../helpers/handlers";
 
 // add on Enter save
 
@@ -17,7 +17,7 @@ export default function EditMsg({ onEditClose, msgInfo, id, channelId }) {
       ...msgInfo,
       message: msg,
     };
-    handleEdit({ msgInfo, id, channelId });
+    handleMsgEdit({ msgInfo, id, channelId });
     onEditClose();
   };
 

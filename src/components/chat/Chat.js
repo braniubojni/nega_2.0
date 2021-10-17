@@ -93,7 +93,6 @@ function Chat() {
   }, [channelName, auth]);
 
   useEffect(() => {
-    // to get messages from channels
     if (pathname.includes("channels")) {
       const messagesRef = query(
         collection(db, `channels/${channelId}/messages`),
@@ -104,7 +103,6 @@ function Chat() {
       });
     } else if (pathname.includes("users")) {
       if (userId && currentUserId) {
-        // console.log(userId.id, currentUserId.id);
         getDirectMessages({
           toUid: userId.id,
           currentUid: currentUserId.id,
