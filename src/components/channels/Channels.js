@@ -326,7 +326,7 @@ function Channels({ window }) {
             </Box>
           </Box>
           <Divider />
-          <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+          <Box component="main" sx={{ flexGrow: 1, p: 2 }}>
             <Chat />
           </Box>
         </Box>
