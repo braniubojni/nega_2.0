@@ -29,15 +29,11 @@ export default function AddNewChannel() {
   };
 
   return (
-    <div>
+    <>
       <Box>
         <AddIcon cursor="pointer" onClick={handleClickOpen} />
       </Box>
-      <Dialog
-        open={open}
-        onClose={closeModal}
-        aria-labelledby="responsive-dialog-title"
-      >
+      <Dialog open={open} onClose={closeModal}>
         <DialogTitle id="responsive-dialog-title">
           {"Type your channel name"}
         </DialogTitle>
@@ -51,16 +47,15 @@ export default function AddNewChannel() {
             label="New Channel Name"
             value={newChannel}
             onChange={(e) => setNewChannel(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && addNewChanel()}
             variant="standard"
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={addNewChanel}>YES</Button>
-          <Button autoFocus onClick={closeModal}>
-            NO
-          </Button>
+          <Button onClick={closeModal}>CANCEL</Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 }

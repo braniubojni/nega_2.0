@@ -31,10 +31,11 @@ import Chat from "../chat/Chat";
 import { selectLoggedInUser } from "../../redux/common/auth/selectors";
 import { useHistory } from "react-router";
 import { SIGN_IN_ROUTE } from "../../constants/paths";
-import { collection, onSnapshot } from "@firebase/firestore";
+import { collection, onSnapshot, query, orderBy } from "@firebase/firestore";
 import db from "../../firebase";
 import useWindowResize from "../helpers/customHooks/useWindowResize";
 import { MAGENTA } from "../../constants/colors";
+import SearchDrawer from "../searchDrawer/SearchDrawer";
 
 const drawerWidth = 240;
 
@@ -85,6 +86,7 @@ function Channels({ window }) {
   const loggedUser = useSelector(selectLoggedInUser);
   const history = useHistory();
   const [channels, setChannels] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
   const [open, setOpen] = useState(true);
   const channelName = useSelector(selectChannelName);
@@ -93,9 +95,9 @@ function Channels({ window }) {
     if (!loggedUser) {
       history.push(SIGN_IN_ROUTE);
     } else {
-      onSnapshot(collection(db, "channels"), (snapshot) =>
-        setChannels(snapshot?.docs)
-      );
+      const q = query(collection(db, "channels"), orderBy("timestamp"));
+      const unsub = onSnapshot(q, (snapshot) => setChannels(snapshot?.docs));
+      return unsub;
     }
   }, [history, loggedUser]);
 
@@ -247,8 +249,12 @@ function Channels({ window }) {
                   <StyledInputBase
                     placeholder="Search…"
                     inputProps={{ "aria-label": "search" }}
+                    onChange={(e) => setSearchInput(e.target.value)}
                   />
                 </Search>
+              </Box>
+              <Box>
+                <SearchDrawer searchInput={searchInput} />
               </Box>
               <Box sx={{ ml: 3, display: "flex", alignItems: "center" }}>
                 <HelpIcon />
