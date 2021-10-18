@@ -16,6 +16,7 @@ import { styled } from "@mui/system";
 import Emoji from "./Emoji";
 import { useLocation } from "react-router";
 import { getDirectMessages, sentDirectMsg, sentMsg } from "../helpers/handlers";
+import Loader from "../loader/Loader";
 
 const Arrow = styled("div")(({ theme }) => ({
   cursor: "pointer",
@@ -155,8 +156,14 @@ function Chat() {
   return (
     <MainContentWrapper>
       <Ul>
-        {messages?.map((msg) => renderMsg(msg))}
-        <li ref={chatRef} />
+        {!messages ? (
+          <Loader />
+        ) : (
+          <>
+            {messages?.map((msg) => renderMsg(msg))}
+            <li ref={chatRef} />
+          </>
+        )}
       </Ul>
       <div style={{ flex: "1 1 auto" }} />
       <TextFieldWrapper>
