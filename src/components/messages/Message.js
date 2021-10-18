@@ -16,18 +16,17 @@ const HoverPopUp = styled("div")(() => ({
 const Li = styled("li")(({ theme }) => ({
   position: "relative",
   display: "flex",
-  height: theme.spacing(4),
+  height: "auto",
   padding: theme.spacing(1),
-  marginTop: theme.spacing(1),
   marginBottom: theme.spacing(1),
   alignItems: "center",
   borderRadius: theme.spacing(1),
-}));
-const StyledMsg = styled("div")({
   "&:hover": {
-    color: "red",
+    backgroundColor: "#80808024",
+    transition: "all 0.2s",
   },
-});
+}));
+const StyledMsg = styled("div")({});
 const StyledTime = styled("span")(({ theme }) => ({
   position: "relative",
   fontSize: "0.718em",
