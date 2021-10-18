@@ -8,14 +8,16 @@ import {
   orderBy,
   query,
   getDocs,
+  onSnapshot,
 } from "@firebase/firestore";
+import { useEffect, useState } from "react";
 import db from "../../firebase";
 
 const channelRef = collection(db, "channels");
 const usersRef = collection(db, "users");
 
 export const handleNewChannel = async (channelName) => {
-  addDoc(channelRef, { channelName });
+  await addDoc(channelRef, { channelName, timestamp: serverTimestamp() });
 };
 
 export const handleChannelRemove = async (id) => {
@@ -71,4 +73,22 @@ export const sentDirectMsg = async ({ toUid, currentUid, message, name }) => {
 const dmCollection = async (toUid, currentUid) => {
   const idPair = [currentUid, toUid].sort().join("_");
   return collection(db, "dms", idPair, "messages");
+};
+
+export const useGetAllExistingChannels = async () => {
+  const [channels, setChannels] = useState([]);
+  useEffect(() => {
+    onSnapshot(collection(db, "channels"), (snapshot) =>
+      setChannels(snapshot?.docs)
+    );
+    return () => setChannels([]);
+  }, []);
+  return channels;
+};
+export const useGetAllExistingUsers = async () => {
+  const [users, setCUsers] = useState([]);
+  onSnapshot(collection(db, "channels"), (snapshot) =>
+    setCUsers(snapshot?.docs)
+  );
+  return users;
 };
