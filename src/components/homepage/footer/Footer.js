@@ -1,25 +1,13 @@
 import React from "react";
 import { v4 } from "uuid";
 import InfoColumn from "./InfoColumn";
-import { makeStyles } from "@mui/styles";
-import useWindowResize from "../../helpers/customHooks/useWindowResize";
 import { styled } from "@mui/system";
 
 import { Container } from "@mui/material";
 
-const useStyles = makeStyles(({ theme }) => ({
-  footer: {
-    position: "relative",
-  },
-  footer__wrapper: {
-    display: "flex",
-    justifyContent: "space-evenly",
-  },
-}));
-
-const FooterContainer = styled("footer")(({ theme }) => ({
+const FooterContainer = styled("footer")({
   position: "relative",
-}));
+});
 const FooterWrapper = styled("div")(({ theme }) => ({
   display: "flex",
   justifyContent: "space-evenly",
@@ -73,8 +61,6 @@ const columns = [
 ];
 
 function Footer() {
-  const widthWindow = useWindowResize();
-  const classes = useStyles();
   return (
     <Container maxWidth="lg">
       <FooterContainer>

@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/system";
 import { Container, Typography } from "@mui/material";
 import useWindowResize from "../../helpers/customHooks/useWindowResize";
-import VideoDialog from "./VideoDialogs";
 import { BLACK } from "../../../constants/colors";
 
 const Content = styled("div")(({ theme }) => ({

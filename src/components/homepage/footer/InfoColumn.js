@@ -1,10 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { makeStyles } from "@mui/styles";
 import useWindowResize from "../../helpers/customHooks/useWindowResize";
-import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Fade from "@mui/material/Fade";
 import Box from "@mui/material/Box";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -12,7 +8,6 @@ import ListItemText from "@mui/material/ListItemText";
 import Paper from "@mui/material/Paper";
 
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
-import { styled } from "@mui/system";
 import { BLACK } from "../../../constants/colors";
 import { GRAY } from "../../../constants/colors";
 // menu item instead of regular
@@ -43,7 +38,7 @@ const useStyles = makeStyles(() => ({
 function InfoColumn({ title, menuItem }) {
   const classes = useStyles();
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const widthWindow = useWindowResize();
   return (
