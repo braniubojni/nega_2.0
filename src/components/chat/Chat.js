@@ -47,6 +47,18 @@ const Ul = styled("ul")({
   flexDirection: "column",
   paddingLeft: "1%",
   width: "100%",
+  "&::-webkit-scrollbar": {
+    width: 10,
+    height: 10,
+  },
+  "&::-webkit-scrollbar-track": {
+    backgroundColor: "transparent",
+    borderRadius: 10,
+  },
+  "&::-webkit-scrollbar-thumb": {
+    backgroundColor: "rgba(0, 0, 0, 0.4)",
+    borderRadius: 10,
+  },
 });
 const TextFieldWrapper = styled("div")(({ theme }) => ({
   display: "flex",
