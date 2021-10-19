@@ -8,7 +8,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-
+import { Link } from "react-router-dom";
 import Dropdown from "./Dropdown";
 import DrawerComponent from "./Drawer";
 import Logo from "../../../logo/logo.svg";
@@ -66,7 +66,11 @@ function Navbar() {
                   />
                   <Tab
                     disableRipple
-                    label={<span style={{ color: BLACK }}>Pricing</span>}
+                    label={
+                      <span style={{ color: BLACK }}>
+                        <Link to="/pricing">Pricing</Link>
+                      </span>
+                    }
                   />
                 </Tabs>
               </Box>

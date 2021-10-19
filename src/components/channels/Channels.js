@@ -137,7 +137,7 @@ function Channels({ window }) {
               },
             })}
           >
-            <Paper elevation={0} sx={{ maxWidth: 500 }}>
+            <Paper elevation={0} sx={{ maxWidth: 500, overflowX: "hidden" }}>
               <Box
                 sx={{
                   bgcolor: open ? "rgba(255,255,255, 1)" : null,
@@ -194,7 +194,7 @@ function Channels({ window }) {
           </ThemeProvider>
         </Box>
       </List>
-      <Box>
+      <Box sx={{ overflowX: "hidden" }}>
         <DirectMessages />
       </Box>
     </div>
