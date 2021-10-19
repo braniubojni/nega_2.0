@@ -3,6 +3,8 @@ import { styled } from "@mui/system";
 import { Container, Typography } from "@mui/material";
 import useWindowResize from "../../helpers/customHooks/useWindowResize";
 import { BLACK } from "../../../constants/colors";
+import { Link } from "react-router-dom";
+import { VIDEO_ROUTE } from "../../../constants/paths";
 
 const Content = styled("div")(({ theme }) => ({
   marginTop: 60,
@@ -78,18 +80,12 @@ function ContentItem({ content, index }) {
             <ContentImgItem>
               {content.img.map((item, index) => (
                 <div key={content.imgName[index]}>
-                  <Img
-                    src={item}
-                    onClick={() => setvideoId(content.videoLink[index])}
-                  />
-                  {/* </Link> */}
-                  {/* {open && (
-                    <VideoDialog
-                      open={open}
-                      video={content.videoLink[index]}
-                      handleClose={handleClose}
+                  <Link to={`${VIDEO_ROUTE}/:${content.videoLink[index]}`}>
+                    <Img
+                      src={item}
+                      onClick={() => setvideoId(content.videoLink[index])}
                     />
-                  )} */}
+                  </Link>
                 </div>
               ))}
             </ContentImgItem>

@@ -1,8 +1,10 @@
 import { Box, Card, CardContent, Container, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/system";
 import CheckIcon from "@mui/icons-material/Check";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import useWindowResize from "../../helpers/customHooks/useWindowResize";
+import Slide1 from "../mainContent/Slide1";
 
 const H3 = styled(Typography)(({ theme }) => ({
   color: "#1d1d1d",
@@ -54,33 +56,90 @@ const pricingContenet = [
 ];
 
 function Pricing() {
+  const [content, setContent] = useState(false);
+  const widthWindow = useWindowResize();
   function renderAdvantage(item) {
     return (
       <>
-        <div>
-          <CheckIcon />
-          {item}
-        </div>
+        <Box
+          sx={{
+            marginBottom: 1.5,
+            display: "flex",
+          }}
+        >
+          <CheckIcon fontSize="smail" />
+          <Typography
+            sx={{
+              fontSize: "0.875rem",
+              fontWeight: 400,
+              lineHeight: "1.444444",
+              letterSpacing: "normal",
+            }}
+            variant="body2"
+          >
+            {item}
+          </Typography>
+        </Box>
       </>
     );
   }
   function renderPricingContent(item) {
     return (
       <>
-        <Typography variant="h4" component="h4">
-          {item.title}
-        </Typography>
-        <Typography variant="body2">{item.text}</Typography>
-        <Typography variant="h3" component="h3">
-          <AttachMoneyIcon />
-          {item.price}
-          <span>/on</span>
-        </Typography>
-        <div>
-          {item.advantage.map((item) => (
-            <div key={item}>{renderAdvantage(item)}</div>
-          ))}
-        </div>
+        <CardContent>
+          <Typography
+            sx={{
+              lineHeight: "1.25",
+              fontWeight: 700,
+              fontSize: "1.5rem",
+              marginBottom: 1,
+            }}
+            variant="h4"
+            component="h4"
+          >
+            {item.title}
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: "0.875rem",
+              fontWeight: 400,
+              lineHeight: "1.444444",
+              letterSpacing: "normal",
+            }}
+            variant="body2"
+          >
+            {item.text}
+          </Typography>
+          <Box
+            sx={{
+              marginBottom: 4,
+              marginTop: 2,
+              display: "flex",
+            }}
+          >
+            <AttachMoneyIcon
+              sx={{
+                marginTop: "2px",
+              }}
+            />
+            <Typography
+              variant="h3"
+              component="h3"
+              sx={{
+                fontSize: "1.5rem",
+                fontWeight: 700,
+              }}
+            >
+              {item.price}
+            </Typography>
+          </Box>
+
+          <div>
+            {item.advantage.map((item) => (
+              <div key={item}>{renderAdvantage(item)}</div>
+            ))}
+          </div>
+        </CardContent>
       </>
     );
   }
@@ -90,16 +149,28 @@ function Pricing() {
         <H3 variant="h3" component="h3">
           Make teamwork more productive
         </H3>
-        <Line></Line>
-        <Box>
-          <Card>
-            {pricingContenet.map((item) => (
-              <CardContent key={item.price}>
-                {renderPricingContent(item)}
-              </CardContent>
-            ))}
-          </Card>
+        <Line />
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            flexDirection: widthWindow > 1000 ? "row" : "column",
+            marginBottom: 3,
+          }}
+        >
+          {pricingContenet.map((item) => (
+            <Card
+              key={item.price}
+              sx={{
+                maxWidth: "345px",
+                minWidth: "250px",
+              }}
+            >
+              {renderPricingContent(item)}
+            </Card>
+          ))}
         </Box>
+        <Line />
       </Container>
     </>
   );

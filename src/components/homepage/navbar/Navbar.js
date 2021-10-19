@@ -19,6 +19,7 @@ import Buttons from "../../../shared/ButtonTemplate";
 import { LIGHT_ORANGE } from "../../../constants/colors";
 import { BLACK } from "../../../constants/colors";
 import useWindowResize from "../../helpers/customHooks/useWindowResize";
+import { HOME_ROUTE } from "../../../constants/paths";
 
 function Navbar() {
   const widthWindow = useWindowResize();
@@ -41,9 +42,13 @@ function Navbar() {
             <>
               <Typography sx={{ mr: "20px", mt: "10px" }}>
                 {widthWindow > 1024 ? (
-                  <img src={Logo} width="100px" alt="slack_logo" />
+                  <Link to={HOME_ROUTE} style={{ textDecoration: "none" }}>
+                    <img src={Logo} width="100px" alt="slack_logo" />
+                  </Link>
                 ) : (
-                  <img src={Logo_2} width="100px" alt="slack_logo" />
+                  <Link to={HOME_ROUTE} style={{ textDecoration: "none" }}>
+                    <img src={Logo_2} width="100px" alt="slack_logo" />
+                  </Link>
                 )}
               </Typography>
               <Box sx={{ display: "flex" }}>
@@ -68,7 +73,15 @@ function Navbar() {
                     disableRipple
                     label={
                       <span style={{ color: BLACK }}>
-                        <Link to="/pricing">Pricing</Link>
+                        <Link
+                          to="/pricing"
+                          style={{
+                            color: BLACK,
+                            textDecoration: "none",
+                          }}
+                        >
+                          Pricing
+                        </Link>
                       </span>
                     }
                   />

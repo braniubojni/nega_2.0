@@ -20,17 +20,14 @@ function Home() {
         <Switch>
           <Route exact path={HOME_ROUTE}>
             <MainContent />
-            <Box>
-              <Slide1 />
-              <Slide2 />
-            </Box>
-            <Box>
-              <Slide1 />
-            </Box>
           </Route>
           <Route exact path="/pricing" children={<Pricing />}></Route>
         </Switch>
         <Box>
+          <Box>
+            <Slide1 />
+            <Slide2 />
+          </Box>
           <Footer />
         </Box>
       </Box>

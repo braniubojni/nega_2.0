@@ -75,7 +75,7 @@ function App() {
           <Route exact path={`${USERS_ROUTE}/:id`}>
             <Channels />
           </Route>
-          <Route exact path={`${VIDEO_ROUTE}`}>
+          <Route exact path={`${VIDEO_ROUTE}/:id`}>
             <WatchVideo />
           </Route>
         </Switch>
