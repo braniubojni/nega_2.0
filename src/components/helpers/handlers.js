@@ -9,6 +9,7 @@ import {
   query,
   getDocs,
   onSnapshot,
+  where,
 } from "@firebase/firestore";
 import { useEffect, useState } from "react";
 import db from "../../firebase";
@@ -75,7 +76,7 @@ const dmCollection = async (toUid, currentUid) => {
   return collection(db, "dms", idPair, "messages");
 };
 
-export const useGetAllExistingChannels = async () => {
+const useGetAllExistingChannels = async () => {
   const [channels, setChannels] = useState([]);
   useEffect(() => {
     onSnapshot(collection(db, "channels"), (snapshot) =>
@@ -85,10 +86,26 @@ export const useGetAllExistingChannels = async () => {
   }, []);
   return channels;
 };
-export const useGetAllExistingUsers = async () => {
-  const [users, setCUsers] = useState([]);
+const useGetAllExistingUsers = async () => {
+  const [users, setUsers] = useState([]);
   onSnapshot(collection(db, "channels"), (snapshot) =>
-    setCUsers(snapshot?.docs)
+    setUsers(snapshot?.docs)
   );
   return users;
+};
+
+export const useGetAllChannels = async () => {
+  const channels = await getDocs(channelRef);
+  channels.forEach(async (channel) => {
+    const msgs = await getDocs(
+      collection(db, "channels", channel.id, "messages")
+    );
+    msgs.forEach((msg) => {
+      console.log(msg.id, "=>", msg.data());
+    });
+  });
+};
+export const useGetAllChannelMsgs = async ({ id }) => {
+  const msgs = await getDocs(collection(db, "channels", id, "messages"));
+  return msgs;
 };

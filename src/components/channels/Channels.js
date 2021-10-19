@@ -36,6 +36,7 @@ import db from "../../firebase";
 import useWindowResize from "../helpers/customHooks/useWindowResize";
 import { MAGENTA } from "../../constants/colors";
 import SearchDrawer from "../searchDrawer/SearchDrawer";
+import { getAllChannelsMsgs } from "../helpers/handlers";
 
 const drawerWidth = 240;
 
