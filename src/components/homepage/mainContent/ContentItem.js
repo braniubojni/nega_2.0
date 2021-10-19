@@ -14,7 +14,7 @@ const Content = styled("div")(({ theme }) => ({
   paddingRight: 15,
   flexDirection: "row",
   color: BLACK,
-  [theme.breakpoints.down("1000")]: {
+  [theme.breakpoints.down("1045")]: {
     marginTop: 40,
     justifyContent: "center",
   },
