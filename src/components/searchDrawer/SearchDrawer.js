@@ -10,14 +10,25 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { useGetAllChannels, useGetAllChannelMsgs } from "../helpers/handlers";
+import { Toolbar } from "@mui/material";
 
 export default function SearchDrawer({ searchInput }) {
-  useGetAllChannels();
-
   const [state, setState] = useState({
     right: false,
   });
   const showPanel = searchInput && "right";
+
+  useEffect(() => {
+    const channels = await getDocs(collection(db, "channels"));
+    channels.forEach(async (channel) => {
+      const msgs = await getDocs(
+        collection(db, "channels", channel.id, "messages")
+      );
+      msgs.forEach((msg) => {
+        console.log(msg.id, "=>", msg.data());
+      });
+    });
+  });
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -62,7 +73,7 @@ export default function SearchDrawer({ searchInput }) {
   );
 
   return (
-    <div>
+    <>
       {["right"]?.map((anchor) => (
         <Fragment key={anchor}>
           <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
@@ -75,6 +86,6 @@ export default function SearchDrawer({ searchInput }) {
           </Drawer>
         </Fragment>
       ))}
-    </div>
+    </>
   );
 }

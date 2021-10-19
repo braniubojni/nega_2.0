@@ -105,6 +105,7 @@ export const useGetAllChannels = async () => {
     });
   });
 };
+
 export const useGetAllChannelMsgs = async ({ id }) => {
   const msgs = await getDocs(collection(db, "channels", id, "messages"));
   return msgs;
