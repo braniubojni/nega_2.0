@@ -1,5 +1,6 @@
 import {
   collection,
+  getDocs,
   setDoc,
   doc,
   deleteDoc,
@@ -7,7 +8,6 @@ import {
   serverTimestamp,
   orderBy,
   query,
-  getDocs,
   onSnapshot,
   where,
 } from "@firebase/firestore";
