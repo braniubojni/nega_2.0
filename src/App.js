@@ -13,11 +13,13 @@ import {
   CHANNELS_ROUTE,
   VIDEO_ROUTE,
   USERS_ROUTE,
+  PRICING,
 } from "./constants/paths";
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
 import { collection, onSnapshot } from "@firebase/firestore";
 import db from "./firebase";
 import WatchVideo from "./components/video/WatchVideo";
+import Pricing from "./components/homepage/pricing/Pricing";
 
 function App() {
   const dispatch = useDispatch();
@@ -47,6 +49,17 @@ function App() {
           <Route exact path={HOME_ROUTE}>
             <Home />
           </Route>
+
+          <Route exact path={PRICING}>
+            <Home />
+          </Route>
+          <Route exact path={PRICING}>
+            <Home />
+          </Route>
+          <Route exact path={PRICING}>
+            <Home />
+          </Route>
+
           <Route exact path={SIGN_UP_ROUTE}>
             <Auth />
           </Route>
@@ -62,10 +75,9 @@ function App() {
           <Route exact path={`${USERS_ROUTE}/:id`}>
             <Channels />
           </Route>
-          <Route exact path={`${VIDEO_ROUTE}`}>
+          <Route exact path={`${VIDEO_ROUTE}/:id`}>
             <WatchVideo />
           </Route>
-          <Redirect to={HOME_ROUTE} />
         </Switch>
       </Router>
     </>
