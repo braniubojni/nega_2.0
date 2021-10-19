@@ -34,12 +34,15 @@ export default function EditMsg({ onEditClose, msgInfo, id, channelId }) {
             fullWidth
             value={msg}
             onChange={(e) => setMsg(e.target.value)}
+            onKeyDown={(e) =>
+              e.key === "Enter" && onEditSave({ msg, id, channelId })
+            }
             variant="standard"
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={onEditClose}>CANCEL</Button>
-          <Button onClick={() => onEditSave({ msg, id, channelId })}>
+          <Button onClick={(e) => onEditSave({ msg, id, channelId })}>
             SAVE
           </Button>
         </DialogActions>
