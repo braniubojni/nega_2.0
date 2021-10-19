@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
@@ -9,13 +9,11 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
-import { useGetAllExistingChannels } from "../helpers/handlers";
+import { useGetAllChannels, useGetAllChannelMsgs } from "../helpers/handlers";
 
 export default function SearchDrawer({ searchInput }) {
-  const [channels, setChannels] = useState([]);
-  useGetAllExistingChannels().then(
-    (res) => Array.isArray(res) && setChannels(res)
-  );
+  useGetAllChannels();
+
   const [state, setState] = useState({
     right: false,
   });
