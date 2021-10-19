@@ -62,7 +62,12 @@ const columns = [
 
 function Footer() {
   return (
-    <Container maxWidth="lg">
+    <Container
+      maxWidth="lg"
+      sx={{
+        marginTop: 8,
+      }}
+    >
       <FooterContainer>
         <FooterWrapper>
           {columns.map((props) => (

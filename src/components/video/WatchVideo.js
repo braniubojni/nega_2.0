@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import YouTube from "react-youtube";
 import { styled } from "@mui/system";
 
@@ -25,7 +26,8 @@ function WatchVideo() {
       history.push(HOME_ROUTE);
     }
   }, [esc, history]);
-  const video = "";
+  const { id } = useParams();
+  const video = id.slice(1);
 
   const opts = {
     width: "100%",
@@ -34,13 +36,16 @@ function WatchVideo() {
       autoplay: 1,
     },
   };
-  const onReady = (event) => {
-    event.target.pauseVideo();
+  // const onReady = (event) => {
+  //   event.target.pauseVideo();
+  // };
+  const onPlay = (event) => {
+    event.target.playVideo();
   };
   return (
     <>
       <ConatinerVideo>
-        <YouTube videoId={video} opts={opts} onReady={onReady} />
+        <YouTube videoId={video} opts={opts} onPlay={onPlay} />
         <Close onClick={() => setEsc(true)}>
           Esc
           <CloseIcon />
@@ -49,4 +54,6 @@ function WatchVideo() {
     </>
   );
 }
+// onReady={onReady}
+
 export default WatchVideo;
