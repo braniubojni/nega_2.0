@@ -37,6 +37,7 @@ export default function SearchDrawer({ searchInput }) {
       return setMessages([]);
     };
   }, [searchInput]);
+
   useEffect(() => {
     setFilteredChannelMessages(
       messages.filter((item) =>
@@ -44,6 +45,7 @@ export default function SearchDrawer({ searchInput }) {
       )
     );
   }, [messages, searchInput]);
+
   const toggleDrawer = (anchor, open) => (event) => {
     if (
       event.type === "keydown" &&
