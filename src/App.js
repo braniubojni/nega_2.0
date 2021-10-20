@@ -74,6 +74,8 @@ function App() {
           <Route exact path={`${USERS_ROUTE}/:id`}>
             <Channels />
           </Route>
+
+          <Redirect to={HOME_ROUTE} />
         </Switch>
       </Router>
     </>
