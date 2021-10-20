@@ -19,7 +19,7 @@ import Buttons from "../../../shared/ButtonTemplate";
 import { LIGHT_ORANGE } from "../../../constants/colors";
 import { BLACK } from "../../../constants/colors";
 import useWindowResize from "../../helpers/customHooks/useWindowResize";
-import { HOME_ROUTE } from "../../../constants/paths";
+import { HOME_ROUTE, PRICING, RECOURCES } from "../../../constants/paths";
 
 function Navbar() {
   const widthWindow = useWindowResize();
@@ -35,7 +35,7 @@ function Navbar() {
   return (
     <>
       <AppBar sx={{ backgroundColor: "black" }}>
-        <Toolbar sx={{ backgroundColor: LIGHT_ORANGE }}>
+        <Toolbar sx={{ backgroundColor: LIGHT_ORANGE, width: "100%" }}>
           {isSmallScreen ? (
             <DrawerComponent />
           ) : (
@@ -63,18 +63,30 @@ function Navbar() {
                   />
                   <Tab
                     disableRipple
-                    label={<span style={{ color: BLACK }}>Enterprise</span>}
-                  />
-                  <Tab
-                    disableRipple
-                    label={<span style={{ color: BLACK }}>Recources</span>}
+                    label={<span style={{ color: BLACK }}>Enterprise </span>}
                   />
                   <Tab
                     disableRipple
                     label={
                       <span style={{ color: BLACK }}>
                         <Link
-                          to="/pricing"
+                          to={RECOURCES}
+                          style={{
+                            color: BLACK,
+                            textDecoration: "none",
+                          }}
+                        >
+                          Recources
+                        </Link>
+                      </span>
+                    }
+                  />
+                  <Tab
+                    disableRipple
+                    label={
+                      <span style={{ color: BLACK }}>
+                        <Link
+                          to={PRICING}
                           style={{
                             color: BLACK,
                             textDecoration: "none",

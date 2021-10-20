@@ -3,8 +3,6 @@ import { styled } from "@mui/system";
 import { Container, Typography } from "@mui/material";
 import useWindowResize from "../../helpers/customHooks/useWindowResize";
 import { BLACK } from "../../../constants/colors";
-import { Link } from "react-router-dom";
-import { VIDEO_ROUTE } from "../../../constants/paths";
 import ModalVideo from "react-modal-video";
 import "react-modal-video/scss/modal-video.scss";
 
@@ -16,7 +14,7 @@ const Content = styled("div")(({ theme }) => ({
   paddingRight: 15,
   flexDirection: "row",
   color: BLACK,
-  [theme.breakpoints.down("1000")]: {
+  [theme.breakpoints.down("1045")]: {
     marginTop: 40,
     justifyContent: "center",
   },

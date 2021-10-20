@@ -21,7 +21,7 @@ const data = [
 function SmallDropdown() {
   const [open, setOpen] = React.useState(false);
   return (
-    <Box sx={{ display: "flex", ml: -1, mt: "25px" }}>
+    <Box sx={{ display: "flex", ml: -1, mt: "25px", width: "100%" }}>
       <ThemeProvider
         theme={createTheme({
           components: {
@@ -38,11 +38,12 @@ function SmallDropdown() {
           },
         })}
       >
-        <Paper elevation={0} sx={{ maxWidth: "100%" }}>
+        <Paper elevation={0} sx={{ width: "100%" }}>
           <Box
             sx={{
               bgcolor: open ? "rgba(255,255,255, 1)" : null,
               pb: open ? 2 : 0,
+              width: "100%",
             }}
           >
             <ListItemButton
