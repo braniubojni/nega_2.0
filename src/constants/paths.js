@@ -4,5 +4,5 @@ export const SIGN_UP_ROUTE = "/sign-up";
 export const CHANNELS_ROUTE = "/channels";
 export const USERS_ROUTE = "/users";
 export const PERSONALROOM_ROUTE = "/personal-room";
-export const VIDEO_ROUTE = "/watch_video";
 export const PRICING = "/pricing";
+export const RECOURCES = "/recources";

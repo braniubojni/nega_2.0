@@ -11,9 +11,9 @@ import {
   SIGN_IN_ROUTE,
   SIGN_UP_ROUTE,
   CHANNELS_ROUTE,
-  VIDEO_ROUTE,
   USERS_ROUTE,
   PRICING,
+  RECOURCES,
 } from "./constants/paths";
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
 import { collection, onSnapshot } from "@firebase/firestore";
@@ -52,7 +52,7 @@ function App() {
           <Route exact path={PRICING}>
             <Home />
           </Route>
-          <Route exact path={PRICING}>
+          <Route exact path={RECOURCES}>
             <Home />
           </Route>
           <Route exact path={PRICING}>
@@ -73,9 +73,6 @@ function App() {
           </Route>
           <Route exact path={`${USERS_ROUTE}/:id`}>
             <Channels />
-          </Route>
-          <Route exact path={`${VIDEO_ROUTE}/:id`}>
-            <WatchVideo />
           </Route>
         </Switch>
       </Router>

@@ -75,43 +75,45 @@ function Slide2(incomeData = slideData) {
 
   return (
     <>
-      <Container maxWidth="lg">
-        <Box
-          backgroundColor="#FFF5EE"
-          // backgroundColor="black"
-          marginLeft="20px"
-          marginRight="20px"
-          width="100%"
-        >
-          <Typography
-            variant="h1"
-            fontWeight="bold"
-            fontSize="30px"
-            textAlign="center"
-            marginTop="40px"
+      <Box backgroundColor="#FFF5EE">
+        <Container maxWidth="lg">
+          <Box
+            backgroundColor="#FFF5EE"
+            // backgroundColor="black"
+            marginLeft="20px"
+            marginRight="20px"
+            width="100%"
           >
-            Get started with Slack
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            background: "#FFF5EE",
-            // background: "green",
-            width: "100%",
-            display: "flex",
-            justifyContent: "space-between",
-            flexDirection: windowWidth > 960 ? "row" : "column",
-            // justifyContent: "space-evenly",
-            mx: "20px",
-          }}
-        >
-          {slideData.map((slideItem) => (
-            <List sx={{ display: "flex" }} key={slideItem.h1}>
-              {renderSlides(slideItem)}
-            </List>
-          ))}
-        </Box>
-      </Container>
+            <Typography
+              variant="h1"
+              fontWeight="bold"
+              fontSize="30px"
+              textAlign="center"
+              marginTop="40px"
+            >
+              Get started with Slack
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              background: "#FFF5EE",
+              // background: "green",
+              width: "100%",
+              display: "flex",
+              justifyContent: "space-between",
+              flexDirection: windowWidth > 960 ? "row" : "column",
+              // justifyContent: "space-evenly",
+              mx: "20px",
+            }}
+          >
+            {slideData.map((slideItem) => (
+              <List sx={{ display: "flex" }} key={slideItem.h1}>
+                {renderSlides(slideItem)}
+              </List>
+            ))}
+          </Box>
+        </Container>
+      </Box>
     </>
   );
 }

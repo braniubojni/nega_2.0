@@ -3,8 +3,6 @@ import { styled } from "@mui/system";
 import { Container, Typography } from "@mui/material";
 import useWindowResize from "../../helpers/customHooks/useWindowResize";
 import { BLACK } from "../../../constants/colors";
-import { Link } from "react-router-dom";
-import { VIDEO_ROUTE } from "../../../constants/paths";
 import ModalVideo from "react-modal-video";
 import "react-modal-video/scss/modal-video.scss";
 

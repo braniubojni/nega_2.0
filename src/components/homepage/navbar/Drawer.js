@@ -29,12 +29,17 @@ function DrawerComponent() {
 
   return (
     <>
-      <Drawer open={openDrawer} anchor="left" onClose={handleDrawerToggling}>
+      <Drawer
+        open={openDrawer}
+        anchor="left"
+        onClose={handleDrawerToggling}
+        sx={{ width: "100% " }}
+      >
         <Box
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            width: "100%",
+            width: "100% ",
           }}
         >
           <Box sx={{ ml: "20px", mt: "20px" }}>
@@ -49,7 +54,7 @@ function DrawerComponent() {
           </Box>
         </Box>
 
-        <List sx={{ minWidth: 500 }}>
+        <List>
           {menuItems.map((item, index) => {
             return index === 0 ? (
               <SmallDropdown key={item} />
