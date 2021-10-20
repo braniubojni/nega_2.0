@@ -77,6 +77,7 @@ function App() {
           <Route exact path={`${VIDEO_ROUTE}/:id`}>
             <WatchVideo />
           </Route>
+          <Redirect to={HOME_ROUTE} />
         </Switch>
       </Router>
     </>
