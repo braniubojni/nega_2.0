@@ -72,3 +72,8 @@ const dmCollection = async (toUid, currentUid) => {
   const idPair = [currentUid, toUid].sort().join("_");
   return collection(db, "dms", idPair, "messages");
 };
+
+export const getExistingUsers = async ({ currentUid }) => {
+  const dmsRef = await getDocs(collection(db, "dms"));
+  dmsRef.forEach((item) => console.log(item.id, "===>", item.data()));
+};

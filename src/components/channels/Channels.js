@@ -88,7 +88,7 @@ function Channels({ window }) {
   const [inputValue, setInputValue] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [open, setOpen] = useState(true);
-  const inputRef = useRef(null);
+  const inputRef = useRef();
   const channelName = useSelector(selectChannelName);
 
   useEffect(() => {
@@ -250,14 +250,17 @@ function Channels({ window }) {
                     placeholder="Search…"
                     inputProps={{ "aria-label": "search" }}
                     inputRef={inputRef}
-                    onChange={(e) =>
-                      setInputValue(e.target.value) && inputRef.focus()
+                    onBlur={() =>
+                      inputValue === ""
+                        ? inputRef.current.blur()
+                        : inputRef.current.focus()
                     }
+                    onChange={(e) => setInputValue(e.target.value)}
                   />
                 </Search>
               </Box>
               <Box>
-                <SearchDrawer searchInput={inputValue} />
+                <SearchDrawer searchInput={inputValue} inputRef={inputRef} />
               </Box>
               <Box sx={{ ml: 3, display: "flex", alignItems: "center" }}>
                 <HelpIcon />
