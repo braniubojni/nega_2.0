@@ -5,6 +5,8 @@ import useWindowResize from "../../helpers/customHooks/useWindowResize";
 import { BLACK } from "../../../constants/colors";
 import { Link } from "react-router-dom";
 import { VIDEO_ROUTE } from "../../../constants/paths";
+import ModalVideo from "react-modal-video";
+import "react-modal-video/scss/modal-video.scss";
 
 const Content = styled("div")(({ theme }) => ({
   marginTop: 60,
@@ -53,7 +55,8 @@ const Img = styled("img")(({ theme }) => ({
 
 function ContentItem({ content, index }) {
   const windowWidth = useWindowResize();
-  const [videoId, setvideoId] = useState(null);
+  const [isOpen, setOpen] = useState(false);
+  const [link, setLink] = useState(null);
 
   return (
     <>
@@ -78,16 +81,23 @@ function ContentItem({ content, index }) {
               {content.text}
             </Typography>
             <ContentImgItem>
-              {content.img.map((item, index) => (
-                <div key={content.imgName[index]}>
-                  <Link to={`${VIDEO_ROUTE}/:${content.videoLink[index]}`}>
-                    <Img
-                      src={item}
-                      onClick={() => setvideoId(content.videoLink[index])}
-                    />
-                  </Link>
+              {content.img.map((item, newIndex) => (
+                <div key={item + newIndex}>
+                  <Img
+                    src={item.name}
+                    onClick={() => setLink(item.link) || setOpen(true)}
+                  />
                 </div>
               ))}
+              <React.Fragment>
+                <ModalVideo
+                  channel="youtube"
+                  autoplay
+                  isOpen={isOpen}
+                  videoId={link}
+                  onClose={() => setLink(null) || setOpen(false)}
+                />
+              </React.Fragment>
             </ContentImgItem>
           </ContentItemWraper>
           <div

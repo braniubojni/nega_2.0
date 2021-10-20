@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -36,7 +36,6 @@ import db from "../../firebase";
 import useWindowResize from "../helpers/customHooks/useWindowResize";
 import { MAGENTA } from "../../constants/colors";
 import SearchDrawer from "../searchDrawer/SearchDrawer";
-import { getAllChannelsMsgs } from "../helpers/handlers";
 
 const drawerWidth = 240;
 
@@ -87,9 +86,10 @@ function Channels({ window }) {
   const loggedUser = useSelector(selectLoggedInUser);
   const history = useHistory();
   const [channels, setChannels] = useState([]);
-  const [searchInput, setSearchInput] = useState("");
+  const [inputValue, setInputValue] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [open, setOpen] = useState(true);
+  const inputRef = useRef(null);
   const channelName = useSelector(selectChannelName);
 
   useEffect(() => {
@@ -250,12 +250,15 @@ function Channels({ window }) {
                   <StyledInputBase
                     placeholder="Search…"
                     inputProps={{ "aria-label": "search" }}
-                    onChange={(e) => setSearchInput(e.target.value)}
+                    inputRef={inputRef}
+                    onChange={(e) =>
+                      setInputValue(e.target.value) && inputRef.focus()
+                    }
                   />
                 </Search>
               </Box>
               <Box>
-                <SearchDrawer searchInput={searchInput} />
+                <SearchDrawer searchInput={inputValue} />
               </Box>
               <Box sx={{ ml: 3, display: "flex", alignItems: "center" }}>
                 <HelpIcon />
