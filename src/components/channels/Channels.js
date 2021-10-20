@@ -3,7 +3,7 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
-import { Drawer } from "@mui/material";
+import { Drawer, ListItem } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -21,7 +21,6 @@ import Channel from "../channels/Channel";
 import { useSelector } from "react-redux";
 import ProfileDropdown from "../homepage/navbar/ProfileDropdown";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
@@ -146,12 +145,12 @@ function Channels({ window }) {
                   position: "relative",
                 }}
               >
-                <ListItemButton
+                <ListItem
                   alignItems="flex-start"
                   onClick={() => setOpen(!open)}
                   sx={{
-                    px: 3,
-                    pt: 1.1,
+                    px: 2.5,
+                    pt: 2.5,
                     pb: open ? 0 : 1.5,
                     "&:hover, &:focus": { "& svg": { opacity: open ? 1 : 0 } },
                   }}
@@ -168,13 +167,13 @@ function Channels({ window }) {
                   <KeyboardArrowDown
                     sx={{
                       mt: 0.4,
-                      mr: 21,
+                      mr: 12.5,
                       opacity: 0,
                       transform: open ? "rotate(-180deg)" : "rotate(0)",
                       transition: "0.2s",
                     }}
                   />
-                </ListItemButton>
+                </ListItem>
                 <Box
                   sx={{
                     position: "absolute",

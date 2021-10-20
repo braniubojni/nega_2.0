@@ -6,7 +6,7 @@ import Slide1 from "./mainContent/Slide1";
 import Slide2 from "./mainContent/Slide2";
 import MainContent from "./mainContent/MainContent";
 import Pricing from "./pricing/Pricing";
-import { Route, Switch, useLocation, useParams } from "react-router";
+import { Route, Switch } from "react-router";
 import { HOME_ROUTE } from "../../constants/paths";
 
 function Home() {
