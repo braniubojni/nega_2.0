@@ -7,7 +7,6 @@ import {
   Toolbar,
   useMediaQuery,
   useTheme,
-  Container,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import Dropdown from "./Dropdown";
