@@ -8,6 +8,8 @@ import {
   serverTimestamp,
   orderBy,
   query,
+  getDoc,
+  where,
 } from "@firebase/firestore";
 import db from "../../firebase";
 
@@ -73,7 +75,16 @@ const dmCollection = async (toUid, currentUid) => {
   return collection(db, "dms", idPair, "messages");
 };
 
-export const getExistingUsers = async ({ currentUid }) => {
-  const dmsRef = await getDocs(collection(db, "dms"));
-  dmsRef.forEach((item) => console.log(item.id, "===>", item.data()));
+export const getExistingUsers = ({ currentUid }) => {
+  const getAllUsers = async () => {
+    const uniq = [];
+    const dmsRef = await getDocs(collection(db, "users"));
+    const pushId = async (toUid) =>
+      uniq.push([currentUid, toUid].sort().join("_"));
+    dmsRef.forEach(async (doc) => {
+      if (doc.data().id !== currentUid) await pushId(doc.data().id);
+    });
+    return uniq;
+  };
+  return getAllUsers();
 };

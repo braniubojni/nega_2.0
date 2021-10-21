@@ -4,7 +4,15 @@ import Drawer from "@mui/material/Drawer";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import { collection, getDoc, getDocs } from "@firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  getDoc,
+  doc,
+  onSnapshot,
+} from "@firebase/firestore";
 import db from "../../firebase";
 import { Toolbar } from "@mui/material";
 import MessageLoader from "../loader/MessageLoader";
@@ -12,54 +20,61 @@ import { useDispatch } from "react-redux";
 import { setChannelInfo } from "../../redux/common/channel/actions";
 import { CHANNELS_ROUTE } from "../../constants/paths";
 import { useHistory } from "react-router";
-import { getExistingUsers } from "../helpers/handlers";
 import { useSelector } from "react-redux";
 import { selectLoggedInUser } from "../../redux/common/auth/selectors";
+import { getExistingUsers } from "../helpers/handlers";
 
-export default function SearchDrawer({ searchInput, inputRef }) {
+export default function SearchDrawer({ searchInput }) {
   const [channelMessages, setChannelMessages] = useState([]);
   const [userMessages, setUserMessages] = useState([]);
   const [filteredChannelMessages, setFilteredChannelMessages] = useState([]);
   const [filteredUserMessages, setFilteredUserMessages] = useState([]);
-  const currentUser = useSelector(selectLoggedInUser);
-  const dispatch = useDispatch();
-  const history = useHistory();
   const [state, setState] = useState({
     right: false,
   });
-  const setChannel = (id, channelName) => {
-    dispatch(setChannelInfo({ channelId: id }));
+
+  const currentUser = useSelector(selectLoggedInUser);
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const setChannel = async (id) => {
+    const channel = await getDocs(doc(db, "channels", id));
+    dispatch(
+      setChannelInfo({ channelId: id, channelName: channel.data().channelName })
+    );
     history.push(`${CHANNELS_ROUTE}/${id}`);
   };
 
   useEffect(() => {
-    const getMessages = async () => {
+    const getUserMessages = async () => {
+      const existUsers = await getExistingUsers({
+        currentUid: currentUser?.id,
+      });
+      existUsers.forEach(async (dm) => {
+        const msgs = await getDocs(collection(db, "dms", dm, "messages"));
+        msgs.forEach((msg) => {
+          setUserMessages((prev) =>
+            prev?.id !== msg.id
+              ? [
+                  ...prev,
+                  {
+                    data: msg.data(),
+                    id: msg.id,
+                    channelId: msg.id,
+                  },
+                ]
+              : [...prev]
+          );
+        });
+      });
+    };
+    // getting messages from channels
+    // getting messages from channels
+    // getting messages from channels
+    // getting messages from channels
+    const getChannelMessages = async () => {
       const channels = await getDocs(collection(db, "channels"));
-      const dmsRef = await getDocs(collection(db, "dms"));
-      // dmsRef.forEach((item) => console.log(item.id, "===>", item.data()));
-
-      // users.forEach(async (user) => {
-      //   const msgs = await getDocs(
-      //     collection(db, "dms", currentUser.id, "messages")
-      //   );
-      //   msgs.forEach((msg) => {
-      //     console.log(msg, msg.data());
-      //     setUserMessages((prev) => [
-      //       ...prev,
-      //       {
-      //         data: msg.data(),
-      //         id: msg.id,
-      //         channelId: user.id,
-      //       },
-      //     ]);
-      //   });
-      // });
-
-      // getting messages from channels
-
       channels.forEach(async (channel) => {
-        // const channelName = await getDocs(collection(db, "channels"));
-        // channelName.docs.find((item) => item.id === channel.id);
         const msgs = await getDocs(
           collection(db, "channels", channel.id, "messages")
         );
@@ -76,10 +91,11 @@ export default function SearchDrawer({ searchInput, inputRef }) {
       });
     };
     return () => {
-      getMessages();
+      getUserMessages();
+      getChannelMessages();
       return setChannelMessages([]);
     };
-  }, [searchInput]);
+  }, [currentUser, searchInput]);
 
   useEffect(() => {
     if (searchInput) {
@@ -142,7 +158,7 @@ export default function SearchDrawer({ searchInput, inputRef }) {
                     primary={"Channels"}
                   />
                 </ListItem>
-                {filteredChannelMessages.map((item, index) => (
+                {[...new Set(filteredChannelMessages)].map((item, index) => (
                   <ListItem
                     onClick={() => setChannel(item.channelId)}
                     key={item + index}
@@ -168,7 +184,7 @@ export default function SearchDrawer({ searchInput, inputRef }) {
                     primary={"Users"}
                   />
                 </ListItem>
-                {filteredUserMessages.map((item, index) => (
+                {[...new Set(filteredUserMessages)].map((item, index) => (
                   <ListItem
                     onClick={() => setChannel(item.channelId)}
                     key={item + index}
