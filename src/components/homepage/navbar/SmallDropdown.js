@@ -6,6 +6,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Paper from "@mui/material/Paper";
 
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
+import useWindowResize from "../../helpers/customHooks/useWindowResize";
 
 const data = [
   { label: "Features" },
@@ -19,6 +20,7 @@ const data = [
 ];
 
 function SmallDropdown() {
+  const widthWindow = useWindowResize();
   const [open, setOpen] = React.useState(false);
   return (
     <Box sx={{ display: "flex", ml: -1, mt: "25px", width: "100%" }}>
@@ -35,10 +37,11 @@ function SmallDropdown() {
             mode: "light",
             primary: { main: "rgb(0,0,0)" },
             background: { paper: "rgb(255,255,255)" },
+            width: "100%",
           },
         })}
       >
-        <Paper elevation={0} sx={{ width: "100%" }}>
+        <Paper elevation={0} sx={{ width: widthWindow }}>
           <Box
             sx={{
               bgcolor: open ? "rgba(255,255,255, 1)" : null,

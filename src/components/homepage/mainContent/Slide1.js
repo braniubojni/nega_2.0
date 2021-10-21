@@ -90,7 +90,7 @@ function Slide1(incomeData = slideData) {
           mt: 5,
         }}
       >
-        {widthWindow > 615 ? (
+        {widthWindow > 628 ? (
           <BoxItems>
             <Grid
               container

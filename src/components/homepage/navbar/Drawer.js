@@ -7,10 +7,8 @@ import ButtonTemplate from "../../../shared/ButtonTemplate";
 
 import {
   Drawer,
-  List,
   ListItem,
   ListItemText,
-  ListItemIcon,
   IconButton,
   Typography,
   Box,
@@ -54,7 +52,7 @@ function DrawerComponent() {
           </Box>
         </Box>
 
-        <Box sx={{ width: "70vw" }}>
+        <Box sx={{ width: "100%" }}>
           {menuItems.map((item, index) => {
             return index === 0 ? (
               <SmallDropdown key={item} />
