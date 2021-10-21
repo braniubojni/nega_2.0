@@ -2,7 +2,7 @@ import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import { Typography, List, Container } from "@mui/material";
+import { Typography, List, Container, Grid } from "@mui/material";
 import { styled } from "@mui/system";
 import Slider from "infinite-react-carousel";
 
@@ -90,24 +90,39 @@ function Slide1(incomeData = slideData) {
           mt: 5,
         }}
       >
-        {widthWindow > 600 ? (
+        {widthWindow > 615 ? (
           <BoxItems>
-            {slideData.map((slideItem) => (
-              <List sx={{ display: "flex" }} key={slideItem.h1}>
-                {renderSlides(slideItem)}
-              </List>
-            ))}
+            <Grid
+              container
+              spacing={3}
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              {slideData.map((slideItem) => (
+                <Grid item lg={3} md={6}>
+                  <List
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                    key={slideItem.h1}
+                  >
+                    {renderSlides(slideItem)}
+                  </List>
+                </Grid>
+              ))}
+            </Grid>
           </BoxItems>
         ) : (
           <Box>
             <Slider dots>
               {slideData.map((slideItem) => (
-                <List
+                <Box
                   key={slideItem.h1}
                   sx={{ display: "flex !important", justifyContent: "center" }}
                 >
                   {renderSlides(slideItem)}
-                </List>
+                </Box>
               ))}
             </Slider>
           </Box>
