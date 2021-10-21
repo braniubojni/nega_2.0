@@ -54,26 +54,20 @@ function DrawerComponent() {
           </Box>
         </Box>
 
-        <List>
+        <Box sx={{ width: "70vw" }}>
           {menuItems.map((item, index) => {
             return index === 0 ? (
               <SmallDropdown key={item} />
             ) : (
               <ListItem key={item}>
-                <ListItemIcon
-                  sx={{
-                    color: "rgba(0,0,0,1)",
-                  }}
-                >
-                  <ListItemText>{item}</ListItemText>
-                </ListItemIcon>
+                <ListItemText>{item}</ListItemText>
               </ListItem>
             );
           })}
           <Box>
             <ButtonTemplate />
           </Box>
-        </List>
+        </Box>
       </Drawer>
 
       <Box

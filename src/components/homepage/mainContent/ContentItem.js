@@ -90,7 +90,7 @@ function ContentItem({ content, index }) {
               <React.Fragment>
                 <ModalVideo
                   channel="youtube"
-                  autoplay
+                  autoplay={true}
                   isOpen={isOpen}
                   videoId={link}
                   onClose={() => setLink(null) || setOpen(false)}
