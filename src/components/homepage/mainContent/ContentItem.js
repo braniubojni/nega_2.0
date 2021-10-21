@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@mui/system";
 import { Container, Typography } from "@mui/material";
 import useWindowResize from "../../helpers/customHooks/useWindowResize";
 import { BLACK } from "../../../constants/colors";
 import ModalVideo from "react-modal-video";
 import "react-modal-video/scss/modal-video.scss";
+import Loader from "../../loader/Loader";
 
 const Content = styled("div")(({ theme }) => ({
   marginTop: 60,
@@ -56,6 +57,13 @@ function ContentItem({ content, index }) {
   const [isOpen, setOpen] = useState(false);
   const [link, setLink] = useState(null);
 
+  useEffect(() => {
+    if (link !== null) {
+      setOpen(true);
+    }
+    return () => setOpen(false);
+  }, [link]);
+
   return (
     <>
       <Container maxWidth="lg">
@@ -81,10 +89,7 @@ function ContentItem({ content, index }) {
             <ContentImgItem>
               {content.img.map((item, newIndex) => (
                 <div key={item + newIndex}>
-                  <Img
-                    src={item.name}
-                    onClick={() => setLink(item.link) || setOpen(true)}
-                  />
+                  <Img src={item.name} onClick={() => setLink(item.link)} />
                 </div>
               ))}
               <React.Fragment>
