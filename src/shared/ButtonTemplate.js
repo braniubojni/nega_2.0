@@ -19,7 +19,7 @@ function Buttons() {
   const loggedUser = useSelector(selectLoggedInUser);
 
   return (
-    <Box width="100%" display="flex" justifyContent="flex-end">
+    <Box width="100%" display="flex" justifyContent="flex-end" sx={{ mr: 4 }}>
       {!loggedUser && (
         <Button
           variant="outlined"
@@ -40,6 +40,7 @@ function Buttons() {
           backgroundColor: MAGENTA,
           width: "130px",
           padding: "7px",
+          marginRight: "16px",
         }}
       >
         <div
