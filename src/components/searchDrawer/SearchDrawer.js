@@ -1,14 +1,18 @@
 import { Fragment, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import { collection, getDoc, getDocs } from "@firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  getDoc,
+  doc,
+  onSnapshot,
+} from "@firebase/firestore";
 import db from "../../firebase";
 import { Toolbar } from "@mui/material";
 import MessageLoader from "../loader/MessageLoader";
@@ -16,47 +20,61 @@ import { useDispatch } from "react-redux";
 import { setChannelInfo } from "../../redux/common/channel/actions";
 import { CHANNELS_ROUTE } from "../../constants/paths";
 import { useHistory } from "react-router";
+import { useSelector } from "react-redux";
+import { selectLoggedInUser } from "../../redux/common/auth/selectors";
+import { getExistingUsers } from "../helpers/handlers";
 
 export default function SearchDrawer({ searchInput }) {
   const [channelMessages, setChannelMessages] = useState([]);
   const [userMessages, setUserMessages] = useState([]);
   const [filteredChannelMessages, setFilteredChannelMessages] = useState([]);
   const [filteredUserMessages, setFilteredUserMessages] = useState([]);
-  const dispatch = useDispatch();
-  const history = useHistory();
   const [state, setState] = useState({
     right: false,
   });
 
-  const setChannel = (id, channelName) => {
-    dispatch(setChannelInfo({ channelId: id }));
+  const currentUser = useSelector(selectLoggedInUser);
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const setChannel = async (id) => {
+    const channel = await getDocs(doc(db, "channels", id));
+    dispatch(
+      setChannelInfo({ channelId: id, channelName: channel.data().channelName })
+    );
     history.push(`${CHANNELS_ROUTE}/${id}`);
   };
 
   useEffect(() => {
-    // getting messages from channels
-    const getMessages = async () => {
-      const channels = await getDocs(collection(db, "channels"));
-      const users = await getDocs(collection(db, "users"));
-
-      users.forEach(async (user) => {
-        const msgs = await getDocs(collection(db, "dms", user.id, "messages"));
+    const getUserMessages = async () => {
+      const existUsers = await getExistingUsers({
+        currentUid: currentUser?.id,
+      });
+      existUsers.forEach(async (dm) => {
+        const msgs = await getDocs(collection(db, "dms", dm, "messages"));
         msgs.forEach((msg) => {
-          console.log(msg, msg.data());
-          setUserMessages((prev) => [
-            ...prev,
-            {
-              data: msg.data(),
-              id: msg.id,
-              channelId: user.id,
-            },
-          ]);
+          setUserMessages((prev) =>
+            prev?.id !== msg.id
+              ? [
+                  ...prev,
+                  {
+                    data: msg.data(),
+                    id: msg.id,
+                    channelId: msg.id,
+                  },
+                ]
+              : [...prev]
+          );
         });
       });
-
+    };
+    // getting messages from channels
+    // getting messages from channels
+    // getting messages from channels
+    // getting messages from channels
+    const getChannelMessages = async () => {
+      const channels = await getDocs(collection(db, "channels"));
       channels.forEach(async (channel) => {
-        // const channelName = await getDocs(collection(db, "channels"));
-        // channelName.docs.find((item) => item.id === channel.id);
         const msgs = await getDocs(
           collection(db, "channels", channel.id, "messages")
         );
@@ -73,10 +91,11 @@ export default function SearchDrawer({ searchInput }) {
       });
     };
     return () => {
-      getMessages();
+      getUserMessages();
+      getChannelMessages();
       return setChannelMessages([]);
     };
-  }, [searchInput]);
+  }, [currentUser, searchInput]);
 
   useEffect(() => {
     if (searchInput) {
@@ -139,7 +158,7 @@ export default function SearchDrawer({ searchInput }) {
                     primary={"Channels"}
                   />
                 </ListItem>
-                {filteredChannelMessages.map((item, index) => (
+                {[...new Set(filteredChannelMessages)].map((item, index) => (
                   <ListItem
                     onClick={() => setChannel(item.channelId)}
                     key={item + index}
@@ -155,20 +174,29 @@ export default function SearchDrawer({ searchInput }) {
           </Box>
           <Divider />
           <Box>
-            <ListItem>
-              <ListItemText sx={{ py: 0, minHeight: 32 }} primary={"Users"} />
-            </ListItem>
-            {filteredUserMessages.map((item, index) => (
-              <ListItem
-                onClick={() => setChannel(item.channelId)}
-                key={item + index}
-              >
-                <ListItemText
-                  sx={{ py: 0, minHeight: 32 }}
-                  primary={`${item.data.name} ===> ${item.data.message}`}
-                />
-              </ListItem>
-            ))}
+            {!filteredUserMessages ? (
+              <MessageLoader />
+            ) : (
+              <>
+                <ListItem>
+                  <ListItemText
+                    sx={{ py: 0, minHeight: 32 }}
+                    primary={"Users"}
+                  />
+                </ListItem>
+                {[...new Set(filteredUserMessages)].map((item, index) => (
+                  <ListItem
+                    onClick={() => setChannel(item.channelId)}
+                    key={item + index}
+                  >
+                    <ListItemText
+                      sx={{ py: 0, minHeight: 32 }}
+                      primary={`${item.data.name} ===> ${item.data.message}`}
+                    />
+                  </ListItem>
+                ))}
+              </>
+            )}
           </Box>
         </Box>
       </>
