@@ -69,8 +69,11 @@ export default function SignIn() {
   }, [history, loggedInUser]);
 
   useEffect(() => {
-    if (error) {
-      setAlert((prev) => !prev);
+    if (
+      error?.message &&
+      error.message === "Firebase: Error (auth/invalid-email)."
+    ) {
+      setAlert("We don't have such a person");
     }
     return () => setAlert(null);
   }, [error]);
@@ -182,7 +185,7 @@ export default function SignIn() {
               <Copyright sx={{ mt: 8, mb: 4 }} />
             </Container>
           </ThemeProvider>
-          {alert && <Alert alert={alert} setAlert={setAlert} />}
+          <Alert alert={!!alert} setAlert={setAlert} text={alert} />
         </>
       )}
     </>

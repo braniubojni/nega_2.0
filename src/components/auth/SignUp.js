@@ -79,8 +79,11 @@ export default function SignUp() {
   }, [history, loggedInUser]);
 
   useEffect(() => {
-    if (error) {
-      setAlert((prev) => !prev);
+    if (
+      error?.message &&
+      error.message === "Firebase: Error (auth/user-not-found)."
+    ) {
+      setAlert("Please fill all fields");
     }
   }, [error]);
 

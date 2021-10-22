@@ -36,6 +36,5 @@ function Home() {
     </>
   );
 }
-// <Redirect to={HOME_ROUTE} />
 
 export default Home;
