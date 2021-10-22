@@ -63,10 +63,6 @@ export default function SearchDrawer({ searchInput }) {
         });
       });
     };
-    // getting messages from channels
-    // getting messages from channels
-    // getting messages from channels
-    // getting messages from channels
     const getChannelMessages = async () => {
       const channels = await getDocs(collection(db, "channels"));
       channels.forEach(async (channel) => {
@@ -186,16 +182,12 @@ export default function SearchDrawer({ searchInput }) {
                     primary={"Users"}
                   />
                 </ListItem>
-                {/* [
-                  ...new Map(
-                    filteredUserMessages.map((item) => [
-                      item.data.message,
-                      item,
-                    ])
-                  ).values(),
-                ] */}
                 {filteredUserMessages
-                  .filter((item) => item.data.message)
+                  .filter(
+                    (tag, index, array) =>
+                      array.findIndex((t) => t.message === tag.message) ===
+                      index
+                  )
                   .map((item, index) => (
                     <ListItem onClick={() => setDM(item)} key={item + index}>
                       <ListItemText

@@ -86,3 +86,7 @@ export const getExistingUsers = ({ currentUid }) => {
   };
   return getAllUsers();
 };
+
+export const remDuplicate = (data, key) => [
+  ...new Map(data.map((x) => [key(x), x])).values(),
+];

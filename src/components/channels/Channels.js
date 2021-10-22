@@ -85,10 +85,10 @@ function Channels({ window }) {
   const loggedUser = useSelector(selectLoggedInUser);
   const history = useHistory();
   const [channels, setChannels] = useState([]);
-  const [inputValue, setInputValue] = useState(false);
+  const [inputValue, setInputValue] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
   const [open, setOpen] = useState(true);
-  const inputRef = useRef();
+  const inpRef = useRef();
   const channelName = useSelector(selectChannelName);
 
   useEffect(() => {
@@ -249,18 +249,18 @@ function Channels({ window }) {
                   <StyledInputBase
                     placeholder="Search…"
                     inputProps={{ "aria-label": "search" }}
-                    inputRef={inputRef}
+                    inputRef={inpRef}
                     onBlur={() =>
                       inputValue === ""
-                        ? inputRef.current.blur()
-                        : inputRef.current.focus()
+                        ? inpRef.current.blur()
+                        : inpRef.current.focus()
                     }
                     onChange={(e) => setInputValue(e.target.value)}
                   />
                 </Search>
               </Box>
               <Box>
-                <SearchDrawer searchInput={inputValue} inputRef={inputRef} />
+                <SearchDrawer searchInput={inputValue} />
               </Box>
               <Box sx={{ ml: 3, display: "flex", alignItems: "center" }}>
                 <HelpIcon />
@@ -333,7 +333,7 @@ function Channels({ window }) {
           </Box>
           <Divider />
           <Box component="main" sx={{ flexGrow: 1, p: 2 }}>
-            <Chat />
+            <Chat setSearchInput={setInputValue} />
           </Box>
         </Box>
       </Box>

@@ -72,7 +72,7 @@ const TextFieldWrapper = styled("div")(({ theme }) => ({
   },
 }));
 
-function Chat() {
+function Chat({ setSearchInput }) {
   const [messages, setMessages] = useState([]);
   const [sent, setSent] = useState(false);
   const [userId, setUserId] = useState(null);
@@ -194,6 +194,7 @@ function Chat() {
               id="standard-basic"
               disabled={!channelId}
               inputRef={inputRef}
+              onClick={() => setSearchInput(null)} //setSearchInput("")
               placeholder={
                 channelId ? `Message # ${channelName}` : "Select any channel"
               }
