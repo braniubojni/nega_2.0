@@ -18,8 +18,6 @@ import {
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
 import { collection, onSnapshot } from "@firebase/firestore";
 import db from "./firebase";
-import WatchVideo from "./components/video/WatchVideo";
-import Pricing from "./components/homepage/pricing/Pricing";
 function App() {
   const dispatch = useDispatch();
   const auth = getAuth();

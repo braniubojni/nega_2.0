@@ -4,15 +4,7 @@ import Drawer from "@mui/material/Drawer";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  getDoc,
-  doc,
-  onSnapshot,
-} from "@firebase/firestore";
+import { collection, getDocs, doc, getDoc } from "@firebase/firestore";
 import db from "../../firebase";
 import { Toolbar } from "@mui/material";
 import MessageLoader from "../loader/MessageLoader";
@@ -38,11 +30,14 @@ export default function SearchDrawer({ searchInput }) {
   const history = useHistory();
 
   const setChannel = async (id) => {
-    const channel = await getDocs(doc(db, "channels", id));
+    const channel = await getDoc(doc(db, "channels", id));
     dispatch(
       setChannelInfo({ channelId: id, channelName: channel.data().channelName })
     );
     history.push(`${CHANNELS_ROUTE}/${id}`);
+  };
+  const setDM = async (id) => {
+    console.log(id);
   };
 
   useEffect(() => {
@@ -68,10 +63,6 @@ export default function SearchDrawer({ searchInput }) {
         });
       });
     };
-    // getting messages from channels
-    // getting messages from channels
-    // getting messages from channels
-    // getting messages from channels
     const getChannelMessages = async () => {
       const channels = await getDocs(collection(db, "channels"));
       channels.forEach(async (channel) => {
@@ -158,17 +149,24 @@ export default function SearchDrawer({ searchInput }) {
                     primary={"Channels"}
                   />
                 </ListItem>
-                {[...new Set(filteredChannelMessages)].map((item, index) => (
-                  <ListItem
-                    onClick={() => setChannel(item.channelId)}
-                    key={item + index}
-                  >
-                    <ListItemText
-                      sx={{ py: 0, minHeight: 32 }}
-                      primary={`${item.data.name} ===> ${item.data.message}`}
-                    />
-                  </ListItem>
-                ))}
+                {filteredChannelMessages
+                  .filter(
+                    (v, i, a) =>
+                      a.findIndex(
+                        (t) => JSON.stringify(t) === JSON.stringify(v)
+                      ) === i
+                  )
+                  .map((item, index) => (
+                    <ListItem
+                      onClick={() => setChannel(item.channelId)}
+                      key={item + index}
+                    >
+                      <ListItemText
+                        sx={{ py: 0, minHeight: 32 }}
+                        primary={`${item.data.name} ===> ${item.data.message}`}
+                      />
+                    </ListItem>
+                  ))}
               </>
             )}
           </Box>
@@ -184,17 +182,20 @@ export default function SearchDrawer({ searchInput }) {
                     primary={"Users"}
                   />
                 </ListItem>
-                {[...new Set(filteredUserMessages)].map((item, index) => (
-                  <ListItem
-                    onClick={() => setChannel(item.channelId)}
-                    key={item + index}
-                  >
-                    <ListItemText
-                      sx={{ py: 0, minHeight: 32 }}
-                      primary={`${item.data.name} ===> ${item.data.message}`}
-                    />
-                  </ListItem>
-                ))}
+                {filteredUserMessages
+                  .filter(
+                    (tag, index, array) =>
+                      array.findIndex((t) => t.message === tag.message) ===
+                      index
+                  )
+                  .map((item, index) => (
+                    <ListItem onClick={() => setDM(item)} key={item + index}>
+                      <ListItemText
+                        sx={{ py: 0, minHeight: 32 }}
+                        primary={`${item.data.name} ===> ${item.data.message}`}
+                      />
+                    </ListItem>
+                  ))}
               </>
             )}
           </Box>
