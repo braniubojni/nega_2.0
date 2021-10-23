@@ -8,6 +8,7 @@ import {
   serverTimestamp,
   orderBy,
   query,
+  getDoc,
 } from "@firebase/firestore";
 import db from "../../firebase";
 
@@ -32,8 +33,13 @@ export const handleMsgEdit = async ({ channelId, id, msgInfo }) => {
   await setDoc(docRef, msgInfo);
 };
 
-export const handleMsgRemove = async ({ channelId, id }) => {
+export const handleChannelMsgRemove = async ({ channelId, id }) => {
   await deleteDoc(doc(collection(db, "channels", channelId, "messages"), id));
+};
+
+export const handleUserMsgRemove = async (id, msgId) => {
+  const users = await getExistingUsers({ currentUid: id });
+  await deleteDoc(doc(collection(db, "dms", users[0], "messages"), msgId));
 };
 
 export const handleUserRemove = async (id) => {
@@ -59,12 +65,21 @@ const retrieveDM = async (toUid, currentUid) => {
   return collection(db, "dms", idPair, "messages");
 };
 
-export const sentDirectMsg = async ({ toUid, currentUid, message, name }) => {
+export const sentDirectMsg = async ({
+  toUid,
+  currentUid,
+  message,
+  name,
+  channelId,
+  channelName,
+}) => {
   const collecitonRef = await dmCollection(toUid, currentUid);
   await addDoc(collecitonRef, {
     timestamp: serverTimestamp(),
     message,
     name,
+    channelId,
+    channelName,
   });
 };
 

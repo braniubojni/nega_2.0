@@ -9,6 +9,7 @@ import EditMsg from "../chat/EditMsg";
 import RemoveMsg from "../chat/RemoveMsg";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useState } from "react";
+import { useLocation } from "react-router";
 
 const HoverPopUp = styled("div")(() => ({
   transition: "all 0.2s",
@@ -38,6 +39,7 @@ function Message({ msgInfo, id }) {
   const [removeMsg, setRemoveMsg] = useState(null);
   const [showPopUp, setShowPopUp] = useState(false);
   const [hoverToggler, setHoverToggler] = useState(false);
+  const { pathname } = useLocation();
   const channelId = useSelector(selectChannelId);
   const loggedUser = useSelector(selectLoggedInUser);
   const onRemoveClose = () => {
@@ -89,7 +91,8 @@ function Message({ msgInfo, id }) {
         <RemoveMsg
           id={id}
           channelId={channelId}
-          msgInfo={removeMsg}
+          loggedUserId={loggedUser.id}
+          location={pathname.includes("users")}
           onRemoveClose={onRemoveClose}
         />
       )}
@@ -97,6 +100,8 @@ function Message({ msgInfo, id }) {
         <EditMsg
           id={id}
           channelId={channelId}
+          loggedUserId={loggedUser.id}
+          location={pathname.includes("users")}
           msgInfo={msgInfo}
           onEditClose={onEditClose}
         />
