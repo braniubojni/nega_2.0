@@ -36,9 +36,13 @@ export default function SearchDrawer({ searchInput }) {
     );
     history.push(`${CHANNELS_ROUTE}/${id}`);
   };
-  const setDM = async (id) => {
-    console.log(id);
+  const setDM = async ({ channelName, channelId }) => {
+    dispatch(setChannelInfo({ channelName, channelId }));
+    history.push(`${CHANNELS_ROUTE}/${channelId}`);
   };
+  useEffect(() => {
+    console.log("Show the messages");
+  }, [filteredUserMessages]);
 
   useEffect(() => {
     const getUserMessages = async () => {
@@ -184,12 +188,16 @@ export default function SearchDrawer({ searchInput }) {
                 </ListItem>
                 {filteredUserMessages
                   .filter(
-                    (tag, index, array) =>
-                      array.findIndex((t) => t.message === tag.message) ===
-                      index
+                    (v, i, a) =>
+                      a.findIndex(
+                        (t) => JSON.stringify(t) === JSON.stringify(v)
+                      ) === i
                   )
                   .map((item, index) => (
-                    <ListItem onClick={() => setDM(item)} key={item + index}>
+                    <ListItem
+                      onClick={() => setDM(item.data)}
+                      key={item + index}
+                    >
                       <ListItemText
                         sx={{ py: 0, minHeight: 32 }}
                         primary={`${item.data.name} ===> ${item.data.message}`}

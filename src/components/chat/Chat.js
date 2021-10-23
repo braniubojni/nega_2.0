@@ -1,6 +1,6 @@
 import { getAuth } from "@firebase/auth";
 import { query, orderBy } from "firebase/firestore";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { collection, onSnapshot } from "firebase/firestore";
 import db from "../../firebase";
@@ -151,6 +151,8 @@ function Chat({ setSearchInput }) {
             currentUid: currentUserId.id,
             message: inputRef.current.value,
             name: auth.currentUser.email,
+            channelId,
+            channelName,
           });
 
       setSent(true);
@@ -194,7 +196,7 @@ function Chat({ setSearchInput }) {
               id="standard-basic"
               disabled={!channelId}
               inputRef={inputRef}
-              onClick={() => setSearchInput(null)} //setSearchInput("")
+              onClick={() => setSearchInput("")}
               placeholder={
                 channelId ? `Message # ${channelName}` : "Select any channel"
               }

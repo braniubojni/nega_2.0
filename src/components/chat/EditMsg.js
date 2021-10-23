@@ -7,17 +7,19 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { handleMsgEdit } from "../helpers/handlers";
 
-// add on Enter save
-
 export default function EditMsg({ onEditClose, msgInfo, id, channelId }) {
   const [msg, setMsg] = useState(msgInfo.message);
 
-  const onEditSave = ({ msg, id, channelId }) => {
+  const onEditSave = ({ msg, id, channelId, location }) => {
     msgInfo = {
       ...msgInfo,
       message: msg,
     };
-    handleMsgEdit({ msgInfo, id, channelId });
+    if (!location) {
+      handleMsgEdit({ msgInfo, id, channelId });
+    } else {
+      console.log("In users");
+    }
     onEditClose();
   };
 

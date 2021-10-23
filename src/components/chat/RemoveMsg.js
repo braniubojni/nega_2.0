@@ -4,9 +4,22 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { handleMsgRemove } from "../helpers/handlers";
+import {
+  handleChannelMsgRemove,
+  handleUserMsgRemove,
+} from "../helpers/handlers";
 
-export default function RemoveMsg({ onRemoveClose, id, channelId }) {
+export default function RemoveMsg({
+  onRemoveClose,
+  id,
+  channelId,
+  loggedUserId,
+  location,
+}) {
+  const removeFunc = ({ channelId, id }) =>
+    !location
+      ? handleChannelMsgRemove({ channelId, id })
+      : handleUserMsgRemove(loggedUserId, id);
   return (
     <div>
       <Dialog open={true} onClose={onRemoveClose}>
@@ -18,9 +31,7 @@ export default function RemoveMsg({ onRemoveClose, id, channelId }) {
         </DialogContent>
         <DialogActions>
           <Button onClick={onRemoveClose}>NO</Button>
-          <Button onClick={() => handleMsgRemove({ channelId, id })}>
-            YES
-          </Button>
+          <Button onClick={() => removeFunc({ channelId, id })}>YES</Button>
         </DialogActions>
       </Dialog>
     </div>
