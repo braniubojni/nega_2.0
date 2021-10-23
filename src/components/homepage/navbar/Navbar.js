@@ -19,7 +19,12 @@ import Buttons from "../../../shared/ButtonTemplate";
 import { LIGHT_ORANGE } from "../../../constants/colors";
 import { BLACK } from "../../../constants/colors";
 import useWindowResize from "../../helpers/customHooks/useWindowResize";
-import { HOME_ROUTE, PRICING, RECOURCES } from "../../../constants/paths";
+import {
+  ENTERPRISE_ROUTE,
+  HOME_ROUTE,
+  PRICING,
+  RECOURCES,
+} from "../../../constants/paths";
 
 function Navbar() {
   const widthWindow = useWindowResize();
@@ -57,13 +62,22 @@ function Navbar() {
                   onChange={handleClickTab}
                   value={value}
                 >
+                  Enterprise
                   <Tab
                     disableRipple
-                    label={<span style={{ color: BLACK }}>{<Dropdown />}</span>}
-                  />
-                  <Tab
-                    disableRipple
-                    label={<span style={{ color: BLACK }}>Enterprise </span>}
+                    label={
+                      <span style={{ color: BLACK }}>
+                        <Link
+                          to={ENTERPRISE_ROUTE}
+                          style={{
+                            color: BLACK,
+                            textDecoration: "none",
+                          }}
+                        >
+                          Enterprise
+                        </Link>
+                      </span>
+                    }
                   />
                   <Tab
                     disableRipple

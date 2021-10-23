@@ -6,3 +6,4 @@ export const USERS_ROUTE = "/users";
 export const PERSONALROOM_ROUTE = "/personal-room";
 export const PRICING = "/pricing";
 export const RECOURCES = "/recources";
+export const ENTERPRISE_ROUTE = "/enterprise ";

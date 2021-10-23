@@ -7,8 +7,14 @@ import Slide2 from "./mainContent/Slide2";
 import MainContent from "./mainContent/MainContent";
 import Pricing from "./pricing/Pricing";
 import { Route, Switch } from "react-router";
-import { HOME_ROUTE, PRICING, RECOURCES } from "../../constants/paths";
+import {
+  HOME_ROUTE,
+  PRICING,
+  RECOURCES,
+  ENTERPRISE_ROUTE,
+} from "../../constants/paths";
 import Recorces from "./recoutces/Recources";
+import Enterprise from "./enterprise/Enterprise";
 
 function Home() {
   return (
@@ -22,8 +28,13 @@ function Home() {
           <Route exact path={HOME_ROUTE}>
             <MainContent />
           </Route>
-          <Route exact path={PRICING} children={<Pricing />}></Route>
+          <Route
+            exact
+            path={ENTERPRISE_ROUTE}
+            children={<Enterprise />}
+          ></Route>
           <Route exact patch={RECOURCES} children={<Recorces />}></Route>
+          <Route exact path={PRICING} children={<Pricing />}></Route>
         </Switch>
         <Box>
           <Box>
