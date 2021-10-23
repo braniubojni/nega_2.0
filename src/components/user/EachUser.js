@@ -9,7 +9,6 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import RemoveUser from "../chat/Remove";
 import { handleUserRemove } from "../helpers/handlers";
 import { setChannelInfo } from "../../redux/common/channel/actions";
-import { setUserInfo } from "../../redux/common/user/actions";
 
 function EachUser({ id, userName }) {
   const dispatch = useDispatch();
@@ -24,7 +23,6 @@ function EachUser({ id, userName }) {
 
   const setUser = () => {
     dispatch(setChannelInfo({ channelId: id, channelName: userName }));
-    dispatch(setUserInfo({ userId: id, userName }));
     history.push(`${USERS_ROUTE}/${id}`);
   };
 

@@ -5,7 +5,6 @@ import useWindowResize from "../../helpers/customHooks/useWindowResize";
 import { BLACK } from "../../../constants/colors";
 import ModalVideo from "react-modal-video";
 import "react-modal-video/scss/modal-video.scss";
-import Loader from "../../loader/Loader";
 
 const Content = styled("div")(({ theme }) => ({
   marginTop: 60,

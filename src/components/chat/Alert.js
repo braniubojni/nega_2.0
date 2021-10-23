@@ -9,7 +9,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 export default function Alert({
   alert,
   setAlert,
-  text = "We don't have such a person, please Sign In to see our channels",
+  text = "Something went wrong",
 }) {
   const handleClose = () => setAlert((prev) => !prev);
   return (

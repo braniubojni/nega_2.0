@@ -8,8 +8,6 @@ import {
   serverTimestamp,
   orderBy,
   query,
-  getDoc,
-  where,
 } from "@firebase/firestore";
 import db from "../../firebase";
 
@@ -29,13 +27,24 @@ export const handleChannelRemove = async (id) => {
   await deleteDoc(doc(channelRef, id));
 };
 
-export const handleMsgEdit = async ({ channelId, id, msgInfo }) => {
+export const handleChannelMsgEdit = async ({ channelId, id, msgInfo }) => {
   const docRef = doc(collection(db, "channels", channelId, "messages"), id);
   await setDoc(docRef, msgInfo);
 };
 
-export const handleMsgRemove = async ({ channelId, id }) => {
+export const handleChannelMsgRemove = async ({ channelId, id }) => {
   await deleteDoc(doc(collection(db, "channels", channelId, "messages"), id));
+};
+
+export const handleUserMsgEdit = async ({ id, msgInfo, loggedUserId }) => {
+  const user = await getExistingUsers({ currentUid: loggedUserId });
+  const docRef = doc(collection(db, "dms", user[0], "messages"), id);
+  await setDoc(docRef, msgInfo);
+};
+
+export const handleUserMsgRemove = async (id, msgId) => {
+  const user = await getExistingUsers({ currentUid: id });
+  await deleteDoc(doc(collection(db, "dms", user[0], "messages"), msgId));
 };
 
 export const handleUserRemove = async (id) => {
@@ -61,12 +70,21 @@ const retrieveDM = async (toUid, currentUid) => {
   return collection(db, "dms", idPair, "messages");
 };
 
-export const sentDirectMsg = async ({ toUid, currentUid, message, name }) => {
+export const sentDirectMsg = async ({
+  toUid,
+  currentUid,
+  message,
+  name,
+  channelId,
+  channelName,
+}) => {
   const collecitonRef = await dmCollection(toUid, currentUid);
   await addDoc(collecitonRef, {
     timestamp: serverTimestamp(),
     message,
     name,
+    channelId,
+    channelName,
   });
 };
 
@@ -88,3 +106,7 @@ export const getExistingUsers = ({ currentUid }) => {
   };
   return getAllUsers();
 };
+
+export const remDuplicate = (data, key) => [
+  ...new Map(data.map((x) => [key(x), x])).values(),
+];

@@ -1,10 +1,9 @@
 import { Box, Card, CardContent, Container, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import { styled } from "@mui/system";
 import CheckIcon from "@mui/icons-material/Check";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import useWindowResize from "../../helpers/customHooks/useWindowResize";
-import Slide1 from "../mainContent/Slide1";
 
 const H3 = styled(Typography)(({ theme }) => ({
   color: "#1d1d1d",
@@ -56,7 +55,6 @@ const pricingContenet = [
 ];
 
 function Pricing() {
-  const [content, setContent] = useState(false);
   const widthWindow = useWindowResize();
   function renderAdvantage(item) {
     return (

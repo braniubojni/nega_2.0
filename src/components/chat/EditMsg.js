@@ -5,11 +5,16 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { handleMsgEdit } from "../helpers/handlers";
+import { handleChannelMsgEdit, handleUserMsgEdit } from "../helpers/handlers";
 
-// add on Enter save
-
-export default function EditMsg({ onEditClose, msgInfo, id, channelId }) {
+export default function EditMsg({
+  onEditClose,
+  msgInfo,
+  id,
+  channelId,
+  location,
+  loggedUserId,
+}) {
   const [msg, setMsg] = useState(msgInfo.message);
 
   const onEditSave = ({ msg, id, channelId }) => {
@@ -17,7 +22,11 @@ export default function EditMsg({ onEditClose, msgInfo, id, channelId }) {
       ...msgInfo,
       message: msg,
     };
-    handleMsgEdit({ msgInfo, id, channelId });
+    if (!location) {
+      handleChannelMsgEdit({ msgInfo, id, channelId });
+    } else {
+      handleUserMsgEdit({ msgInfo, id, channelId, loggedUserId });
+    }
     onEditClose();
   };
 

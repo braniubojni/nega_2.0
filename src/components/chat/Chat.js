@@ -1,6 +1,6 @@
 import { getAuth } from "@firebase/auth";
 import { query, orderBy } from "firebase/firestore";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { collection, onSnapshot } from "firebase/firestore";
 import db from "../../firebase";
@@ -72,7 +72,7 @@ const TextFieldWrapper = styled("div")(({ theme }) => ({
   },
 }));
 
-function Chat() {
+function Chat({ setSearchInput }) {
   const [messages, setMessages] = useState([]);
   const [sent, setSent] = useState(false);
   const [userId, setUserId] = useState(null);
@@ -151,6 +151,8 @@ function Chat() {
             currentUid: currentUserId.id,
             message: inputRef.current.value,
             name: auth.currentUser.email,
+            channelId,
+            channelName,
           });
 
       setSent(true);
@@ -194,6 +196,7 @@ function Chat() {
               id="standard-basic"
               disabled={!channelId}
               inputRef={inputRef}
+              onClick={() => setSearchInput("")}
               placeholder={
                 channelId ? `Message # ${channelName}` : "Select any channel"
               }
