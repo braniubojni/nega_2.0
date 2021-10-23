@@ -8,6 +8,7 @@ import {
   serverTimestamp,
   orderBy,
   query,
+  getDoc,
 } from "@firebase/firestore";
 import db from "../../firebase";
 
@@ -36,15 +37,30 @@ export const handleChannelMsgRemove = async ({ channelId, id }) => {
   await deleteDoc(doc(collection(db, "channels", channelId, "messages"), id));
 };
 
+const getUserNameByName = async (name) => {
+  const users = await getDocs(collection(db, "users"));
+  const getByName = async () => {
+    const uniq = {};
+    users.forEach(async (user) => {
+      if (user.data().email === name) {
+        uniq.id = await user.data().id;
+      }
+    });
+    return uniq;
+  };
+  return getByName();
+};
 export const handleUserMsgEdit = async ({ id, msgInfo, loggedUserId }) => {
-  const user = await getExistingUsers({ currentUid: loggedUserId });
-  const docRef = doc(collection(db, "dms", user[0], "messages"), id);
+  const userUniq = await getUserNameByName(msgInfo.channelName);
+  const uniqPair = [userUniq.id, loggedUserId].sort().join("_");
+  const docRef = doc(collection(db, "dms", uniqPair, "messages"), id);
   await setDoc(docRef, msgInfo);
 };
 
-export const handleUserMsgRemove = async (id, msgId) => {
-  const user = await getExistingUsers({ currentUid: id });
-  await deleteDoc(doc(collection(db, "dms", user[0], "messages"), msgId));
+export const handleUserMsgRemove = async ({ loggedUserId, id, msgInfo }) => {
+  const userUniq = await getUserNameByName(msgInfo.channelName);
+  const uniqPair = [userUniq.id, loggedUserId].sort().join("_");
+  await deleteDoc(doc(collection(db, "dms", uniqPair, "messages"), id));
 };
 
 export const handleUserRemove = async (id) => {

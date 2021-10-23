@@ -8,7 +8,7 @@ import { selectChannelId } from "../../redux/common/channel/selectors";
 import EditMsg from "../chat/EditMsg";
 import RemoveMsg from "../chat/RemoveMsg";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useLocation } from "react-router";
 
 const HoverPopUp = styled("div")(() => ({
@@ -34,7 +34,7 @@ const StyledTime = styled("span")(({ theme }) => ({
   marginLeft: theme.spacing(1),
 }));
 
-function Message({ msgInfo, id }) {
+function Message({ msgInfo, id, index, scrollToBottom }) {
   const [editedMsg, setEditedMsg] = useState(null);
   const [removeMsg, setRemoveMsg] = useState(null);
   const [showPopUp, setShowPopUp] = useState(false);
@@ -42,6 +42,12 @@ function Message({ msgInfo, id }) {
   const { pathname } = useLocation();
   const channelId = useSelector(selectChannelId);
   const loggedUser = useSelector(selectLoggedInUser);
+  const endRef = useRef(index);
+
+  useEffect(() => {
+    scrollToBottom(endRef);
+  }, [endRef, scrollToBottom]);
+
   const onRemoveClose = () => {
     setRemoveMsg(null);
   };
@@ -50,6 +56,7 @@ function Message({ msgInfo, id }) {
   };
   return (
     <Li
+      ref={endRef}
       onMouseEnter={() => setHoverToggler(true)}
       onMouseLeave={() => {
         setHoverToggler(false);
@@ -91,6 +98,7 @@ function Message({ msgInfo, id }) {
           id={id}
           channelId={channelId}
           loggedUserId={loggedUser.id}
+          msgInfo={msgInfo}
           location={pathname.includes("users")}
           onRemoveClose={onRemoveClose}
         />

@@ -9,12 +9,16 @@ import db from "../../firebase";
 import { Toolbar } from "@mui/material";
 import MessageLoader from "../loader/MessageLoader";
 import { useDispatch } from "react-redux";
-import { setChannelInfo } from "../../redux/common/channel/actions";
-import { CHANNELS_ROUTE } from "../../constants/paths";
+import {
+  removeChannelInfo,
+  setChannelInfo,
+} from "../../redux/common/channel/actions";
+import { CHANNELS_ROUTE, USERS_ROUTE } from "../../constants/paths";
 import { useHistory } from "react-router";
 import { useSelector } from "react-redux";
 import { selectLoggedInUser } from "../../redux/common/auth/selectors";
 import { getExistingUsers } from "../helpers/handlers";
+import { getAuth } from "firebase/auth";
 
 export default function SearchDrawer({ searchInput }) {
   const [channelMessages, setChannelMessages] = useState([]);
@@ -24,7 +28,7 @@ export default function SearchDrawer({ searchInput }) {
   const [state, setState] = useState({
     right: false,
   });
-
+  const auth = getAuth();
   const currentUser = useSelector(selectLoggedInUser);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -36,13 +40,20 @@ export default function SearchDrawer({ searchInput }) {
     );
     history.push(`${CHANNELS_ROUTE}/${id}`);
   };
-  const setDM = async ({ channelName, channelId }) => {
-    dispatch(setChannelInfo({ channelName, channelId }));
-    history.push(`${CHANNELS_ROUTE}/${channelId}`);
+
+  const setDM = async ({
+    item: {
+      data: { name, channelName, channelId },
+    },
+  }) => {
+    if (name === currentUser.email) {
+      dispatch(setChannelInfo({ channelName, channelId }));
+      history.push(`${USERS_ROUTE}/${channelId}`);
+    } else {
+      dispatch(removeChannelInfo());
+      history.push(`${CHANNELS_ROUTE}`);
+    }
   };
-  useEffect(() => {
-    console.log("Show the messages");
-  }, [filteredUserMessages]);
 
   useEffect(() => {
     const getUserMessages = async () => {
@@ -195,7 +206,7 @@ export default function SearchDrawer({ searchInput }) {
                   )
                   .map((item, index) => (
                     <ListItem
-                      onClick={() => setDM(item.data)}
+                      onClick={() => setDM({ item })}
                       key={item + index}
                     >
                       <ListItemText
