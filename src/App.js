@@ -14,6 +14,7 @@ import {
   USERS_ROUTE,
   PRICING,
   RECOURCES,
+  ENTERPRISE_ROUTE,
 } from "./constants/paths";
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
 import { collection, onSnapshot } from "@firebase/firestore";
@@ -49,7 +50,7 @@ function App() {
             <Home />
           </Route>
 
-          <Route exact path={PRICING}>
+          <Route exact path={ENTERPRISE_ROUTE}>
             <Home />
           </Route>
           <Route exact path={RECOURCES}>
