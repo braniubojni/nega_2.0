@@ -86,7 +86,6 @@ function Message({ msgInfo, id }) {
           />
         </HoverPopUp>
       )}
-
       {!!removeMsg && (
         <RemoveMsg
           id={id}

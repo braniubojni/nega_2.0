@@ -28,7 +28,7 @@ export const handleChannelRemove = async (id) => {
   await deleteDoc(doc(channelRef, id));
 };
 
-export const handleMsgEdit = async ({ channelId, id, msgInfo }) => {
+export const handleChannelMsgEdit = async ({ channelId, id, msgInfo }) => {
   const docRef = doc(collection(db, "channels", channelId, "messages"), id);
   await setDoc(docRef, msgInfo);
 };
@@ -37,9 +37,15 @@ export const handleChannelMsgRemove = async ({ channelId, id }) => {
   await deleteDoc(doc(collection(db, "channels", channelId, "messages"), id));
 };
 
+export const handleUserMsgEdit = async ({ id, msgInfo, loggedUserId }) => {
+  const user = await getExistingUsers({ currentUid: loggedUserId });
+  const docRef = doc(collection(db, "dms", user[0], "messages"), id);
+  await setDoc(docRef, msgInfo);
+};
+
 export const handleUserMsgRemove = async (id, msgId) => {
-  const users = await getExistingUsers({ currentUid: id });
-  await deleteDoc(doc(collection(db, "dms", users[0], "messages"), msgId));
+  const user = await getExistingUsers({ currentUid: id });
+  await deleteDoc(doc(collection(db, "dms", user[0], "messages"), msgId));
 };
 
 export const handleUserRemove = async (id) => {
