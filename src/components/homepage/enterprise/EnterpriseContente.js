@@ -6,7 +6,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import useWindowResize from "../../helpers/customHooks/useWindowResize";
 
 const Video = styled("video")({
-  width: "99vh",
+  width: "90vh",
 });
 const BoxContainer = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -24,12 +24,15 @@ const H5 = styled(Typography)(({ theme }) => ({
   fontWeight: "700",
   lineHeight: "1.125",
   letterSpacing: ".8px",
+  marginTop: "10px !important",
+  marginBottom: "20px !important",
 }));
 const H3 = styled(Typography)(({ theme }) => ({
   fontWeight: "700",
   lineHeight: "1.1875",
   letterSpacing: "-0.3px",
   fontSize: "1.5rem",
+  marginBottom: "20px !important",
 }));
 const ListBox = styled(List)(({ theme }) => ({
   padding: 0,
@@ -38,6 +41,7 @@ const ListContent = styled(ListItem)(({ theme }) => ({
   padding: 0,
   display: "flex",
   alignItems: "center",
+  marginBottom: "10px !important",
 }));
 const ChekedBox = styled(Box)({
   borderRadius: "50%",
@@ -79,6 +83,7 @@ const PercentText = styled(Typography)({
   fontWeight: "700",
   lineHeight: "1.125",
   letterSpacing: ".8px",
+  marginBottom: "10px !important",
 });
 
 function EnterpriseContente(props) {
@@ -105,7 +110,11 @@ function EnterpriseContente(props) {
             <H3 variant="h3" component="h5">
               {content.boltText}
             </H3>
-            <Box>
+            <Box
+              sx={{
+                marginBottom: "20px !important",
+              }}
+            >
               <ListBox>
                 {content.chekedText.map((item) => (
                   <ListContent key={item}>
@@ -122,7 +131,11 @@ function EnterpriseContente(props) {
                 ))}
               </ListBox>
             </Box>
-            <Box>
+            <Box
+              sx={{
+                marginBottom: "20px !important",
+              }}
+            >
               {content.text.length !== 0 ? (
                 <Text variant="body1">{content.text}</Text>
               ) : content.paragrap.length !== 0 ? (
@@ -135,6 +148,7 @@ function EnterpriseContente(props) {
                           component="h1"
                           sx={{
                             color: content.chekedColor,
+                            marginBottom: "10px !important",
                           }}
                         >
                           {item.percent}
@@ -149,7 +163,7 @@ function EnterpriseContente(props) {
                 <Box>
                   <Grid container spacing={1}>
                     {content.imgParagrap.map((item, index) => (
-                      <Grid item sx={3} lg={3} sm={4} key={index + "a"}>
+                      <Grid item lg={3} sm={4} key={index + "a"}>
                         <img src={item} />
                       </Grid>
                     ))}
@@ -157,7 +171,11 @@ function EnterpriseContente(props) {
                 </Box>
               )}
             </Box>
-            <Box>
+            <Box
+              sx={{
+                marginBottom: "20px !important",
+              }}
+            >
               <img src={content.img} />
             </Box>
           </BoxContainer>
