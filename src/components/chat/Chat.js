@@ -14,7 +14,7 @@ import TextField from "@mui/material/TextField";
 import SendIcon from "@mui/icons-material/Send";
 import { styled } from "@mui/system";
 import Emoji from "./Emoji";
-import { useLocation, useParams } from "react-router";
+import { useLocation } from "react-router";
 import { getDirectMessages, sentDirectMsg, sentMsg } from "../helpers/handlers";
 import Loader from "../loader/Loader";
 
