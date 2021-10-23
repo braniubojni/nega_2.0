@@ -40,9 +40,6 @@ export default function SearchDrawer({ searchInput }) {
     dispatch(setChannelInfo({ channelName, channelId }));
     history.push(`${CHANNELS_ROUTE}/${channelId}`);
   };
-  useEffect(() => {
-    console.log("Show the messages");
-  }, [filteredUserMessages]);
 
   useEffect(() => {
     const getUserMessages = async () => {
@@ -195,7 +192,7 @@ export default function SearchDrawer({ searchInput }) {
                   )
                   .map((item, index) => (
                     <ListItem
-                      onClick={() => setDM(item.data)}
+                      onClick={() => setDM(item, currentUser.id)}
                       key={item + index}
                     >
                       <ListItemText

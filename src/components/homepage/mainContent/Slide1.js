@@ -99,13 +99,12 @@ function Slide1(incomeData = slideData) {
               alignItems="center"
             >
               {slideData.map((slideItem) => (
-                <Grid item lg={3} md={6}>
+                <Grid key={slideItem.h1} item lg={3} md={6}>
                   <List
                     sx={{
                       display: "flex",
                       justifyContent: "center",
                     }}
-                    key={slideItem.h1}
                   >
                     {renderSlides(slideItem)}
                   </List>

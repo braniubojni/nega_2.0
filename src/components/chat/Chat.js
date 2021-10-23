@@ -14,7 +14,7 @@ import TextField from "@mui/material/TextField";
 import SendIcon from "@mui/icons-material/Send";
 import { styled } from "@mui/system";
 import Emoji from "./Emoji";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { getDirectMessages, sentDirectMsg, sentMsg } from "../helpers/handlers";
 import Loader from "../loader/Loader";
 
@@ -81,7 +81,6 @@ function Chat({ setSearchInput }) {
   const channelId = useSelector(selectChannelId);
   const channelName = useSelector(selectChannelName);
   const inputRef = useRef("");
-  const chatRef = useRef(null);
   const auth = getAuth();
 
   useEffect(() => {
@@ -130,10 +129,10 @@ function Chat({ setSearchInput }) {
     return () => setMessages([]);
   }, [channelId, currentUserId, pathname, userId]);
 
-  const scrollToBottom = () => {
-    chatRef.current.scrollIntoView({
+  const scrollToBottom = (refer) => {
+    refer.current.scrollIntoView({
       behavior: "smooth",
-      block: "start",
+      block: "end",
     });
   };
 
@@ -157,27 +156,25 @@ function Chat({ setSearchInput }) {
 
       setSent(true);
       inputRef.current.value = "";
-      scrollToBottom();
     }
   };
 
-  const renderMsg = (msgInfo) => {
+  const renderMsg = (msgInfo, index) => {
     return (
-      <Message key={msgInfo.id} id={msgInfo.id} msgInfo={msgInfo.data()} />
+      <Message
+        index={index}
+        key={msgInfo.id}
+        id={msgInfo.id}
+        msgInfo={msgInfo.data()}
+        scrollToBottom={scrollToBottom}
+      />
     );
   };
 
   return (
     <MainContentWrapper>
       <Ul>
-        {!messages ? (
-          <Loader />
-        ) : (
-          <>
-            {messages?.map((msg) => renderMsg(msg))}
-            <li ref={chatRef} />
-          </>
-        )}
+        {!messages ? <Loader /> : <>{messages?.map((msg) => renderMsg(msg))}</>}
       </Ul>
       <div style={{ flex: "1 1 auto" }} />
       <TextFieldWrapper>
