@@ -14,16 +14,34 @@ import {
   Box,
 } from "@mui/material";
 import useWindowResize from "../../helpers/customHooks/useWindowResize";
+import {
+  ENTERPRISE_ROUTE,
+  RESOURCES_ROUTE,
+  PRICING_ROUTE,
+  HOME_ROUTE,
+} from "../../../constants/paths";
+import { useHistory } from "react-router";
 
 function DrawerComponent() {
   const widthWindow = useWindowResize();
   const [openDrawer, setOpenDrawer] = useState(true);
+  const history = useHistory();
 
   const handleDrawerToggling = () => {
     setOpenDrawer(false);
   };
 
-  const menuItems = ["Product", "Enterprise", "Recources", "Pricing"];
+  const menuItems = [
+    "Product",
+    { label: "Enterprise", link: ENTERPRISE_ROUTE },
+    { label: "Recources", link: RESOURCES_ROUTE },
+    { label: "Pricing", link: PRICING_ROUTE },
+  ];
+
+  const pushToPage = (link) => {
+    history.push(link);
+    handleDrawerToggling();
+  };
 
   return (
     <>
@@ -41,9 +59,7 @@ function DrawerComponent() {
           }}
         >
           <Box sx={{ ml: "20px", mt: "20px" }}>
-            <Typography>
-              <img src={Logo} width="140px" alt="slack_logo" />
-            </Typography>
+            <img src={Logo} width="140px" alt="slack_logo" />
           </Box>
           <Box sx={{ mr: "25px", mt: "15px" }}>
             <IconButton onClick={() => setOpenDrawer(!openDrawer)}>
@@ -57,8 +73,15 @@ function DrawerComponent() {
             return index === 0 ? (
               <SmallDropdown key={item} />
             ) : (
-              <ListItem key={item}>
-                <ListItemText>{item}</ListItemText>
+              <ListItem key={item.label}>
+                <ListItemText
+                  sx={{
+                    cursor: "pointer",
+                  }}
+                  onClick={() => pushToPage(item.link)}
+                >
+                  {item.label}
+                </ListItemText>
               </ListItem>
             );
           })}
@@ -71,14 +94,28 @@ function DrawerComponent() {
       <Box
         sx={{ display: "flex", justifyContent: "space-between", width: "100%" }}
       >
-        <Box sx={{ ml: "20px", mt: "15px" }}>
-          <Typography>
-            {widthWindow > 1024 ? (
-              <img src={Logo} width="100px" alt="slack_logo" />
-            ) : null}
-          </Typography>
-        </Box>
-        <Box sx={{ mr: "10px", mt: "5px" }}>
+        {widthWindow > 1024 ? (
+          <Box sx={{ ml: "20px", mt: "15px" }}>
+            <img src={Logo} width="100px" alt="slack_logo" />
+          </Box>
+        ) : null}
+        <Box
+          sx={{
+            mt: "5px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            width: "100%",
+          }}
+        >
+          <Box sx={{ cursor: "pointer" }}>
+            <img
+              src={Logo}
+              onClick={() => pushToPage(HOME_ROUTE)}
+              alt="Logo"
+              width="100px"
+            />
+          </Box>
           <IconButton onClick={() => setOpenDrawer(!openDrawer)}>
             <MenuIcon />
           </IconButton>

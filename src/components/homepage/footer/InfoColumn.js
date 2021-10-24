@@ -118,8 +118,9 @@ function InfoColumn({ title, menuItem }) {
                       <ListItemText
                         sx={{ minWidth: 1000 }}
                         primary={item}
+                        onClick={() => setOpen(false)}
                         primaryTypographyProps={{
-                          fontSize: 16,
+                          fontSize: 18,
                           fontWeight: "medium",
                         }}
                       />

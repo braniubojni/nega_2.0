@@ -4,10 +4,12 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Menu, MenuItem } from "@mui/material";
 import { Box } from "@mui/system";
 import { BLACK } from "../../../constants/colors";
+import useWindowResize from "../../helpers/customHooks/useWindowResize";
 
 function Dropdown() {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const widthWindow = useWindowResize();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
