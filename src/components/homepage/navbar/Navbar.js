@@ -8,7 +8,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router";
 import DrawerComponent from "./Drawer";
 import Logo from "../../../logo/logo.svg";
 import Logo_2 from "../../../logo/logo_2.svg";
@@ -21,16 +21,20 @@ import useWindowResize from "../../helpers/customHooks/useWindowResize";
 import {
   ENTERPRISE_ROUTE,
   HOME_ROUTE,
-  PRICING,
-  RESOURCES,
+  PRICING_ROUTE,
+  RESOURCES_ROUTE,
 } from "../../../constants/paths";
 
 function Navbar() {
   const widthWindow = useWindowResize();
   const [value, setValue] = useState(0);
+  const history = useHistory();
 
   const handleClickTab = (evt, newValue) => {
     setValue(newValue);
+  };
+  const pushToPage = (link) => {
+    history.push(link);
   };
 
   const theme = useTheme();
@@ -44,15 +48,21 @@ function Navbar() {
             <DrawerComponent />
           ) : (
             <>
-              <Typography sx={{ mr: "20px", mt: "10px" }}>
+              <Typography sx={{ mr: "20px", mt: "10px", cursor: "pointer" }}>
                 {widthWindow > 1024 ? (
-                  <Link to={HOME_ROUTE} style={{ textDecoration: "none" }}>
-                    <img src={Logo} width="100px" alt="slack_logo" />
-                  </Link>
+                  <img
+                    src={Logo}
+                    width="100px"
+                    alt="slack_logo"
+                    onClick={() => pushToPage(HOME_ROUTE)}
+                  />
                 ) : (
-                  <Link to={HOME_ROUTE} style={{ textDecoration: "none" }}>
-                    <img src={Logo_2} width="100px" alt="slack_logo" />
-                  </Link>
+                  <img
+                    src={Logo_2}
+                    width="100px"
+                    alt="slack_logo"
+                    onClick={() => pushToPage(HOME_ROUTE)}
+                  />
                 )}
               </Typography>
               <Box sx={{ display: "flex" }}>
@@ -64,49 +74,18 @@ function Navbar() {
                   Enterprise
                   <Tab
                     disableRipple
-                    label={
-                      <span style={{ color: BLACK }}>
-                        <Link
-                          to={ENTERPRISE_ROUTE}
-                          style={{
-                            color: BLACK,
-                            textDecoration: "none",
-                          }}
-                        >
-                          Enterprise
-                        </Link>
-                      </span>
-                    }
+                    onClick={() => pushToPage(ENTERPRISE_ROUTE)}
+                    label={<span style={{ color: BLACK }}>Enterprise</span>}
                   />
                   <Tab
                     disableRipple
-                    label={
-                      <Link
-                        to={RESOURCES}
-                        style={{
-                          color: BLACK,
-                          textDecoration: "none",
-                        }}
-                      >
-                        <span style={{ color: BLACK }}>RESOURCES</span>
-                      </Link>
-                    }
+                    onClick={() => pushToPage(RESOURCES_ROUTE)}
+                    label={<span style={{ color: BLACK }}>Resources</span>}
                   />
                   <Tab
                     disableRipple
-                    label={
-                      <span style={{ color: BLACK }}>
-                        <Link
-                          to={PRICING}
-                          style={{
-                            color: BLACK,
-                            textDecoration: "none",
-                          }}
-                        >
-                          Pricing
-                        </Link>
-                      </span>
-                    }
+                    onClick={() => pushToPage(PRICING_ROUTE)}
+                    label={<span style={{ color: BLACK }}>Pricing</span>}
                   />
                 </Tabs>
               </Box>
