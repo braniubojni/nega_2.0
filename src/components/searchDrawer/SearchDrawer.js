@@ -18,7 +18,6 @@ import { useHistory } from "react-router";
 import { useSelector } from "react-redux";
 import { selectLoggedInUser } from "../../redux/common/auth/selectors";
 import { getExistingUsers } from "../helpers/handlers";
-import { getAuth } from "firebase/auth";
 
 export default function SearchDrawer({ searchInput }) {
   const [channelMessages, setChannelMessages] = useState([]);
@@ -28,7 +27,6 @@ export default function SearchDrawer({ searchInput }) {
   const [state, setState] = useState({
     right: false,
   });
-  const auth = getAuth();
   const currentUser = useSelector(selectLoggedInUser);
   const dispatch = useDispatch();
   const history = useHistory();

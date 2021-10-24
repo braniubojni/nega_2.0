@@ -5,5 +5,5 @@ export const CHANNELS_ROUTE = "/channels";
 export const USERS_ROUTE = "/users";
 export const PERSONALROOM_ROUTE = "/personal-room";
 export const PRICING = "/pricing";
-export const RECOURCES = "/recources";
+export const RESOURCES = "/resources";
 export const ENTERPRISE_ROUTE = "/enterprise ";
