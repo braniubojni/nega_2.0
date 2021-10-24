@@ -21,7 +21,7 @@ function Channel({ id, channelName, closeBurger }) {
   const [showFullChannelName, setShowFullChannelName] = useState(true);
   const longChannelName = showFullChannelName
     ? {
-        width: "21vw",
+        width: "100%",
         whiteSpace: "nowrap",
         overflow: "hidden !important",
         textOverflow: "ellipsis",
@@ -69,7 +69,7 @@ function Channel({ id, channelName, closeBurger }) {
           }}
         />
       </Box>
-      <span>{channelName.length > 16 ? "..." : ""}</span>
+      <span>{channelName.length > 16 && showFullChannelName ? "..." : ""}</span>
       {showRemove && role && (
         <RemoveIcon cursor="pointer" onClick={() => setRemoveChannel(true)} />
       )}
