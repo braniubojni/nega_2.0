@@ -10,10 +10,10 @@ import { Route, Switch } from "react-router";
 import {
   HOME_ROUTE,
   PRICING,
-  RECOURCES,
+  RESOURCES,
   ENTERPRISE_ROUTE,
 } from "../../constants/paths";
-import Recorces from "./recoutces/Recources";
+import Resources from "./recoutces/Resources";
 import Enterprise from "./enterprise/Enterprise";
 
 function Home() {
@@ -33,7 +33,7 @@ function Home() {
             path={ENTERPRISE_ROUTE}
             children={<Enterprise />}
           ></Route>
-          <Route exact patch={RECOURCES} children={<Recorces />}></Route>
+          <Route exact patch={RESOURCES} children={<Resources />}></Route>
           <Route exact path={PRICING} children={<Pricing />}></Route>
         </Switch>
         <Box>

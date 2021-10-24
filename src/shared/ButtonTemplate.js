@@ -26,10 +26,14 @@ function Buttons() {
           sx={{
             borderColor: "#611f69",
             fontWeight: "bolder",
+
             mr: "20px",
           }}
         >
-          <Link style={{ textDecoration: "none" }} to={SIGN_UP_ROUTE}>
+          <Link
+            style={{ textDecoration: "none", whiteSpace: "nowrap" }}
+            to={SIGN_UP_ROUTE}
+          >
             SIGN UP
           </Link>
         </Button>

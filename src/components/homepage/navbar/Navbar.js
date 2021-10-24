@@ -9,7 +9,6 @@ import {
   useTheme,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import Dropdown from "./Dropdown";
 import DrawerComponent from "./Drawer";
 import Logo from "../../../logo/logo.svg";
 import Logo_2 from "../../../logo/logo_2.svg";
@@ -23,7 +22,7 @@ import {
   ENTERPRISE_ROUTE,
   HOME_ROUTE,
   PRICING,
-  RECOURCES,
+  RESOURCES,
 } from "../../../constants/paths";
 
 function Navbar() {
@@ -82,17 +81,15 @@ function Navbar() {
                   <Tab
                     disableRipple
                     label={
-                      <span style={{ color: BLACK }}>
-                        <Link
-                          to={RECOURCES}
-                          style={{
-                            color: BLACK,
-                            textDecoration: "none",
-                          }}
-                        >
-                          Recources
-                        </Link>
-                      </span>
+                      <Link
+                        to={RESOURCES}
+                        style={{
+                          color: BLACK,
+                          textDecoration: "none",
+                        }}
+                      >
+                        <span style={{ color: BLACK }}>RESOURCES</span>
+                      </Link>
                     }
                   />
                   <Tab

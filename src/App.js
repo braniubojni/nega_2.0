@@ -13,7 +13,7 @@ import {
   CHANNELS_ROUTE,
   USERS_ROUTE,
   PRICING,
-  RECOURCES,
+  RESOURCES,
   ENTERPRISE_ROUTE,
 } from "./constants/paths";
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
@@ -51,7 +51,7 @@ function App() {
           <Route exact path={ENTERPRISE_ROUTE}>
             <Home />
           </Route>
-          <Route exact path={RECOURCES}>
+          <Route exact path={RESOURCES}>
             <Home />
           </Route>
           <Route exact path={PRICING}>

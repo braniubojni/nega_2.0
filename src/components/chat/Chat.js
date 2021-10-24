@@ -202,7 +202,7 @@ function Chat({ setSearchInput }) {
                 flex: "1 1 auto",
               }}
               variant="standard"
-              fullWidth={true}
+              fullWidth
             />
             <MenuBar>
               <Emoji inputRef={inputRef} isDisabled={channelId} Sent={sent} />
