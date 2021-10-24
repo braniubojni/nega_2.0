@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "@mui/system";
 import { Container, Typography } from "@mui/material";
+import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import useWindowResize from "../../helpers/customHooks/useWindowResize";
 import { BLACK } from "../../../constants/colors";
 import ModalVideo from "react-modal-video";
@@ -46,10 +47,19 @@ const Video = styled("video")({
 const Img = styled("img")(({ theme }) => ({
   borderRadius: 10,
   cursor: "pointer",
+
   [theme.breakpoints.down("600")]: {
     width: 190,
   },
 }));
+const ImgPosition = styled("div")({
+  position: "relative",
+});
+const IconPosition = styled("div")({
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+});
 
 function ContentItem({ content, index }) {
   const windowWidth = useWindowResize();
@@ -87,9 +97,12 @@ function ContentItem({ content, index }) {
             </Typography>
             <ContentImgItem>
               {content.img.map((item, newIndex) => (
-                <div key={item + newIndex}>
+                <ImgPosition key={item + newIndex}>
                   <Img src={item.name} onClick={() => setLink(item.link)} />
-                </div>
+                  <IconPosition>
+                    <PlayCircleOutlineIcon fontSize="large" />
+                  </IconPosition>
+                </ImgPosition>
               ))}
               <React.Fragment>
                 <ModalVideo

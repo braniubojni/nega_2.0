@@ -24,6 +24,7 @@ import {
   PRICING,
   RESOURCES,
 } from "../../../constants/paths";
+import Dropdown from "./Dropdown";
 
 function Navbar() {
   const widthWindow = useWindowResize();
@@ -61,7 +62,15 @@ function Navbar() {
                   onChange={handleClickTab}
                   value={value}
                 >
-                  Enterprise
+                  <Tab
+                    disableRipple
+                    label={
+                      <span style={{ color: BLACK }}>
+                        <Dropdown />
+                      </span>
+                    }
+                  />
+
                   <Tab
                     disableRipple
                     label={
