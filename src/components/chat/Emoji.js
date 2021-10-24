@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import Picker from "emoji-picker-react";
 import { styled } from "@mui/system";
 
-const StyledEmoji = styled("div")({
+const StyledEmoji = styled("div")(({ theme }) => ({
   position: "absolute",
   bottom: "120%",
-  left: "-50%",
+  right: "-5vw",
   transition: "all 0.2s",
-});
+  [theme.breakpoints.down(465)]: {
+    right: "-75%",
+  },
+}));
 
 export default function Emoji({ inputRef, isDisabled, Sent }) {
   const [emoji, setEmoji] = useState(false);

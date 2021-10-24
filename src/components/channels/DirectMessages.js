@@ -12,7 +12,7 @@ import { collection, onSnapshot } from "@firebase/firestore";
 import db from "../../firebase";
 import { Divider } from "@mui/material";
 
-function SmallDropdown() {
+function DirectMessages({ closeBurger }) {
   const [users, setUsers] = useState([]);
   const [open, setOpen] = useState(true);
   const auth = getAuth();
@@ -30,6 +30,7 @@ function SmallDropdown() {
         key={userData?.id}
         id={userData?.id}
         userName={userData?.data().email}
+        closeBurger={closeBurger}
       />
     );
   };
@@ -100,4 +101,4 @@ function SmallDropdown() {
   );
 }
 
-export default SmallDropdown;
+export default DirectMessages;

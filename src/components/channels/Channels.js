@@ -195,7 +195,7 @@ function Channels({ window }) {
         </Box>
       </List>
       <Box sx={{ overflowX: "hidden" }}>
-        <DirectMessages />
+        <DirectMessages closeBurger={setMobileOpen} />
       </Box>
     </div>
   );
