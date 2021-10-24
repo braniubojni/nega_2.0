@@ -5,7 +5,7 @@ import {
   SIGN_IN_ROUTE,
   SIGN_UP_ROUTE,
 } from "./../constants/paths";
-import { Box } from "@mui/system";
+import { Box, styled } from "@mui/system";
 import { Button } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
@@ -13,13 +13,20 @@ import { useHistory } from "react-router";
 import { selectLoggedInUser } from "../redux/common/auth/selectors";
 import { LIGHT_ORANGE } from "../constants/colors";
 import { MAGENTA } from "../constants/colors";
+import useWindowResize from "../components/helpers/customHooks/useWindowResize";
 
 function Buttons() {
   const history = useHistory();
+  const widthWindow = useWindowResize();
   const loggedUser = useSelector(selectLoggedInUser);
+  const StyledBox = styled(Box)(() => ({
+    display: "flex",
+    justifyContent: widthWindow > 900 ? "flex-end" : "center",
+    mr: 4,
+  }));
 
   return (
-    <Box width="100%" display="flex" justifyContent="flex-end" sx={{ mr: 4 }}>
+    <StyledBox>
       {!loggedUser && (
         <Button
           variant="outlined"
@@ -62,7 +69,7 @@ function Buttons() {
           {!loggedUser ? "Try for free" : "Open Chanels"}
         </div>
       </Button>
-    </Box>
+    </StyledBox>
   );
 }
 

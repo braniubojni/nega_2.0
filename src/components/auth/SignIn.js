@@ -36,7 +36,7 @@ function Copyright(props) {
       {"Copyright © "}
       <Link color="inherit" to={HOME_ROUTE}>
         Slack NEGA
-      </Link>
+      </Link>{" "}
       {new Date().getFullYear()}
       {"."}
     </Typography>
