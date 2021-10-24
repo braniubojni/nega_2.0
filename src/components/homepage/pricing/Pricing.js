@@ -55,6 +55,7 @@ const pricingContenet = [
 ];
 
 function Pricing() {
+  console.log("From pricing");
   const widthWindow = useWindowResize();
   function renderAdvantage(item) {
     return (
