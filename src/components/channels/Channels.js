@@ -177,7 +177,7 @@ function Channels({ window }) {
                 <Box
                   sx={{
                     position: "absolute",
-                    top: 10,
+                    top: 20,
                     right: 1,
                     mr: 10,
                   }}
