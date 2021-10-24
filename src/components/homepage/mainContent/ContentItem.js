@@ -57,8 +57,15 @@ const ImgPosition = styled("div")({
 });
 const IconPosition = styled("div")({
   position: "absolute",
-  top: "50%",
-  left: "50%",
+  top: "62%",
+  left: "74%",
+  color: "rgba(255, 255, 255, 0.5)",
+
+  cursor: "pointer",
+  "&:hover": {
+    color: "rgba(234, 226, 226, 0.2)",
+    transition: "all 0.8",
+  },
 });
 
 function ContentItem({ content, index }) {
