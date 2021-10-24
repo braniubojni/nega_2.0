@@ -14,7 +14,7 @@ import Logo from "../../../logo/logo.svg";
 import Logo_2 from "../../../logo/logo_2.svg";
 
 import { Box } from "@mui/system";
-import Buttons from "../../../shared/ButtonTemplate";
+import Buttons from "../../../shared/Buttons";
 import { LIGHT_ORANGE } from "../../../constants/colors";
 import { BLACK } from "../../../constants/colors";
 import useWindowResize from "../../helpers/customHooks/useWindowResize";
@@ -53,7 +53,9 @@ function Navbar() {
           }}
         >
           {isSmallScreen ? (
-            <DrawerComponent />
+            <>
+              <DrawerComponent />
+            </>
           ) : (
             <>
               <Typography sx={{ mr: "20px", mt: "10px", cursor: "pointer" }}>
