@@ -92,6 +92,7 @@ function InfoColumn({ title, menuItem }) {
                     primaryTypographyProps={{
                       fontSize: 17,
                       lineHeight: "20px",
+                      textTransform: "capitalize",
                     }}
                   />
                   <KeyboardArrowDown

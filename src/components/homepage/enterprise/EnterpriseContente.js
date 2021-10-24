@@ -154,7 +154,7 @@ function EnterpriseContente(props) {
                           {item.percent}
                         </PercentTitle>
                         <PercentText variant="body2">{item.text}</PercentText>
-                        <img src={item.img} />
+                        <img src={item.img} alt="percent" />
                       </PercentContent>
                     ))}
                   </Percent>
@@ -164,7 +164,7 @@ function EnterpriseContente(props) {
                   <Grid container spacing={1}>
                     {content.imgParagrap.map((item, index) => (
                       <Grid item lg={3} sm={4} key={index + "a"}>
-                        <img src={item} />
+                        <img src={item} alt="paragraph" />
                       </Grid>
                     ))}
                   </Grid>
@@ -176,7 +176,7 @@ function EnterpriseContente(props) {
                 marginBottom: "20px !important",
               }}
             >
-              <img src={content.img} />
+              <img src={content.img} alt="content" />
             </Box>
           </BoxContainer>
           {widthWindow > 964 ? (

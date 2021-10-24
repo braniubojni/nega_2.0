@@ -91,7 +91,8 @@ const recorcesContent = [
   },
 ];
 
-function Recorces() {
+function Resources() {
+  console.log("From resources");
   function renderContent(item) {
     return (
       <>
@@ -135,4 +136,4 @@ function Recorces() {
   );
 }
 
-export default Recorces;
+export default Resources;

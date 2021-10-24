@@ -12,9 +12,9 @@ import {
   SIGN_UP_ROUTE,
   CHANNELS_ROUTE,
   USERS_ROUTE,
-  PRICING,
-  RECOURCES,
+  PRICING_ROUTE,
   ENTERPRISE_ROUTE,
+  RESOURCES_ROUTE,
 } from "./constants/paths";
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
 import { collection, onSnapshot } from "@firebase/firestore";
@@ -44,35 +44,17 @@ function App() {
     <>
       <Router>
         <Switch>
-          <Route exact path={HOME_ROUTE}>
-            <Home />
-          </Route>
+          <Route exact path={HOME_ROUTE} children={<Home />} />
+          <Route exact path={ENTERPRISE_ROUTE} children={<Home />} />
+          <Route exact path={RESOURCES_ROUTE} children={<Home />} />
+          <Route exact path={PRICING_ROUTE} children={<Home />} />
 
-          <Route exact path={ENTERPRISE_ROUTE}>
-            <Home />
-          </Route>
-          <Route exact path={RECOURCES}>
-            <Home />
-          </Route>
-          <Route exact path={PRICING}>
-            <Home />
-          </Route>
+          <Route exact path={SIGN_UP_ROUTE} children={<Auth />} />
+          <Route exact path={SIGN_IN_ROUTE} children={<Auth />} />
 
-          <Route exact path={SIGN_UP_ROUTE}>
-            <Auth />
-          </Route>
-          <Route exact path={SIGN_IN_ROUTE}>
-            <Auth />
-          </Route>
-          <Route exact path={CHANNELS_ROUTE}>
-            <Channels />
-          </Route>
-          <Route exact path={`${CHANNELS_ROUTE}/:id`}>
-            <Channels />
-          </Route>
-          <Route exact path={`${USERS_ROUTE}/:id`}>
-            <Channels />
-          </Route>
+          <Route exact path={CHANNELS_ROUTE} children={<Channels />} />
+          <Route exact path={`${CHANNELS_ROUTE}/:id`} children={<Channels />} />
+          <Route exact path={`${USERS_ROUTE}/:id`} children={<Channels />} />
 
           <Redirect to={HOME_ROUTE} />
         </Switch>

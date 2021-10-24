@@ -5,18 +5,19 @@ import Footer from "./footer/Footer";
 import Slide1 from "./mainContent/Slide1";
 import Slide2 from "./mainContent/Slide2";
 import MainContent from "./mainContent/MainContent";
-import Pricing from "./pricing/Pricing";
 import { Route, Switch } from "react-router";
 import {
   HOME_ROUTE,
-  PRICING,
-  RECOURCES,
+  PRICING_ROUTE,
   ENTERPRISE_ROUTE,
+  RESOURCES_ROUTE,
 } from "../../constants/paths";
-import Recorces from "./recoutces/Recources";
+import Pricing from "./pricing/Pricing";
+import Resources from "./resources/Resources";
 import Enterprise from "./enterprise/Enterprise";
 
 function Home() {
+  console.log(RESOURCES_ROUTE);
   return (
     <>
       <Box
@@ -25,16 +26,10 @@ function Home() {
         <Navbar />
         <Toolbar />
         <Switch>
-          <Route exact path={HOME_ROUTE}>
-            <MainContent />
-          </Route>
-          <Route
-            exact
-            path={ENTERPRISE_ROUTE}
-            children={<Enterprise />}
-          ></Route>
-          <Route exact patch={RECOURCES} children={<Recorces />}></Route>
-          <Route exact path={PRICING} children={<Pricing />}></Route>
+          <Route exact path={HOME_ROUTE} children={<MainContent />} />
+          <Route exact path={ENTERPRISE_ROUTE} children={<Enterprise />} />
+          <Route exact path={RESOURCES_ROUTE} children={<Resources />} />
+          <Route exact path={PRICING_ROUTE} children={<Pricing />} />
         </Switch>
         <Box>
           <Box>
