@@ -39,12 +39,19 @@ function Navbar() {
   };
 
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
     <>
       <AppBar sx={{ backgroundColor: "black" }}>
-        <Toolbar sx={{ backgroundColor: LIGHT_ORANGE, width: "100%" }}>
+        <Toolbar
+          sx={{
+            backgroundColor: LIGHT_ORANGE,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
           {isSmallScreen ? (
             <DrawerComponent />
           ) : (
