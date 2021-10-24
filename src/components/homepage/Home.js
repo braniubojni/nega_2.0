@@ -17,7 +17,6 @@ import Resources from "./resources/Resources";
 import Enterprise from "./enterprise/Enterprise";
 
 function Home() {
-  console.log(RESOURCES_ROUTE);
   return (
     <>
       <Box
