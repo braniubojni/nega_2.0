@@ -8,9 +8,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
-import Dropdown from "./Dropdown";
 import DrawerComponent from "./Drawer";
 import Logo from "../../../logo/logo.svg";
 import Logo_2 from "../../../logo/logo_2.svg";

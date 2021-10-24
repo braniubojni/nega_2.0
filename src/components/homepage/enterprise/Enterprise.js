@@ -12,7 +12,6 @@ import ameritrade from "./photo/td-ameritrade.png";
 import zendesk from "./photo/zendesk.png";
 import zoom from "./photo/zoom.png";
 import fox from "./photo/fox.png";
-import { Container } from "@mui/material";
 import engagement from "./video/engagement.mp4";
 import platform from "./video/platform.mp4";
 import scale from "./video/scale.mp4";

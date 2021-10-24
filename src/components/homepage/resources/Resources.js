@@ -92,7 +92,6 @@ const recorcesContent = [
 ];
 
 function Resources() {
-  console.log("From resources");
   function renderContent(item) {
     return (
       <>
