@@ -18,6 +18,15 @@ function Channel({ id, channelName, closeBurger }) {
   const role = useGetRole();
   const [removeChannel, setRemoveChannel] = useState(null);
   const [showRemove, setShowRemove] = useState(false);
+  const [showFullChannelName, setShowFullChannelName] = useState(true);
+  const longChannelName = showFullChannelName
+    ? {
+        width: "21vw",
+        whiteSpace: "nowrap",
+        overflow: "hidden !important",
+        textOverflow: "ellipsis",
+      }
+    : {};
   const onRemoveClose = () => {
     setRemoveChannel(null);
   };
@@ -28,11 +37,26 @@ function Channel({ id, channelName, closeBurger }) {
   };
   return (
     <ListItemButton
-      sx={{ py: 0, minHeight: 32 }}
-      onMouseEnter={() => setShowRemove(true)}
-      onMouseLeave={() => setShowRemove(false)}
+      sx={{
+        py: 0,
+        minHeight: 32,
+        ...longChannelName,
+      }}
+      onMouseEnter={() =>
+        setShowRemove(true) || (!role && setShowFullChannelName(false))
+      }
+      onMouseLeave={() =>
+        setShowRemove(false) || (!role && setShowFullChannelName(true))
+      }
     >
-      <Box sx={{ display: "flex", alignItems: "center" }}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          marginRight: 1,
+          ...longChannelName,
+        }}
+      >
         <ListItemIcon sx={{ color: "inherit", minWidth: 23 }}>
           <FontAwesomeIcon icon={faHashtag} className="faHashtag" />
         </ListItemIcon>
@@ -44,10 +68,11 @@ function Channel({ id, channelName, closeBurger }) {
             fontWeight: "medium",
           }}
         />
-        {showRemove && role && (
-          <RemoveIcon cursor="pointer" onClick={() => setRemoveChannel(true)} />
-        )}
       </Box>
+      <span>{channelName.length > 16 ? "..." : ""}</span>
+      {showRemove && role && (
+        <RemoveIcon cursor="pointer" onClick={() => setRemoveChannel(true)} />
+      )}
       {removeChannel && (
         <RemoveChannel
           onRemoveClose={onRemoveClose}
