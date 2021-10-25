@@ -54,6 +54,10 @@ const Img = styled("img")(({ theme }) => ({
 }));
 const ImgPosition = styled("div")({
   position: "relative",
+  opacity: 1,
+  "&:hover": {
+    opacity: 0.8,
+  },
 });
 const IconPosition = styled("div")({
   position: "absolute",
@@ -66,6 +70,7 @@ const IconPosition = styled("div")({
     color: "rgba(234, 226, 226, 0.2)",
     transition: "all 0.8",
   },
+  opacity: 1,
 });
 
 function ContentItem({ content, index }) {
@@ -105,10 +110,13 @@ function ContentItem({ content, index }) {
             <ContentImgItem>
               {content.img.map((item, newIndex) => (
                 <ImgPosition key={item + newIndex}>
-                  <Img src={item.name} onClick={() => setLink(item.link)} />
-                  <IconPosition>
+                  <IconPosition
+                    className="icon"
+                    onClick={() => setLink(item.link)}
+                  >
                     <PlayCircleOutlineIcon fontSize="large" />
                   </IconPosition>
+                  <Img src={item.name} onClick={() => setLink(item.link)} />
                 </ImgPosition>
               ))}
               <React.Fragment>
