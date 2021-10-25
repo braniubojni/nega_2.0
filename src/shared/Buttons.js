@@ -37,7 +37,7 @@ function Buttons() {
           sx={{
             borderColor: "#611f69",
             fontWeight: "bolder",
-            width: width > 900 ? "130px" : width < 500 ? "100%" : "49%",
+            width: width > 900 ? "130px" : width > 500 ? "49%" : "100%",
             mr: "20px",
             mb: width > 500 ? "0" : "20px",
           }}
@@ -54,7 +54,7 @@ function Buttons() {
         variant="outlined"
         sx={{
           backgroundColor: MAGENTA,
-          width: width > 900 ? "130px" : width < 500 ? "100%" : "49%",
+          width: width > 900 ? "130px" : width > 500 ? "49%" : "100%",
           padding: "7px",
           marginRight: "16px",
           "&:hover": {
