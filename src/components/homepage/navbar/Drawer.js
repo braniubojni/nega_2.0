@@ -13,17 +13,28 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import useWindowResize from "../../helpers/customHooks/useWindowResize";
+import { useHistory } from "react-router";
+import {
+  ENTERPRISE_ROUTE,
+  HOME_ROUTE,
+  PRICING_ROUTE,
+  RESOURCES_ROUTE,
+} from "../../../constants/paths";
 
 function DrawerComponent() {
-  const widthWindow = useWindowResize();
   const [openDrawer, setOpenDrawer] = useState(true);
+  const history = useHistory();
 
   const handleDrawerToggling = () => {
     setOpenDrawer(false);
   };
 
-  const menuItems = ["Product", "Enterprise", "Recources", "Pricing"];
+  const menuItems = [
+    "Product",
+    { label: "Enterprise", link: ENTERPRISE_ROUTE },
+    { label: "Recources", link: RESOURCES_ROUTE },
+    { label: "Pricing", link: PRICING_ROUTE },
+  ];
 
   return (
     <>
@@ -56,8 +67,18 @@ function DrawerComponent() {
             return index === 0 ? (
               <SmallDropdown key={item} />
             ) : (
-              <ListItem key={item}>
-                <ListItemText>{item}</ListItemText>
+              <ListItem key={item.label}>
+                <ListItemText
+                  sx={{
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    history.push(item.link);
+                    handleDrawerToggling();
+                  }}
+                >
+                  {item.label}
+                </ListItemText>
               </ListItem>
             );
           })}
@@ -71,13 +92,19 @@ function DrawerComponent() {
       <Box
         sx={{ display: "flex", justifyContent: "space-between", width: "100%" }}
       >
-        {widthWindow > 1024 ? (
-          <Box sx={{ ml: "20px", mt: "15px" }}>
-            <Typography>
-              <img src={Logo} width="100px" alt="slack_logo" />
-            </Typography>
-          </Box>
-        ) : null}
+        <Box
+          sx={{
+            ml: "20px",
+            mt: "15px",
+            cursor: "pointer",
+          }}
+          onClick={() => history.push(HOME_ROUTE)}
+        >
+          <Typography>
+            <img src={Logo} width="100px" alt="slack_logo" />
+          </Typography>
+        </Box>
+
         <Box sx={{ mr: "10px", mt: "5px" }}>
           <IconButton onClick={() => setOpenDrawer(!openDrawer)}>
             <MenuIcon />

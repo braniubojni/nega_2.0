@@ -58,23 +58,25 @@ function Navbar() {
             </>
           ) : (
             <>
-              <Typography sx={{ mr: "20px", mt: "10px", cursor: "pointer" }}>
-                {widthWindow > 1024 ? (
+              {widthWindow > 1024 ? (
+                <Typography sx={{ mr: "20px", mt: "10px", cursor: "pointer" }}>
                   <img
                     src={Logo}
                     width="100px"
                     alt="slack_logo"
                     onClick={() => pushToPage(HOME_ROUTE)}
                   />
-                ) : (
+                </Typography>
+              ) : (
+                <Typography sx={{ mr: "20px", mt: "10px", cursor: "pointer" }}>
                   <img
                     src={Logo_2}
                     width="100px"
                     alt="slack_logo"
                     onClick={() => pushToPage(HOME_ROUTE)}
                   />
-                )}
-              </Typography>
+                </Typography>
+              )}
               <Box sx={{ display: "flex" }}>
                 <Tabs
                   TabIndicatorProps={{ style: { background: "black" } }}
