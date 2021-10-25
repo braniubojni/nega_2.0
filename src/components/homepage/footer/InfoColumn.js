@@ -53,7 +53,7 @@ function InfoColumn({ title, menuItem }) {
           ))}
         </ul>
       ) : (
-        <Box sx={{ display: "flex", ml: -1, mt: "25px" }}>
+        <Box sx={{ display: "flex", ml: -1 }}>
           <ThemeProvider
             theme={createTheme({
               components: {
