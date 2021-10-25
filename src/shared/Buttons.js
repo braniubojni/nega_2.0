@@ -22,6 +22,7 @@ function Buttons() {
   const StyledBox = styled(Box)(() => ({
     display: "flex",
     justifyContent: width > 900 ? "flex-end" : "center",
+    flexDirection: width > 500 ? "row" : "column",
     mt: 20,
     mr: 4,
   }));
@@ -30,13 +31,15 @@ function Buttons() {
     <StyledBox>
       {!loggedUser && (
         <Button
+          fullWidth
           variant="outlined"
           size={width > 900 ? "medium" : "large"}
           sx={{
             borderColor: "#611f69",
             fontWeight: "bolder",
-            width: width > 900 ? "130px" : "49%",
+            width: width > 900 ? "130px" : width < 500 ? "100%" : "49%",
             mr: "20px",
+            mb: width > 500 ? "0" : "20px",
           }}
         >
           <Link
@@ -51,7 +54,7 @@ function Buttons() {
         variant="outlined"
         sx={{
           backgroundColor: MAGENTA,
-          width: width > 900 ? "130px" : "49%",
+          width: width > 900 ? "130px" : width < 500 ? "100%" : "49%",
           padding: "7px",
           marginRight: "16px",
           "&:hover": {
