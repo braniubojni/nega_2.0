@@ -9,6 +9,9 @@ import { ThemeProvider } from "styled-components";
 import { createTheme } from "@mui/system";
 import EachUser from "../user/EachUser";
 import { collection, onSnapshot } from "@firebase/firestore";
+import { selectLoggedInUser } from "../../redux/common/auth/selectors";
+import { useSelector } from "react-redux";
+
 import db from "../../firebase";
 import { Divider } from "@mui/material";
 
@@ -16,6 +19,7 @@ function DirectMessages({ closeBurger }) {
   const [users, setUsers] = useState([]);
   const [open, setOpen] = useState(true);
   const auth = getAuth();
+  const loggedUser = useSelector(selectLoggedInUser);
 
   useEffect(() => {
     onSnapshot(collection(db, "users"), (snapshot) => setUsers(snapshot.docs));
@@ -28,7 +32,8 @@ function DirectMessages({ closeBurger }) {
     return userData?.data().email === auth.currentUser?.email ? null : (
       <EachUser
         key={userData?.id}
-        id={userData?.id}
+        id={userData?.data().id}
+        currentId={loggedUser.id}
         userName={userData?.data().email}
         closeBurger={closeBurger}
       />

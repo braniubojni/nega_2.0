@@ -17,6 +17,7 @@ import Emoji from "./Emoji";
 import { useLocation } from "react-router";
 import { getDirectMessages, sentDirectMsg, sentMsg } from "../helpers/handlers";
 import Loader from "../loader/Loader";
+import { useCallback } from "react";
 
 const Arrow = styled("div")(({ theme }) => ({
   cursor: "pointer",
@@ -82,8 +83,7 @@ function Chat({ setSearchInput }) {
   const channelName = useSelector(selectChannelName);
   const inputRef = useRef("");
   const auth = getAuth();
-
-  useEffect(() => {
+  const settingUserId = useCallback(() => {
     onSnapshot(collection(db, "users"), (snapshot) => {
       setUserId(
         snapshot?.docs
@@ -91,6 +91,9 @@ function Chat({ setSearchInput }) {
           .find((user) => user.email === channelName)
       );
     });
+  }, [channelName]);
+
+  const settingCurrentUserId = useCallback(() => {
     onSnapshot(collection(db, "users"), (snapshot) => {
       setCurrentUserId(
         snapshot?.docs
@@ -98,13 +101,9 @@ function Chat({ setSearchInput }) {
           .find((user) => user.email === auth.currentUser.email)
       );
     });
-    return () => {
-      setCurrentUserId(null);
-      setUserId(null);
-    };
-  }, [channelName, auth]);
+  }, [auth]);
 
-  useEffect(() => {
+  const getChannelMessages = useCallback(() => {
     if (pathname.includes("channels")) {
       const messagesRef = query(
         collection(db, `channels/${channelId}/messages`),
@@ -113,7 +112,11 @@ function Chat({ setSearchInput }) {
       onSnapshot(messagesRef, (snapshot) => {
         setMessages(snapshot.docs);
       });
-    } else if (pathname.includes("users")) {
+    }
+  }, [channelId, pathname]);
+
+  const getPrivateMessages = useCallback(() => {
+    if (pathname.includes("users")) {
       if (userId && currentUserId) {
         getDirectMessages({
           toUid: userId.id,
@@ -125,9 +128,22 @@ function Chat({ setSearchInput }) {
         });
       }
     }
+  }, [currentUserId, pathname, userId]);
 
+  useEffect(() => {
+    settingUserId();
+    settingCurrentUserId();
+    return () => {
+      setCurrentUserId(null);
+      setUserId(null);
+    };
+  }, [settingCurrentUserId, settingUserId]);
+
+  useEffect(() => {
+    getChannelMessages();
+    getPrivateMessages();
     return () => setMessages([]);
-  }, [channelId, currentUserId, pathname, userId]);
+  }, [getChannelMessages, getPrivateMessages]);
 
   const scrollToBottom = (refer) => {
     refer.current.scrollIntoView({
@@ -150,8 +166,8 @@ function Chat({ setSearchInput }) {
             currentUid: currentUserId.id,
             message: inputRef.current.value,
             name: auth.currentUser.email,
-            channelId,
-            channelName,
+            path: pathname.split("/")[pathname.split("/").length - 1],
+            userName: channelName,
           });
 
       setSent(true);
