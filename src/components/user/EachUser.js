@@ -10,7 +10,7 @@ import RemoveUser from "../chat/Remove";
 import { handleUserRemove } from "../helpers/handlers";
 import { setChannelInfo } from "../../redux/common/channel/actions";
 
-function EachUser({ id, userName, closeBurger }) {
+function EachUser({ id, userName, closeBurger, currentId }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const role = useGetRole();
@@ -22,9 +22,15 @@ function EachUser({ id, userName, closeBurger }) {
   };
 
   const setUser = () => {
-    dispatch(setChannelInfo({ channelId: id, channelName: userName }));
+    const routePair = [id, currentId].sort().join("_");
+    dispatch(
+      setChannelInfo({
+        channelId: routePair,
+        channelName: userName,
+      })
+    );
     closeBurger(false);
-    history.push(`${USERS_ROUTE}/${id}`);
+    history.push(`${USERS_ROUTE}/${routePair}`);
   };
 
   return (
