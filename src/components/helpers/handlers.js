@@ -90,16 +90,16 @@ export const sentDirectMsg = async ({
   currentUid,
   message,
   name,
-  channelId,
-  channelName,
+  path,
+  userName,
 }) => {
-  const collecitonRef = await dmCollection(toUid, currentUid);
-  await addDoc(collecitonRef, {
+  const collectionRef = await dmCollection(toUid, currentUid);
+  await addDoc(collectionRef, {
     timestamp: serverTimestamp(),
     message,
     name,
-    channelId,
-    channelName,
+    path,
+    userName,
   });
 };
 
@@ -121,7 +121,3 @@ export const getExistingUsers = ({ currentUid }) => {
   };
   return getAllUsers();
 };
-
-export const remDuplicate = (data, key) => [
-  ...new Map(data.map((x) => [key(x), x])).values(),
-];

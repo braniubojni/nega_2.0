@@ -4,7 +4,7 @@ import {
   CHANNELS_ROUTE,
   SIGN_IN_ROUTE,
   SIGN_UP_ROUTE,
-} from "./../constants/paths";
+} from "../constants/paths";
 import { Box, styled } from "@mui/system";
 import { Button } from "@mui/material";
 import { useSelector } from "react-redux";
@@ -17,11 +17,13 @@ import useWindowResize from "../components/helpers/customHooks/useWindowResize";
 
 function Buttons() {
   const history = useHistory();
-  const widthWindow = useWindowResize();
+  const width = useWindowResize();
   const loggedUser = useSelector(selectLoggedInUser);
   const StyledBox = styled(Box)(() => ({
     display: "flex",
-    justifyContent: widthWindow > 900 ? "flex-end" : "center",
+    justifyContent: width > 900 ? "flex-end" : "center",
+    flexDirection: width > 500 ? "row" : "column",
+    mt: 20,
     mr: 4,
   }));
 
@@ -29,12 +31,15 @@ function Buttons() {
     <StyledBox>
       {!loggedUser && (
         <Button
+          fullWidth
           variant="outlined"
+          size={width > 900 ? "medium" : "large"}
           sx={{
             borderColor: "#611f69",
             fontWeight: "bolder",
-
+            width: width > 900 ? "130px" : width > 500 ? "49%" : "100%",
             mr: "20px",
+            mb: width > 500 ? "0" : "20px",
           }}
         >
           <Link
@@ -47,11 +52,14 @@ function Buttons() {
       )}
       <Button
         variant="outlined"
-        style={{
+        sx={{
           backgroundColor: MAGENTA,
-          width: "130px",
+          width: width > 900 ? "130px" : width > 500 ? "49%" : "100%",
           padding: "7px",
           marginRight: "16px",
+          "&:hover": {
+            backgroundColor: MAGENTA,
+          },
         }}
       >
         <div

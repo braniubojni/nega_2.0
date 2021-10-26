@@ -3,7 +3,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import Logo from "../../../logo/logo.svg";
 import SmallDropdown from "./SmallDropdown";
-import ButtonTemplate from "../../../shared/ButtonTemplate";
+import Buttons from "../../../shared/Buttons";
 
 import {
   Drawer,
@@ -23,7 +23,6 @@ import {
 import { useHistory } from "react-router";
 
 function DrawerComponent() {
-  const widthWindow = useWindowResize();
   const [openDrawer, setOpenDrawer] = useState(true);
   const history = useHistory();
 
@@ -37,7 +36,6 @@ function DrawerComponent() {
     { label: "Recources", link: RESOURCES_ROUTE },
     { label: "Pricing", link: PRICING_ROUTE },
   ];
-
   const pushToPage = (link) => {
     history.push(link);
     handleDrawerToggling();
@@ -67,7 +65,6 @@ function DrawerComponent() {
             </IconButton>
           </Box>
         </Box>
-
         <Box sx={{ width: "100%" }}>
           {menuItems.map((item, index) => {
             return index === 0 ? (
@@ -85,9 +82,10 @@ function DrawerComponent() {
               </ListItem>
             );
           })}
-          <Box>
-            <ButtonTemplate />
-          </Box>
+        </Box>
+
+        <Box sx={{ mx: 5, my: 5, h: "5vh" }}>
+          <Buttons />
         </Box>
       </Drawer>
 
@@ -116,6 +114,20 @@ function DrawerComponent() {
               width="100px"
             />
           </Box>
+        <Box
+          sx={{
+            ml: "20px",
+            mt: "15px",
+            cursor: "pointer",
+          }}
+          onClick={() => history.push(HOME_ROUTE)}
+        >
+          <Typography>
+            <img src={Logo} width="100px" alt="slack_logo" />
+          </Typography>
+        </Box>
+
+        <Box sx={{ mr: "10px", mt: "5px" }}>
           <IconButton onClick={() => setOpenDrawer(!openDrawer)}>
             <MenuIcon />
           </IconButton>
