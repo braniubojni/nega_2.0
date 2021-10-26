@@ -9,7 +9,6 @@ import {
   orderBy,
   query,
 } from "@firebase/firestore";
-import { useCallback } from "react";
 import db from "../../firebase";
 
 const channelRef = collection(db, "channels");
@@ -94,8 +93,8 @@ export const sentDirectMsg = async ({
   path,
   userName,
 }) => {
-  const collecitonRef = await dmCollection(toUid, currentUid);
-  await addDoc(collecitonRef, {
+  const collectionRef = await dmCollection(toUid, currentUid);
+  await addDoc(collectionRef, {
     timestamp: serverTimestamp(),
     message,
     name,

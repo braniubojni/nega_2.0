@@ -9,10 +9,7 @@ import db from "../../firebase";
 import { Toolbar } from "@mui/material";
 import MessageLoader from "../loader/MessageLoader";
 import { useDispatch } from "react-redux";
-import {
-  removeChannelInfo,
-  setChannelInfo,
-} from "../../redux/common/channel/actions";
+import { setChannelInfo } from "../../redux/common/channel/actions";
 import { CHANNELS_ROUTE, USERS_ROUTE } from "../../constants/paths";
 import { useHistory } from "react-router";
 import { useSelector } from "react-redux";
@@ -71,44 +68,55 @@ export default function SearchDrawer({ searchInput }) {
       });
     });
   }, [currentUser]);
-  const getFilteredChannelMessages = useCallback(() => {
-    if (searchInput) {
-      setFilteredChannelMessages(
-        channelMessages.filter((item) =>
-          item.data.message.toLowerCase().includes(searchInput.toLowerCase())
-        )
-      );
-    }
-  }, [channelMessages, searchInput]);
-  const getFilteredUserMessages = useCallback(() => {
-    if (searchInput) {
-      setFilteredUserMessages(
-        userMessages.filter((item) =>
-          item.data.message.toLowerCase().includes(searchInput.toLowerCase())
-        )
-      );
-    }
-  }, [searchInput, userMessages]);
+  const getFilteredChannelMessages = useCallback(
+    (searchInput) => {
+      if (searchInput) {
+        setFilteredChannelMessages(
+          channelMessages.filter((item) =>
+            item.data.message.toLowerCase().includes(searchInput.toLowerCase())
+          )
+        );
+      }
+    },
+    [channelMessages]
+  );
+  const getFilteredUserMessages = useCallback(
+    (searchInput) => {
+      if (searchInput) {
+        setFilteredUserMessages(
+          userMessages.filter((item) =>
+            item.data.message.toLowerCase().includes(searchInput.toLowerCase())
+          )
+        );
+      }
+    },
+    [userMessages]
+  );
 
-  async function setChannel(id) {
+  useEffect(() => {
+    if (searchInput) {
+      getFilteredUserMessages(searchInput);
+      getFilteredChannelMessages(searchInput);
+    }
+  }, [getFilteredChannelMessages, getFilteredUserMessages, searchInput]);
+
+  const setChannel = async (id) => {
     const channel = await getDoc(doc(db, "channels", id));
     dispatch(
       setChannelInfo({ channelId: id, channelName: channel.data().channelName })
     );
     history.push(`${CHANNELS_ROUTE}/${id}`);
-  }
+  };
 
   const setDM = ({
     item: {
       data: { name, path, userName },
     },
   }) => {
-    // need to implement "got to that PM"
-    console.log(name, userName);
     dispatch(
       setChannelInfo({
         channelId: path,
-        channelName: userName,
+        channelName: name === currentUser.email ? userName : name,
       })
     );
     history.push(`${USERS_ROUTE}/${path}`);
