@@ -1,6 +1,7 @@
 import { handleActions } from "redux-actions";
 import initialState from "../../initialState";
 import {
+  CLEAN_ERROR,
   LOG_OUT,
   SET_ERROR,
   SET_LOGGEDIN_USER,
@@ -21,6 +22,12 @@ const reducer = handleActions(
       return {
         ...state,
         isAdmin: payload,
+      };
+    },
+    [CLEAN_ERROR]: (state) => {
+      return {
+        ...state,
+        error: null,
       };
     },
     [LOG_OUT]: (state) => {

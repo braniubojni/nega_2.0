@@ -26,6 +26,7 @@ import { v4 as uuidv4 } from "uuid";
 import Loader from "../loader/Loader";
 import Alert from "../chat/Alert";
 import { signUpUser } from "../../redux/common/auth/thunk";
+import { cleanError } from "../../redux/common/auth/actions";
 
 function Copyright(props) {
   return (
@@ -78,15 +79,6 @@ export default function SignUp() {
     };
   }, [history, loggedInUser]);
 
-  useEffect(() => {
-    if (
-      error?.message &&
-      error.message === "Firebase: Error (auth/user-not-found)."
-    ) {
-      setAlert("Please fill all fields");
-    }
-  }, [error]);
-
   const handleSubmit = (event) => {
     event.preventDefault();
     if (
@@ -116,6 +108,10 @@ export default function SignUp() {
     setLoader(true);
     dispatch(signUpUser({ auth, email, password, userData }));
     setLoader(false);
+    if (error) {
+      setAlert("Please recheck your login and password");
+      dispatch(cleanError());
+    }
   };
 
   return (

@@ -88,7 +88,7 @@ function Chat({ setSearchInput }) {
       setUserId(
         snapshot?.docs
           .map((doc) => doc.data())
-          .find((user) => user.email === channelName)
+          .find((user) => user?.email === channelName)
       );
     });
   }, [channelName]);
@@ -98,7 +98,7 @@ function Chat({ setSearchInput }) {
       setCurrentUserId(
         snapshot?.docs
           .map((doc) => doc.data())
-          .find((user) => user.email === auth.currentUser.email)
+          .find((user) => user?.email === auth.currentUser?.email)
       );
     });
   }, [auth]);
