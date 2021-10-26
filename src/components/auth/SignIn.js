@@ -24,6 +24,7 @@ import { Link } from "react-router-dom";
 import Alert from "../chat/Alert";
 import Loader from "../loader/Loader";
 import { signInUser } from "../../redux/common/auth/thunk";
+import { cleanError } from "../../redux/common/auth/actions";
 
 function Copyright(props) {
   return (
@@ -68,19 +69,32 @@ export default function SignIn() {
     };
   }, [history, loggedInUser]);
 
-  useEffect(() => {
-    if (
-      error?.message &&
-      error.message === "Firebase: Error (auth/invalid-email)."
-    ) {
-      setAlert("We don't have such a person");
-    }
-    return () => setAlert(null);
-  }, [error]);
-
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (usrEmail === "" && usrPassword === "") {
+      setAlert("Fill both email and password fields");
+      return null;
+    }
+    if (usrPassword === "") {
+      setAlert("Password field should be filled");
+      return null;
+    }
+    if (usrEmail === "") {
+      setAlert("Email field should be filled");
+      return null;
+    }
+    if (usrEmail.length < 8 || usrPassword.length < 8) {
+      setAlert("Email & Password should be at least more than 8 string");
+      return null;
+    }
+
     dispatch(signInUser({ auth, usrEmail, usrPassword }));
+    if (error) {
+      setAlert(
+        "Please recheck your login and password, we don't have a person with such credentials!!!"
+      );
+      dispatch(cleanError());
+    }
   };
 
   return (

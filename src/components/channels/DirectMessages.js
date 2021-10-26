@@ -29,11 +29,11 @@ function DirectMessages({ closeBurger }) {
   }, []);
 
   const renderUsers = (userData) => {
-    return userData?.data().email === auth.currentUser?.email ? null : (
+    return userData?.data()?.email === auth?.currentUser?.email ? null : (
       <EachUser
         key={userData?.id}
-        id={userData?.data().id}
-        currentId={loggedUser.id}
+        id={userData?.data()?.id}
+        currentId={loggedUser?.id}
         userName={userData?.data().email}
         closeBurger={closeBurger}
       />
@@ -97,7 +97,7 @@ function DirectMessages({ closeBurger }) {
             <Divider sx={{ width: "300px", marginBottom: "2%" }} />
             {open &&
               users?.map((user) => (
-                <Box key={user.id}>{renderUsers(user)}</Box>
+                <Box key={user?.id}>{renderUsers(user)}</Box>
               ))}
           </Box>
         </Paper>

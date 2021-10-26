@@ -25,6 +25,7 @@ import { useHistory } from "react-router";
 function DrawerComponent() {
   const [openDrawer, setOpenDrawer] = useState(true);
   const history = useHistory();
+  const width = useWindowResize();
 
   const handleDrawerToggling = () => {
     setOpenDrawer(false);
@@ -92,7 +93,7 @@ function DrawerComponent() {
       <Box
         sx={{ display: "flex", justifyContent: "space-between", width: "100%" }}
       >
-        {widthWindow > 1024 ? (
+        {width > 1024 ? (
           <Box sx={{ ml: "20px", mt: "15px" }}>
             <img src={Logo} width="100px" alt="slack_logo" />
           </Box>
@@ -114,23 +115,24 @@ function DrawerComponent() {
               width="100px"
             />
           </Box>
-        <Box
-          sx={{
-            ml: "20px",
-            mt: "15px",
-            cursor: "pointer",
-          }}
-          onClick={() => history.push(HOME_ROUTE)}
-        >
-          <Typography>
-            <img src={Logo} width="100px" alt="slack_logo" />
-          </Typography>
-        </Box>
+          <Box
+            sx={{
+              ml: "20px",
+              mt: "15px",
+              cursor: "pointer",
+            }}
+            onClick={() => history.push(HOME_ROUTE)}
+          >
+            <Typography>
+              <img src={Logo} width="100px" alt="slack_logo" />
+            </Typography>
+          </Box>
 
-        <Box sx={{ mr: "10px", mt: "5px" }}>
-          <IconButton onClick={() => setOpenDrawer(!openDrawer)}>
-            <MenuIcon />
-          </IconButton>
+          <Box sx={{ mr: "10px", mt: "5px" }}>
+            <IconButton onClick={() => setOpenDrawer(!openDrawer)}>
+              <MenuIcon />
+            </IconButton>
+          </Box>
         </Box>
       </Box>
     </>
