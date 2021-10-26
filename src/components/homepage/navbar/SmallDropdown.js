@@ -82,10 +82,11 @@ function SmallDropdown() {
                   sx={{ py: 0, minHeight: 32, color: "rgba(0,0,0,.8)", ml: 4 }}
                 >
                   <ListItemText
-                    sx={{ minWidth: 1000 }}
+                    sx={{ width: "100%" }}
+                    onClick={() => setOpen(false)}
                     primary={item.label}
                     primaryTypographyProps={{
-                      fontSize: 16,
+                      fontSize: 18,
                       fontWeight: "medium",
                     }}
                   />

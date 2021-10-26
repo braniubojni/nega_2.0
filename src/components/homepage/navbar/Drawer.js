@@ -13,13 +13,14 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import { useHistory } from "react-router";
+import useWindowResize from "../../helpers/customHooks/useWindowResize";
 import {
   ENTERPRISE_ROUTE,
-  HOME_ROUTE,
-  PRICING_ROUTE,
   RESOURCES_ROUTE,
+  PRICING_ROUTE,
+  HOME_ROUTE,
 } from "../../../constants/paths";
+import { useHistory } from "react-router";
 
 function DrawerComponent() {
   const [openDrawer, setOpenDrawer] = useState(true);
@@ -35,6 +36,10 @@ function DrawerComponent() {
     { label: "Recources", link: RESOURCES_ROUTE },
     { label: "Pricing", link: PRICING_ROUTE },
   ];
+  const pushToPage = (link) => {
+    history.push(link);
+    handleDrawerToggling();
+  };
 
   return (
     <>
@@ -52,9 +57,7 @@ function DrawerComponent() {
           }}
         >
           <Box sx={{ ml: "20px", mt: "20px" }}>
-            <Typography>
-              <img src={Logo} width="140px" alt="slack_logo" />
-            </Typography>
+            <img src={Logo} width="140px" alt="slack_logo" />
           </Box>
           <Box sx={{ mr: "25px", mt: "15px" }}>
             <IconButton onClick={() => setOpenDrawer(!openDrawer)}>
@@ -72,10 +75,7 @@ function DrawerComponent() {
                   sx={{
                     cursor: "pointer",
                   }}
-                  onClick={() => {
-                    history.push(item.link);
-                    handleDrawerToggling();
-                  }}
+                  onClick={() => pushToPage(item.link)}
                 >
                   {item.label}
                 </ListItemText>
@@ -92,6 +92,28 @@ function DrawerComponent() {
       <Box
         sx={{ display: "flex", justifyContent: "space-between", width: "100%" }}
       >
+        {widthWindow > 1024 ? (
+          <Box sx={{ ml: "20px", mt: "15px" }}>
+            <img src={Logo} width="100px" alt="slack_logo" />
+          </Box>
+        ) : null}
+        <Box
+          sx={{
+            mt: "5px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            width: "100%",
+          }}
+        >
+          <Box sx={{ cursor: "pointer" }}>
+            <img
+              src={Logo}
+              onClick={() => pushToPage(HOME_ROUTE)}
+              alt="Logo"
+              width="100px"
+            />
+          </Box>
         <Box
           sx={{
             ml: "20px",
