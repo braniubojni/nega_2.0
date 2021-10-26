@@ -20,18 +20,18 @@ const Content = styled("div")(({ theme }) => ({
     justifyContent: "center",
   },
 }));
-const H2 = styled("h2")(({ theme }) => ({
+const H2 = styled("h2")({
   fontSize: "2rem",
   fontWeight: 900,
-}));
+});
 
-const ContentItemWraper = styled("div")(({ theme }) => ({
+const ContentItemWraper = styled("div")({
   width: 500,
   display: "flex",
   justifyContent: "space-between",
   flexDirection: "column",
   flexWrap: "wrap",
-}));
+});
 const ContentImgItem = styled("div")(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
