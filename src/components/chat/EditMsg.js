@@ -25,7 +25,7 @@ export default function EditMsg({
     if (!location) {
       handleChannelMsgEdit({ msgInfo, id, channelId });
     } else {
-      handleUserMsgEdit({ msgInfo, id, channelId, loggedUserId });
+      handleUserMsgEdit({ msgInfo, id });
     }
     onEditClose();
   };

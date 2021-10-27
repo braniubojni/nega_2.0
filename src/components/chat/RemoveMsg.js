@@ -13,14 +13,13 @@ export default function RemoveMsg({
   onRemoveClose,
   id,
   channelId,
-  loggedUserId,
   location,
   msgInfo,
 }) {
   const removeFunc = ({ channelId, id }) =>
     !location
       ? handleChannelMsgRemove({ channelId, id })
-      : handleUserMsgRemove({ loggedUserId, id, msgInfo });
+      : handleUserMsgRemove({ id, msgInfo });
   return (
     <div>
       <Dialog open={true} onClose={onRemoveClose}>
