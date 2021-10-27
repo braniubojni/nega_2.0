@@ -4,8 +4,11 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { CHANNELS_ROUTE } from "../../constants/paths";
+import { useHistory } from "react-router";
 
 export default function RemoveMsg({ onRemoveClose, id, name, removeFunc }) {
+  const history = useHistory;
   return (
     <div>
       <Dialog open={true} onClose={onRemoveClose}>
@@ -17,7 +20,11 @@ export default function RemoveMsg({ onRemoveClose, id, name, removeFunc }) {
         </DialogContent>
         <DialogActions>
           <Button onClick={onRemoveClose}>NO</Button>
-          <Button onClick={() => removeFunc(id)}>YES</Button>
+          <Button
+            onClick={() => removeFunc(id) || history.push(CHANNELS_ROUTE)}
+          >
+            YES
+          </Button>
         </DialogActions>
       </Dialog>
     </div>
