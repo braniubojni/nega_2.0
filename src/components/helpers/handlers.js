@@ -29,6 +29,7 @@ export const handleChannelRemove = async (id) => {
 
 export const handleChannelMsgEdit = async ({ channelId, id, msgInfo }) => {
   const docRef = doc(collection(db, "channels", channelId, "messages"), id);
+  console.log(docRef, msgInfo);
   await setDoc(docRef, msgInfo);
 };
 
@@ -36,30 +37,18 @@ export const handleChannelMsgRemove = async ({ channelId, id }) => {
   await deleteDoc(doc(collection(db, "channels", channelId, "messages"), id));
 };
 
-const getUserNameByName = async (name) => {
-  const users = await getDocs(collection(db, "users"));
-  const getByName = async () => {
-    const uniq = {};
-    users.forEach(async (user) => {
-      if (user.data().email === name) {
-        uniq.id = await user.data().id;
-      }
-    });
-    return uniq;
-  };
-  return getByName();
-};
-export const handleUserMsgEdit = async ({ id, msgInfo, loggedUserId }) => {
-  const userUniq = await getUserNameByName(msgInfo.channelName);
-  const uniqPair = [userUniq.id, loggedUserId].sort().join("_");
-  const docRef = doc(collection(db, "dms", uniqPair, "messages"), id);
+export const handleUserMsgEdit = async ({ id, msgInfo }) => {
+  // const userUniq = await getUserNameByName(msgInfo.channelName);
+  // const uniqPair = [userUniq.id, loggedUserId].sort().join("_");
+  const docRef = doc(collection(db, "dms", msgInfo.path, "messages"), id);
+
   await setDoc(docRef, msgInfo);
 };
 
-export const handleUserMsgRemove = async ({ loggedUserId, id, msgInfo }) => {
-  const userUniq = await getUserNameByName(msgInfo.channelName);
-  const uniqPair = [userUniq.id, loggedUserId].sort().join("_");
-  await deleteDoc(doc(collection(db, "dms", uniqPair, "messages"), id));
+export const handleUserMsgRemove = async ({ id, msgInfo }) => {
+  // const userUniq = await getUserNameByName(msgInfo.channelName);
+  // const uniqPair = [userUniq.id, loggedUserId].sort().join("_");
+  await deleteDoc(doc(collection(db, "dms", msgInfo.path, "messages"), id));
 };
 
 export const handleUserRemove = async (id) => {
