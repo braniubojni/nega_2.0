@@ -16,13 +16,13 @@ function EachUser({ id, userName, closeBurger, currentId, removeId }) {
   const role = useGetRole();
   const [showRemove, setShowRemove] = useState(false);
   const [removeUser, setRemoveUser] = useState(null);
+  const routePair = [id, currentId].sort().join("_");
 
   const onRemoveClose = () => {
     setRemoveUser(null);
   };
 
   const setUser = () => {
-    const routePair = [id, currentId].sort().join("_");
     dispatch(
       setChannelInfo({
         channelId: routePair,
@@ -57,6 +57,7 @@ function EachUser({ id, userName, closeBurger, currentId, removeId }) {
           onRemoveClose={onRemoveClose}
           name={userName}
           id={removeId}
+          dmPath={routePair}
           removeFunc={handleUserRemove}
         />
       )}

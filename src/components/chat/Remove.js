@@ -7,8 +7,14 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { CHANNELS_ROUTE } from "../../constants/paths";
 import { useHistory } from "react-router";
 
-export default function RemoveMsg({ onRemoveClose, id, name, removeFunc }) {
-  const history = useHistory;
+export default function RemoveMsg({
+  onRemoveClose,
+  id,
+  name,
+  removeFunc,
+  dmPath,
+}) {
+  const history = useHistory();
   return (
     <div>
       <Dialog open={true} onClose={onRemoveClose}>
@@ -21,7 +27,9 @@ export default function RemoveMsg({ onRemoveClose, id, name, removeFunc }) {
         <DialogActions>
           <Button onClick={onRemoveClose}>NO</Button>
           <Button
-            onClick={() => removeFunc(id) || history.push(CHANNELS_ROUTE)}
+            onClick={() =>
+              removeFunc(id, dmPath) && history.push(CHANNELS_ROUTE)
+            }
           >
             YES
           </Button>
