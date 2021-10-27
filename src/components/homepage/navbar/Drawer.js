@@ -5,14 +5,7 @@ import Logo from "../../../logo/logo.svg";
 import SmallDropdown from "./SmallDropdown";
 import Buttons from "../../../shared/Buttons";
 
-import {
-  Drawer,
-  ListItem,
-  ListItemText,
-  IconButton,
-  Typography,
-  Box,
-} from "@mui/material";
+import { Drawer, ListItem, ListItemText, IconButton, Box } from "@mui/material";
 import useWindowResize from "../../helpers/customHooks/useWindowResize";
 import {
   ENTERPRISE_ROUTE,
@@ -115,19 +108,6 @@ function DrawerComponent() {
               width="100px"
             />
           </Box>
-          <Box
-            sx={{
-              ml: "20px",
-              mt: "15px",
-              cursor: "pointer",
-            }}
-            onClick={() => history.push(HOME_ROUTE)}
-          >
-            <Typography>
-              <img src={Logo} width="100px" alt="slack_logo" />
-            </Typography>
-          </Box>
-
           <Box sx={{ mr: "10px", mt: "5px" }}>
             <IconButton onClick={() => setOpenDrawer(!openDrawer)}>
               <MenuIcon />
