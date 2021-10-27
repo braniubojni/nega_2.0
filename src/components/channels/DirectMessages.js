@@ -11,7 +11,6 @@ import EachUser from "../user/EachUser";
 import { collection, onSnapshot } from "@firebase/firestore";
 import { selectLoggedInUser } from "../../redux/common/auth/selectors";
 import { useSelector } from "react-redux";
-
 import db from "../../firebase";
 import { Divider } from "@mui/material";
 
@@ -35,6 +34,7 @@ function DirectMessages({ closeBurger }) {
         id={userData?.data()?.id}
         currentId={loggedUser?.id}
         userName={userData?.data().email}
+        removeId={userData?.id}
         closeBurger={closeBurger}
       />
     );

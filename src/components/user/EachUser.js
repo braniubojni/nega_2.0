@@ -10,7 +10,7 @@ import RemoveUser from "../chat/Remove";
 import { handleUserRemove } from "../helpers/handlers";
 import { setChannelInfo } from "../../redux/common/channel/actions";
 
-function EachUser({ id, userName, closeBurger, currentId }) {
+function EachUser({ id, userName, closeBurger, currentId, removeId }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const role = useGetRole();
@@ -56,7 +56,7 @@ function EachUser({ id, userName, closeBurger, currentId }) {
         <RemoveUser
           onRemoveClose={onRemoveClose}
           name={userName}
-          id={id}
+          id={removeId}
           removeFunc={handleUserRemove}
         />
       )}
