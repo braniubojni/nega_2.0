@@ -22,7 +22,6 @@ export default function LogOutDialog() {
       .then(() => {
         dispatch(logOut());
         dispatch(setError(null));
-        history.push(HOME_ROUTE);
       })
       .catch((error) => {
         console.log(new Error(error));
@@ -35,6 +34,7 @@ export default function LogOutDialog() {
   const onHandleYesClose = () => {
     handleSignOut();
     setOpen(false);
+    history.push(HOME_ROUTE);
   };
   const onHandleNoClose = () => {
     setOpen(false);
