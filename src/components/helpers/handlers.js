@@ -51,7 +51,12 @@ export const handleUserMsgRemove = async ({ id, msgInfo }) => {
   await deleteDoc(doc(collection(db, "dms", msgInfo.path, "messages"), id));
 };
 
-export const handleUserRemove = async (id) => {
+export const handleUserRemove = async (id, dmPath) => {
+  const msgRef = collection(db, "dms", dmPath, "messages");
+  const snapshots = await getDocs(msgRef);
+  snapshots.forEach(({ id }) => {
+    deleteDoc(doc(msgRef, id));
+  });
   await deleteDoc(doc(usersRef, id));
 };
 
