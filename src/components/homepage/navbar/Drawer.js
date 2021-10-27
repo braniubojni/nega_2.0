@@ -115,19 +115,6 @@ function DrawerComponent() {
               width="100px"
             />
           </Box>
-          <Box
-            sx={{
-              ml: "20px",
-              mt: "15px",
-              cursor: "pointer",
-            }}
-            onClick={() => history.push(HOME_ROUTE)}
-          >
-            <Typography>
-              <img src={Logo} width="100px" alt="slack_logo" />
-            </Typography>
-          </Box>
-
           <Box sx={{ mr: "10px", mt: "5px" }}>
             <IconButton onClick={() => setOpenDrawer(!openDrawer)}>
               <MenuIcon />
