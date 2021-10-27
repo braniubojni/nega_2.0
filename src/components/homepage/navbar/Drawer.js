@@ -5,14 +5,7 @@ import Logo from "../../../logo/logo.svg";
 import SmallDropdown from "./SmallDropdown";
 import Buttons from "../../../shared/Buttons";
 
-import {
-  Drawer,
-  ListItem,
-  ListItemText,
-  IconButton,
-  Typography,
-  Box,
-} from "@mui/material";
+import { Drawer, ListItem, ListItemText, IconButton, Box } from "@mui/material";
 import useWindowResize from "../../helpers/customHooks/useWindowResize";
 import {
   ENTERPRISE_ROUTE,
