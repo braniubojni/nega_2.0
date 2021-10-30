@@ -38,16 +38,11 @@ export const handleChannelMsgRemove = async ({ channelId, id }) => {
 };
 
 export const handleUserMsgEdit = async ({ id, msgInfo }) => {
-  // const userUniq = await getUserNameByName(msgInfo.channelName);
-  // const uniqPair = [userUniq.id, loggedUserId].sort().join("_");
   const docRef = doc(collection(db, "dms", msgInfo.path, "messages"), id);
-
   await setDoc(docRef, msgInfo);
 };
 
 export const handleUserMsgRemove = async ({ id, msgInfo }) => {
-  // const userUniq = await getUserNameByName(msgInfo.channelName);
-  // const uniqPair = [userUniq.id, loggedUserId].sort().join("_");
   await deleteDoc(doc(collection(db, "dms", msgInfo.path, "messages"), id));
 };
 
@@ -102,10 +97,9 @@ const dmCollection = async (toUid, currentUid) => {
   return collection(db, "dms", idPair, "messages");
 };
 
-export const getExistingUsers = ({ currentUid }) => {
+export const getExistingUsers = ({ currentUid, dmsRef }) => {
   const getAllUsers = async () => {
     const uniq = [];
-    const dmsRef = await getDocs(collection(db, "users"));
     const pushId = async (toUid) =>
       uniq.push([currentUid, toUid].sort().join("_"));
     dmsRef.forEach(async (doc) => {
