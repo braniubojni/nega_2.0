@@ -4,7 +4,13 @@ import Drawer from "@mui/material/Drawer";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import { collection, getDocs, doc, getDoc } from "@firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  onSnapshot,
+} from "@firebase/firestore";
 import db from "../../firebase";
 import { Toolbar } from "@mui/material";
 import MessageLoader from "../loader/MessageLoader";
@@ -15,6 +21,7 @@ import { useHistory } from "react-router";
 import { useSelector } from "react-redux";
 import { selectLoggedInUser } from "../../redux/common/auth/selectors";
 import { getExistingUsers } from "../helpers/handlers";
+import { useGetChannels, useGetUsers } from "../helpers/customHooks/useGetInfo";
 
 export default function SearchDrawer({ searchInput }) {
   const [channelMessages, setChannelMessages] = useState([]);
@@ -24,50 +31,58 @@ export default function SearchDrawer({ searchInput }) {
   const [state, setState] = useState({
     right: false,
   });
+  const channels = useGetChannels();
+  const users = useGetUsers();
   const currentUser = useSelector(selectLoggedInUser);
   const dispatch = useDispatch();
   const history = useHistory();
 
   const getChannelMessages = useCallback(async () => {
-    const channels = await getDocs(collection(db, "channels"));
-    channels.forEach(async (channel) => {
-      const msgs = await getDocs(
-        collection(db, "channels", channel.id, "messages")
-      );
-      msgs.forEach((msg) => {
-        setChannelMessages((prev) => [
-          ...prev,
-          {
-            data: msg.data(),
-            id: msg.id,
-            channelId: channel.id,
-          },
-        ]);
-      });
-    });
-  }, []);
-  const getUserMessages = useCallback(async () => {
-    const existUsers = await getExistingUsers({
-      currentUid: currentUser?.id,
-    });
-    existUsers.forEach(async (dm) => {
-      const msgs = await getDocs(collection(db, "dms", dm, "messages"));
-      msgs.forEach((msg) => {
-        setUserMessages((prev) =>
-          prev?.id !== msg.id
-            ? [
+    if (channels) {
+      channels.forEach(async (channel) => {
+        onSnapshot(
+          collection(db, "channels", channel.id, "messages"),
+          (snap) => {
+            snap.forEach((msg) => {
+              setChannelMessages((prev) => [
                 ...prev,
                 {
                   data: msg.data(),
                   id: msg.id,
-                  channelId: msg.id,
+                  channelId: channel.id,
                 },
-              ]
-            : [...prev]
+              ]);
+            });
+          }
         );
       });
-    });
-  }, [currentUser]);
+    }
+  }, [channels]);
+  const getUserMessages = useCallback(async () => {
+    if (users) {
+      const existUsers = await getExistingUsers({
+        currentUid: currentUser?.id,
+        dmsRef: users,
+      });
+      existUsers.forEach(async (dm) => {
+        const msgs = await getDocs(collection(db, "dms", dm, "messages"));
+        msgs.forEach((msg) => {
+          setUserMessages((prev) =>
+            prev?.id !== msg.id
+              ? [
+                  ...prev,
+                  {
+                    data: msg.data(),
+                    id: msg.id,
+                    channelId: msg.id,
+                  },
+                ]
+              : [...prev]
+          );
+        });
+      });
+    }
+  }, [currentUser, users]);
   const getFilteredChannelMessages = useCallback(
     (searchInput) => {
       if (searchInput) {
