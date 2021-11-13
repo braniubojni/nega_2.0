@@ -202,7 +202,7 @@ function SignUp() {
                         required
                         fullWidth
                         name="password"
-                        label="Repeate Password"
+                        label="Repeat Password"
                         type="password"
                         id="password"
                         value={rePassword}
