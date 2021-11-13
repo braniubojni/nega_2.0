@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import Picker from "emoji-picker-react";
 import { styled } from "@mui/system";
 
@@ -12,7 +12,7 @@ const StyledEmoji = styled("div")(({ theme }) => ({
   },
 }));
 
-export default function Emoji({ inputRef, isDisabled, Sent }) {
+function Emoji({ inputRef, isDisabled, Sent }) {
   const [emoji, setEmoji] = useState(false);
 
   useEffect(() => {
@@ -21,15 +21,18 @@ export default function Emoji({ inputRef, isDisabled, Sent }) {
     }
   }, [Sent]);
 
-  const onEmojiClick = (event, emojiObject) => {
-    event.stopPropagation();
-    inputRef.current.value += emojiObject.emoji;
-  };
-  const handleEmojiBar = () => {
+  const onEmojiClick = useCallback(
+    (event, emojiObject) => {
+      event.stopPropagation();
+      inputRef.current.value += emojiObject.emoji;
+    },
+    [inputRef]
+  );
+  const handleEmojiBar = useCallback(() => {
     if (isDisabled) {
       setEmoji((prev) => !prev);
     }
-  };
+  }, [isDisabled]);
   return (
     <>
       <span role="img" aria-label="emoji" onClick={handleEmojiBar}>
@@ -43,3 +46,5 @@ export default function Emoji({ inputRef, isDisabled, Sent }) {
     </>
   );
 }
+
+export default memo(Emoji);

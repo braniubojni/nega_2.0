@@ -6,11 +6,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-export default function Alert({
-  alert,
-  setAlert,
-  text = "Something went wrong",
-}) {
+function Alert({ alert, setAlert, text = "Something went wrong" }) {
   const handleClose = () => setAlert((prev) => !prev);
   return (
     <div>
@@ -35,3 +31,5 @@ export default function Alert({
     </div>
   );
 }
+
+export default React.memo(Alert);

@@ -8,7 +8,7 @@ import { selectChannelId } from "../../redux/common/channel/selectors";
 import EditMsg from "../chat/EditMsg";
 import RemoveMsg from "../chat/RemoveMsg";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useLocation } from "react-router";
 
 const HoverPopUp = styled("div")(() => ({
@@ -48,12 +48,12 @@ function Message({ msgInfo, id, index, scrollToBottom }) {
     scrollToBottom(endRef);
   }, [endRef, scrollToBottom]);
 
-  const onRemoveClose = () => {
+  const onRemoveClose = useCallback(() => {
     setRemoveMsg(null);
-  };
-  const onEditClose = () => {
+  }, []);
+  const onEditClose = useCallback(() => {
     setEditedMsg(null);
-  };
+  }, []);
   return (
     <Li
       ref={endRef}

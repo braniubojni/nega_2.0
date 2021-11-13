@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import YouTube from "react-youtube";
 import { styled } from "@mui/system";
@@ -54,6 +54,5 @@ function WatchVideo() {
     </>
   );
 }
-// onReady={onReady}
 
-export default WatchVideo;
+export default memo(WatchVideo);

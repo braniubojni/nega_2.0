@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo, useCallback, useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -11,12 +11,12 @@ import { useHistory } from "react-router";
 import { getAuth, signOut } from "@firebase/auth";
 import { HOME_ROUTE } from "../../constants/paths";
 
-export default function LogOutDialog() {
+function LogOutDialog() {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const handleSignOut = () => {
+  const handleSignOut = useCallback(() => {
     const auth = getAuth();
     signOut(auth)
       .then(() => {
@@ -26,19 +26,19 @@ export default function LogOutDialog() {
       .catch((error) => {
         console.log(new Error(error));
       });
-  };
-  const handleClickOpen = () => {
+  }, [dispatch]);
+  const handleClickOpen = useCallback(() => {
     setOpen(true);
-  };
+  }, []);
 
-  const onHandleYesClose = () => {
+  const onHandleYesClose = useCallback(() => {
     handleSignOut();
     setOpen(false);
     history.push(HOME_ROUTE);
-  };
-  const onHandleNoClose = () => {
+  }, [handleSignOut, history]);
+  const onHandleNoClose = useCallback(() => {
     setOpen(false);
-  };
+  }, []);
 
   return (
     <div>
@@ -72,3 +72,5 @@ export default function LogOutDialog() {
     </div>
   );
 }
+
+export default memo(LogOutDialog);

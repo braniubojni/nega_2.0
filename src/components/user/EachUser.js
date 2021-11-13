@@ -1,6 +1,6 @@
 import { ListItemButton, ListItemText } from "@mui/material";
 import { Box } from "@mui/system";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { USERS_ROUTE } from "../../constants/paths";
@@ -18,11 +18,11 @@ function EachUser({ id, userName, closeBurger, currentId, removeId }) {
   const [removeUser, setRemoveUser] = useState(null);
   const routePair = [id, currentId].sort().join("_");
 
-  const onRemoveClose = () => {
+  const onRemoveClose = useCallback(() => {
     setRemoveUser(null);
-  };
+  }, []);
 
-  const setUser = () => {
+  const setUser = useCallback(() => {
     dispatch(
       setChannelInfo({
         channelId: routePair,
@@ -31,7 +31,7 @@ function EachUser({ id, userName, closeBurger, currentId, removeId }) {
     );
     closeBurger(false);
     history.push(`${USERS_ROUTE}/${routePair}`);
-  };
+  }, [closeBurger, dispatch, history, routePair, userName]);
 
   return (
     <ListItemButton

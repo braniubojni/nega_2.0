@@ -9,7 +9,7 @@ import Container from "@mui/material/Container";
 import { Link } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useHistory } from "react-router";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -48,7 +48,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignUp() {
+function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
@@ -239,3 +239,5 @@ export default function SignUp() {
     </>
   );
 }
+
+export default memo(SignUp);
