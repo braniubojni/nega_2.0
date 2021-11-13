@@ -6,14 +6,9 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { CHANNELS_ROUTE } from "../../constants/paths";
 import { useHistory } from "react-router";
+import { memo } from "react";
 
-export default function RemoveMsg({
-  onRemoveClose,
-  id,
-  name,
-  removeFunc,
-  dmPath,
-}) {
+function RemoveMsg({ onRemoveClose, id, name, removeFunc, dmPath }) {
   const history = useHistory();
   return (
     <div>
@@ -38,3 +33,5 @@ export default function RemoveMsg({
     </div>
   );
 }
+
+export default memo(RemoveMsg);

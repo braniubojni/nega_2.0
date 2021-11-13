@@ -1,6 +1,6 @@
 import { getAuth } from "@firebase/auth";
 import { query, orderBy } from "firebase/firestore";
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { collection, onSnapshot } from "firebase/firestore";
 import db from "../../firebase";
@@ -145,35 +145,38 @@ function Chat({ setSearchInput }) {
     return () => setMessages([]);
   }, [getChannelMessages, getPrivateMessages]);
 
-  const scrollToBottom = (refer) => {
+  const scrollToBottom = useCallback((refer) => {
     refer.current.scrollIntoView({
       behavior: "smooth",
       block: "end",
     });
-  };
+  }, []);
 
-  const sendMessage = async (evn) => {
-    evn.preventDefault();
-    if (inputRef.current.value !== "") {
-      pathname.includes("channels")
-        ? sentMsg({
-            channelId,
-            message: inputRef.current.value,
-            name: auth.currentUser.email,
-          })
-        : sentDirectMsg({
-            toUid: userId.id,
-            currentUid: currentUserId.id,
-            message: inputRef.current.value,
-            name: auth.currentUser.email,
-            path: pathname.split("/")[pathname.split("/").length - 1],
-            userName: channelName,
-          });
+  const sendMessage = useCallback(
+    async (evn) => {
+      evn.preventDefault();
+      if (inputRef.current.value !== "") {
+        pathname.includes("channels")
+          ? sentMsg({
+              channelId,
+              message: inputRef.current.value,
+              name: auth.currentUser.email,
+            })
+          : sentDirectMsg({
+              toUid: userId.id,
+              currentUid: currentUserId.id,
+              message: inputRef.current.value,
+              name: auth.currentUser.email,
+              path: pathname.split("/")[pathname.split("/").length - 1],
+              userName: channelName,
+            });
 
-      setSent(true);
-      inputRef.current.value = "";
-    }
-  };
+        setSent(true);
+        inputRef.current.value = "";
+      }
+    },
+    [auth, channelId, channelName, currentUserId, pathname, userId]
+  );
 
   const renderMsg = (msgInfo, index) => {
     return (
@@ -234,4 +237,4 @@ function Chat({ setSearchInput }) {
   );
 }
 
-export default Chat;
+export default memo(Chat);

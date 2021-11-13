@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { SIGN_IN_ROUTE, SIGN_UP_ROUTE } from "../../constants/paths";
 import SignIn from "./SignIn";
@@ -19,4 +20,4 @@ function Auth() {
   );
 }
 
-export default Auth;
+export default memo(Auth);

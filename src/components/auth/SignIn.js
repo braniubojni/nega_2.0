@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -46,7 +46,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignIn() {
+function SignIn() {
   const history = useHistory();
   const dispatch = useDispatch();
   const auth = getAuth();
@@ -205,3 +205,5 @@ export default function SignIn() {
     </>
   );
 }
+
+export default memo(SignIn);

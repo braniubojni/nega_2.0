@@ -4,22 +4,20 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { memo, useCallback } from "react";
 import {
   handleChannelMsgRemove,
   handleUserMsgRemove,
 } from "../helpers/handlers";
 
-export default function RemoveMsg({
-  onRemoveClose,
-  id,
-  channelId,
-  location,
-  msgInfo,
-}) {
-  const removeFunc = ({ channelId, id }) =>
-    !location
-      ? handleChannelMsgRemove({ channelId, id })
-      : handleUserMsgRemove({ id, msgInfo });
+function RemoveMsg({ onRemoveClose, id, channelId, location, msgInfo }) {
+  const removeFunc = useCallback(
+    ({ channelId, id }) =>
+      !location
+        ? handleChannelMsgRemove({ channelId, id })
+        : handleUserMsgRemove({ id, msgInfo }),
+    [location, msgInfo]
+  );
   return (
     <div>
       <Dialog open={true} onClose={onRemoveClose}>
@@ -37,3 +35,5 @@ export default function RemoveMsg({
     </div>
   );
 }
+
+export default memo(RemoveMsg);

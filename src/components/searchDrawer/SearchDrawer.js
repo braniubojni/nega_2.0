@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useEffect, useState } from "react";
+import { Fragment, memo, useCallback, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Divider from "@mui/material/Divider";
@@ -23,7 +23,7 @@ import { selectLoggedInUser } from "../../redux/common/auth/selectors";
 import { getExistingUsers } from "../helpers/handlers";
 import { useGetChannels, useGetUsers } from "../helpers/customHooks/useGetInfo";
 
-export default function SearchDrawer({ searchInput }) {
+function SearchDrawer({ searchInput }) {
   const [channelMessages, setChannelMessages] = useState([]);
   const [userMessages, setUserMessages] = useState([]);
   const [filteredChannelMessages, setFilteredChannelMessages] = useState([]);
@@ -271,3 +271,5 @@ export default function SearchDrawer({ searchInput }) {
     </>
   );
 }
+
+export default memo(SearchDrawer);

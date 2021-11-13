@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { getAuth } from "@firebase/auth";
 import { ListItem } from "@mui/material";
@@ -106,4 +106,4 @@ function DirectMessages({ closeBurger }) {
   );
 }
 
-export default DirectMessages;
+export default memo(DirectMessages);

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo, useCallback, useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -9,24 +9,24 @@ import { TextField } from "@mui/material";
 import { handleNewChannel } from "../helpers/handlers";
 import { Box } from "@mui/system";
 
-export default function AddNewChannel() {
+function AddNewChannel() {
   const [open, setOpen] = useState(false);
   const [newChannel, setNewChannel] = useState("");
 
-  const handleClickOpen = () => {
+  const handleClickOpen = useCallback(() => {
     setOpen(true);
-  };
+  }, []);
 
-  const addNewChanel = () => {
+  const addNewChanel = useCallback(() => {
     if (newChannel) {
       handleNewChannel(newChannel);
       setOpen(false);
     }
     setNewChannel("");
-  };
-  const closeModal = () => {
+  }, [newChannel]);
+  const closeModal = useCallback(() => {
     setOpen(false);
-  };
+  }, []);
 
   return (
     <>
@@ -59,3 +59,5 @@ export default function AddNewChannel() {
     </>
   );
 }
+
+export default memo(AddNewChannel);

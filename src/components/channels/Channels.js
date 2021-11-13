@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -101,9 +101,9 @@ function Channels({ window }) {
     }
   }, [history, loggedUser]);
 
-  const handleDrawerToggle = () => {
+  const handleDrawerToggle = useCallback(() => {
     setMobileOpen(!mobileOpen);
-  };
+  }, [mobileOpen]);
   const renderChannels = (channel) => {
     return (
       <Channel
@@ -341,4 +341,4 @@ function Channels({ window }) {
   );
 }
 
-export default Channels;
+export default memo(Channels);

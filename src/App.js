@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Redirect } from "react-router";
 import Auth from "./components/auth/Auth";
@@ -63,4 +63,4 @@ function App() {
   );
 }
 
-export default App;
+export default memo(App);

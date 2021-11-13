@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo, useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { setChannelInfo } from "../../redux/common/channel/actions";
@@ -27,14 +27,14 @@ function Channel({ id, channelName, closeBurger }) {
         textOverflow: "ellipsis",
       }
     : {};
-  const onRemoveClose = () => {
+  const onRemoveClose = useCallback(() => {
     setRemoveChannel(null);
-  };
-  const setChannel = () => {
+  }, []);
+  const setChannel = useCallback(() => {
     dispatch(setChannelInfo({ channelId: id, channelName }));
     closeBurger(false);
     history.push(`${CHANNELS_ROUTE}/${id}`);
-  };
+  }, [channelName, closeBurger, dispatch, history, id]);
   return (
     <ListItemButton
       sx={{
@@ -85,4 +85,4 @@ function Channel({ id, channelName, closeBurger }) {
   );
 }
 
-export default Channel;
+export default memo(Channel);
